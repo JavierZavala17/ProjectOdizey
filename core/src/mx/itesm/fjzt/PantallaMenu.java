@@ -33,10 +33,6 @@ public class PantallaMenu implements Screen {
 
     private Texture textFondo;
 
-    //Sprite
-    private Sprite spriteSmash;
-    private Texture textSmash;
-
     //MENU, Escenas, Independiente de la cámara(movimiento)
     private Stage escenaMenu; //Botones
 
@@ -98,7 +94,7 @@ public class PantallaMenu implements Screen {
 
     private void crearMenu() {
         escenaMenu = new Stage(vista);
-        //Botón PLAY
+        //Botón JUGAR
         Texture textBtnPlay = new Texture("button_play.png");
         TextureRegionDrawable trdBtnPlay = new TextureRegionDrawable(new TextureRegion(textBtnPlay));
 
@@ -106,7 +102,7 @@ public class PantallaMenu implements Screen {
         TextureRegionDrawable trdBtnPlayP = new TextureRegionDrawable(new TextureRegion(textBtnPlayP));
 
         ImageButton btnPlay = new ImageButton(trdBtnPlay,trdBtnPlayP);
-        btnPlay.setPosition(ANCHO/2 - btnPlay.getWidth()/2, PantallaCargando.ALTO*2/3f - btnPlay.getHeight()/2);
+        btnPlay.setPosition(800,550);
         escenaMenu.addActor(btnPlay);
         //Agregar el LISTENER
         btnPlay.addListener(new ClickListener(){
@@ -114,29 +110,71 @@ public class PantallaMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new PantallaCargando(juego));
+                juego.setScreen(new PantallaMasInfo(juego));
             }
         });
 
-        //Botón HELP
-        Texture textBtnHelp = new Texture("button_play.png");
-        TextureRegionDrawable trdBtnHelp = new TextureRegionDrawable(new TextureRegion(textBtnHelp));
+        //Botón Ajustes
+        Texture textBtnAjustes = new Texture("button_play.png");
+        TextureRegionDrawable trdBtnAjustes = new TextureRegionDrawable(new TextureRegion(textBtnAjustes));
 
-        Texture textBtnHelpP = new Texture("button_play(2).png");
-        TextureRegionDrawable trdBtnHelpP = new TextureRegionDrawable(new TextureRegion(textBtnHelpP));
+        Texture textBtnAjustesS = new Texture("button_play(2).png");
+        TextureRegionDrawable trdBtnAjustedsS = new TextureRegionDrawable(new TextureRegion(textBtnAjustesS));
 
-        ImageButton btnHelp = new ImageButton(trdBtnHelp, trdBtnHelpP);
-        btnHelp.setPosition(ANCHO/2 - btnHelp.getWidth()/2, PantallaCargando.ALTO*1/3f - btnHelp.getHeight()/2);
+        ImageButton btnHelp = new ImageButton(trdBtnAjustes, trdBtnAjustedsS);
+        btnHelp.setPosition(802,361);
         // CARGAR LA PANTALLA DE MAPAS
         btnHelp.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                super.clicked(event, x, y);
+                //Responder al evento del boton
+                juego.setScreen(new PantallaMasInfo(juego));
+            }
+        });
+        escenaMenu.addActor(btnHelp);
+
+        //Botón Ayuda
+        Texture textBtnAyuda = new Texture("button_play.png");
+        TextureRegionDrawable trdBtnAyuda = new TextureRegionDrawable(new TextureRegion(textBtnAyuda));
+
+        Texture textBtnAyudaA = new Texture("button_play(2).png");
+        TextureRegionDrawable trdBtnAyudaA = new TextureRegionDrawable(new TextureRegion(textBtnAyuda));
+
+        ImageButton btnAyuda = new ImageButton(trdBtnAyuda, trdBtnAyudaA);
+        btnAyuda.setPosition(793,270);
+        // CARGAR LA PANTALLA DE MAPAS
+        btnAyuda.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new PantallaCargando(juego));
+                juego.setScreen(new PantallaMasInfo(juego));
             }
         });
-        escenaMenu.addActor(btnHelp);
+        escenaMenu.addActor(btnAyuda);
+
+        //Botón DontEnter
+        Texture textBtnDontEnter = new Texture("button_play.png");
+        TextureRegionDrawable trdBtnDontEnter = new TextureRegionDrawable(new TextureRegion(textBtnDontEnter));
+
+        Texture textBtnDontEnterR = new Texture("button_play(2).png");
+        TextureRegionDrawable trdBtnDontEnterR = new TextureRegionDrawable(new TextureRegion(textBtnDontEnterR));
+
+        ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter, trdBtnDontEnterR);
+        btnDontEnter.setPosition(744,105);
+        // CARGAR LA PANTALLA DE MAPAS
+        btnDontEnter.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //Responder al evento del boton
+                juego.setScreen(new PantallaMasInfo(juego));
+            }
+        });
+        escenaMenu.addActor(btnDontEnter);
+
+        //Jugar, ajustes, ayuda, no entres
     }
 
     @Override
@@ -199,7 +237,6 @@ public class PantallaMenu implements Screen {
 
     @Override
     public void dispose() {
-        textSmash.dispose();
         textFondo.dispose();
         textEngraneGrande.dispose();
         textureEngraneMediano.dispose();
