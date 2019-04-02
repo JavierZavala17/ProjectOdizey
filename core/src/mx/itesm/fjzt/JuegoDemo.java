@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import mx.itesm.fjzt.PantallaCargando;
+
 public class JuegoDemo extends Game {
 
 	@Override

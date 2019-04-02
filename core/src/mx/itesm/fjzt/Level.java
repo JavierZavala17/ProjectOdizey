@@ -159,7 +159,6 @@ public class Level extends Pantalla {
 
     private void acualizarCamara() {
         float xCamara = mario.getX();
-
         camara.position.x = xCamara;
         camara.update(); //Cambio
     }

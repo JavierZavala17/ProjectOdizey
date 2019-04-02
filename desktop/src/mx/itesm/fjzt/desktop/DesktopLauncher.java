@@ -2,6 +2,7 @@ package mx.itesm.fjzt.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+
 import mx.itesm.fjzt.JuegoDemo;
 
 public class DesktopLauncher {
