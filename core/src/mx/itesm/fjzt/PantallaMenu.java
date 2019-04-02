@@ -119,10 +119,10 @@ public class PantallaMenu implements Screen {
         });
 
         //Botón HELP
-        Texture textBtnHelp = new Texture("Jugar1.jpg");
+        Texture textBtnHelp = new Texture("button_play.png");
         TextureRegionDrawable trdBtnHelp = new TextureRegionDrawable(new TextureRegion(textBtnHelp));
 
-        Texture textBtnHelpP = new Texture("Jugar2.png");
+        Texture textBtnHelpP = new Texture("button_play(2).png");
         TextureRegionDrawable trdBtnHelpP = new TextureRegionDrawable(new TextureRegion(textBtnHelpP));
 
         ImageButton btnHelp = new ImageButton(trdBtnHelp, trdBtnHelpP);
@@ -136,7 +136,7 @@ public class PantallaMenu implements Screen {
                 juego.setScreen(new PantallaCargando(juego));
             }
         });
-        escenaMenu.addActor(btnPlay);
+        escenaMenu.addActor(btnHelp);
     }
 
     @Override
