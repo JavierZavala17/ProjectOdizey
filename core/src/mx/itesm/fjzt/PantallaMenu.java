@@ -95,10 +95,10 @@ public class PantallaMenu implements Screen {
     private void crearMenu() {
         escenaMenu = new Stage(vista);
         //Botón JUGAR
-        Texture textBtnPlay = new Texture("button_play.png");
+        Texture textBtnPlay = new Texture("btnJugar.png");
         TextureRegionDrawable trdBtnPlay = new TextureRegionDrawable(new TextureRegion(textBtnPlay));
 
-        Texture textBtnPlayP = new Texture("button_play(2).png");
+        Texture textBtnPlayP = new Texture("btnJugar2.png");
         TextureRegionDrawable trdBtnPlayP = new TextureRegionDrawable(new TextureRegion(textBtnPlayP));
 
         ImageButton btnPlay = new ImageButton(trdBtnPlay,trdBtnPlayP);
@@ -115,34 +115,34 @@ public class PantallaMenu implements Screen {
         });
 
         //Botón Ajustes
-        Texture textBtnAjustes = new Texture("button_play.png");
+        Texture textBtnAjustes = new Texture("btnAjustes.png");
         TextureRegionDrawable trdBtnAjustes = new TextureRegionDrawable(new TextureRegion(textBtnAjustes));
 
-        Texture textBtnAjustesS = new Texture("button_play(2).png");
+        Texture textBtnAjustesS = new Texture("btnAjustes2.png");
         TextureRegionDrawable trdBtnAjustedsS = new TextureRegionDrawable(new TextureRegion(textBtnAjustesS));
 
         ImageButton btnHelp = new ImageButton(trdBtnAjustes, trdBtnAjustedsS);
-        btnHelp.setPosition(802,361);
+        btnHelp.setPosition(830,400);
         // CARGAR LA PANTALLA DE MAPAS
         btnHelp.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new PantallaMasInfo(juego));
+                juego.setScreen(new PantallaAjustes(juego));
             }
         });
         escenaMenu.addActor(btnHelp);
 
         //Botón Ayuda
-        Texture textBtnAyuda = new Texture("button_play.png");
+        Texture textBtnAyuda = new Texture("btnAyuda.png");
         TextureRegionDrawable trdBtnAyuda = new TextureRegionDrawable(new TextureRegion(textBtnAyuda));
 
-        Texture textBtnAyudaA = new Texture("button_play(2).png");
+        Texture textBtnAyudaA = new Texture("btnAyuda2.png");
         TextureRegionDrawable trdBtnAyudaA = new TextureRegionDrawable(new TextureRegion(textBtnAyuda));
 
         ImageButton btnAyuda = new ImageButton(trdBtnAyuda, trdBtnAyudaA);
-        btnAyuda.setPosition(793,270);
+        btnAyuda.setPosition(793,250);
         // CARGAR LA PANTALLA DE MAPAS
         btnAyuda.addListener(new ClickListener() {
             @Override
@@ -155,10 +155,10 @@ public class PantallaMenu implements Screen {
         escenaMenu.addActor(btnAyuda);
 
         //Botón DontEnter
-        Texture textBtnDontEnter = new Texture("button_play.png");
+        Texture textBtnDontEnter = new Texture("btnCreditos.png");
         TextureRegionDrawable trdBtnDontEnter = new TextureRegionDrawable(new TextureRegion(textBtnDontEnter));
 
-        Texture textBtnDontEnterR = new Texture("button_play(2).png");
+        Texture textBtnDontEnterR = new Texture("btnCreditos2.png");
         TextureRegionDrawable trdBtnDontEnterR = new TextureRegionDrawable(new TextureRegion(textBtnDontEnterR));
 
         ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter, trdBtnDontEnterR);
@@ -208,7 +208,7 @@ public class PantallaMenu implements Screen {
         //MANECILLA
         spriteManecilla.setX(61.5f -spriteManecilla.getWidth()/2);
         spriteManecilla.setY(456 - spriteManecilla.getHeight()/2);
-        spriteManecilla.rotate(0.4f);
+        spriteManecilla.rotate(0.65f);
         spriteManecilla.draw(batch);
         batch.end();
 

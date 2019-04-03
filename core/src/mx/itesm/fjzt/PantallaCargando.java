@@ -87,7 +87,7 @@ public class PantallaCargando extends Pantalla {
 
         //Prueba tiempo
         contadorTiempo += delta;
-        if (contadorTiempo>=4){
+        if (contadorTiempo>=2){
             //Contó 2s
             juego.setScreen(new PantallaMenu(juego));
         }
