@@ -110,7 +110,7 @@ public class PantallaMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new PantallaMasInfo(juego));
+                juego.setScreen(new PantallaSeleccionNivel(juego));
             }
         });
 
