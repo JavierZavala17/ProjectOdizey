@@ -76,13 +76,13 @@ public class PantallaCargando extends Pantalla {
         spriteEngraneGrande.setX(ANCHO-720);
         spriteEngraneGrande.setY(ALTO-410);
         spriteEngraneGrande.draw(batch);
-        spriteEngraneGrande.rotate(0.7f);
+        spriteEngraneGrande.rotate(0.49f);
 
         //COORDENADAS ENEÑO
         spriteEngranePequeño.setX(ANCHO-900);
         spriteEngranePequeño.setY(ALTO-500);
         spriteEngranePequeño.draw(batch);
-        spriteEngranePequeño.rotate(-0.9f);
+        spriteEngranePequeño.rotate(-0.7f);
         batch.end();
 
         //Prueba tiempo
