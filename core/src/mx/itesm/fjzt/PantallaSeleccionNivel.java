@@ -90,7 +90,7 @@ public class PantallaSeleccionNivel implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new pantallanivel1(juego));
+                juego.setScreen(new PantallaWin(juego));
             }
         });
 
@@ -109,7 +109,7 @@ public class PantallaSeleccionNivel implements Screen {
             public void clicked(InputEvent event, float x, float y){
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new pantallanivel1(juego));
+                juego.setScreen(new PantallaLose(juego));
             }
         });
         escenaMenu.addActor(btnHelp);
@@ -129,7 +129,7 @@ public class PantallaSeleccionNivel implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new pantallanivel1(juego));
+                juego.setScreen(new PantallaMenu(juego));
             }
         });
         escenaMenu.addActor(btnAyuda);
@@ -149,7 +149,7 @@ public class PantallaSeleccionNivel implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new PantallaMenu(juego));
+                juego.setScreen(new PantallaLose(juego));
             }
         });
         escenaMenu.addActor(btnDontEnter);
