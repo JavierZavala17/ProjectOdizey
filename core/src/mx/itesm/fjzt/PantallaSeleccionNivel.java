@@ -169,13 +169,13 @@ public class PantallaSeleccionNivel implements Screen {
 
         //COORDENADAS ENGRANE MEDIANO
         spriteEngraneMediano.setX(640 - spriteEngraneMediano.getWidth()/2);
-        spriteEngraneMediano.setY(0 - spriteEngraneMediano.getHeight()/2);
+        spriteEngraneMediano.setY(-50 - spriteEngraneMediano.getHeight()/2);
         spriteEngraneMediano.rotate(0.35f);
         spriteEngraneMediano.draw(batch);
 
         //COORDENADAS ENGRANE PEQUEÑO
         spriteEngranePequeño.setX(640 - spriteEngranePequeño.getWidth()/2);
-        spriteEngranePequeño.setY(0 - spriteEngranePequeño.getHeight()/2);
+        spriteEngranePequeño.setY(-50 - spriteEngranePequeño.getHeight()/2);
         spriteEngranePequeño.rotate(-0.37f);
         spriteEngranePequeño.draw(batch);
 
