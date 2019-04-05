@@ -53,6 +53,7 @@ public class PantallaMenu implements Screen {
     private Texture textureManecilla;
 
 
+
     public PantallaMenu(JuegoDemo juego) {
         this.juego = juego;
     }
@@ -85,6 +86,7 @@ public class PantallaMenu implements Screen {
         textureManecilla = new Texture("Manecilla.png");
         spriteManecilla = new Sprite(textureManecilla);
 
+
         //Menú
         crearMenu();
         //Pasamos el control de INPUT a la escena
@@ -102,7 +104,7 @@ public class PantallaMenu implements Screen {
         TextureRegionDrawable trdBtnPlayP = new TextureRegionDrawable(new TextureRegion(textBtnPlayP));
 
         ImageButton btnPlay = new ImageButton(trdBtnPlay,trdBtnPlayP);
-        btnPlay.setPosition(800,550);
+        btnPlay.setPosition(790,280);
         escenaMenu.addActor(btnPlay);
         //Agregar el LISTENER
         btnPlay.addListener(new ClickListener(){
@@ -122,7 +124,7 @@ public class PantallaMenu implements Screen {
         TextureRegionDrawable trdBtnAjustedsS = new TextureRegionDrawable(new TextureRegion(textBtnAjustesS));
 
         ImageButton btnHelp = new ImageButton(trdBtnAjustes, trdBtnAjustedsS);
-        btnHelp.setPosition(830,400);
+        btnHelp.setPosition(760,195);
         // CARGAR LA PANTALLA DE MAPAS
         btnHelp.addListener(new ClickListener() {
             @Override
@@ -142,7 +144,7 @@ public class PantallaMenu implements Screen {
         TextureRegionDrawable trdBtnAyudaA = new TextureRegionDrawable(new TextureRegion(textBtnAyuda));
 
         ImageButton btnAyuda = new ImageButton(trdBtnAyuda, trdBtnAyudaA);
-        btnAyuda.setPosition(793,250);
+        btnAyuda.setPosition(730,110);
         // CARGAR LA PANTALLA DE MAPAS
         btnAyuda.addListener(new ClickListener() {
             @Override
@@ -162,7 +164,7 @@ public class PantallaMenu implements Screen {
         TextureRegionDrawable trdBtnDontEnterR = new TextureRegionDrawable(new TextureRegion(textBtnDontEnterR));
 
         ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter, trdBtnDontEnterR);
-        btnDontEnter.setPosition(744,105);
+        btnDontEnter.setPosition(700,25);
         // CARGAR LA PANTALLA DE MAPAS
         btnDontEnter.addListener(new ClickListener() {
             @Override
@@ -210,6 +212,7 @@ public class PantallaMenu implements Screen {
         spriteManecilla.setY(456 - spriteManecilla.getHeight()/2);
         spriteManecilla.rotate(0.65f);
         spriteManecilla.draw(batch);
+
         batch.end();
 
         escenaMenu.draw();
