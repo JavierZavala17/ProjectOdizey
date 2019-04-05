@@ -134,25 +134,7 @@ public class PantallaSeleccionNivel implements Screen {
         });
         escenaMenu.addActor(btnAyuda);
 
-        //Botón BACK
-        Texture textBtnDontEnter = new Texture("btnRegresar.png");
-        TextureRegionDrawable trdBtnDontEnter = new TextureRegionDrawable(new TextureRegion(textBtnDontEnter));
 
-        Texture textBtnDontEnterR = new Texture("btnRegresar2.png");
-        TextureRegionDrawable trdBtnDontEnterR = new TextureRegionDrawable(new TextureRegion(textBtnDontEnterR));
-
-        ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter, trdBtnDontEnterR);
-        btnDontEnter.setPosition(10,22);
-        // CARGAR LA PANTALLA DE MAPAS
-        btnDontEnter.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                //Responder al evento del boton
-                juego.setScreen(new PantallaMenu(juego));
-            }
-        });
-        escenaMenu.addActor(btnDontEnter);
     }
 
     @Override
