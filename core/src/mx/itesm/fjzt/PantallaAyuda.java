@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static mx.itesm.fjzt.Pantalla.ANCHO;
 
-public class PantallaMasInfo implements Screen {
+public class PantallaAyuda implements Screen {
 
     private final JuegoDemo juego;
     // Camara del juego
@@ -30,15 +30,11 @@ public class PantallaMasInfo implements Screen {
 
     private Texture textFondo;
 
-    //Sprite de engrane mediano
-    private Sprite spriteEngraneMediano;
-    private Texture textureEngraneMediano;
-
     //MENU, Escenas, Independiente de la cámara(movimiento)
     private Stage escenaMenu; //Botones
 
 
-    public PantallaMasInfo (JuegoDemo juego) {
+    public PantallaAyuda (JuegoDemo juego) {
         this.juego = juego;
     }
 
@@ -52,11 +48,7 @@ public class PantallaMasInfo implements Screen {
         vista = new StretchViewport(ANCHO,PantallaCargando.ALTO,camera);
         batch = new SpriteBatch();
 
-        textFondo = new Texture("PantallaMasInfoFondo.png");
-
-        //ENGRANE MEDIANO
-        textureEngraneMediano = new Texture("EngraneMedianoMenu.png");
-        spriteEngraneMediano = new Sprite(textureEngraneMediano);
+        textFondo = new Texture("PantallaAyudaFondo.png");
 
         //Menú
         crearMenu();
@@ -76,7 +68,7 @@ public class PantallaMasInfo implements Screen {
         TextureRegionDrawable trdBtnDontEnterR = new TextureRegionDrawable(new TextureRegion(textBtnDontEnterR));
 
         ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter, trdBtnDontEnterR);
-        btnDontEnter.setPosition(13,530);
+        btnDontEnter.setPosition(1020,121);
         // CARGAR LA PANTALLA DE MAPAS
         btnDontEnter.addListener(new ClickListener() {
             @Override
@@ -100,12 +92,6 @@ public class PantallaMasInfo implements Screen {
         batch.begin();
 
         batch.draw(textFondo,0,0);
-
-        //COORDENADAS ENGRANE MEDIANO
-        spriteEngraneMediano.setX(1271 - spriteEngraneMediano.getWidth()/2);
-        spriteEngraneMediano.setY(7 - spriteEngraneMediano.getHeight()/2);
-        spriteEngraneMediano.rotate(0.35f);
-        spriteEngraneMediano.draw(batch);
 
         batch.end();
 
