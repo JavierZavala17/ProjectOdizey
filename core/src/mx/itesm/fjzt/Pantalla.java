@@ -18,6 +18,11 @@ public abstract class Pantalla implements Screen
     // Atributos disponibles en todas las clases del proyecto
     public static final float ANCHO = 1280;
     public static final float ALTO = 720;
+    public static final float PX = 100;
+
+    public static final short JUGADOR = 2;
+    public static final short ENEMIGO = 2;
+
 
     // Atributos disponibles solo en las subclases
     // Todas las pantallas tienen una cámara y una vista
