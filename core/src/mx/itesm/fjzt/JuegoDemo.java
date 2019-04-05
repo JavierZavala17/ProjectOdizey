@@ -13,8 +13,6 @@ public class JuegoDemo extends Game {
 
 	@Override
 	public void create(){
-		Procesador p = new Procesador();
-		Gdx.input.setInputProcessor(p);
 		setScreen(new PantallaCargando(this));
 	}
 }
