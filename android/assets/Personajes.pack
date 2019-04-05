@@ -1,0 +1,26 @@
+
+Personajes.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Linea-Silo-Co
+  rotate: false
+  xy: 1, 133
+  size: 936, 96
+  orig: 936, 96
+  offset: 0, 0
+  index: -1
+Linea-Alacran
+  rotate: false
+  xy: 1, 67
+  size: 615, 64
+  orig: 615, 64
+  offset: 0, 0
+  index: -1
+Linea-Ave
+  rotate: false
+  xy: 1, 1
+  size: 512, 64
+  orig: 512, 64
+  offset: 0, 0
+  index: -1

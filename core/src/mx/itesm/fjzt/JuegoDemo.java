@@ -11,8 +11,16 @@ import mx.itesm.fjzt.PantallaCargando;
 
 public class JuegoDemo extends Game {
 
+	public SpriteBatch batch;
+
 	@Override
 	public void create(){
+		batch = new SpriteBatch();
 		setScreen(new PantallaCargando(this));
+	}
+
+	@Override
+	public void render() {
+		super.render();
 	}
 }

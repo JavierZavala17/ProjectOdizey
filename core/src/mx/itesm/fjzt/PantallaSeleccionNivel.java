@@ -41,7 +41,7 @@ public class PantallaSeleccionNivel implements Screen {
     //MENU, Escenas, Independiente de la cámara(movimiento)
     private Stage escenaMenu; //Botones
 
-    public PantallaSeleccionNivel (JuegoDemo juego) {
+    public PantallaSeleccionNivel(JuegoDemo juego) {
         this.juego = juego;
     }
 
@@ -90,7 +90,7 @@ public class PantallaSeleccionNivel implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new PantallaWin(juego));
+                juego.setScreen(new nivel1(juego));
             }
         });
 
