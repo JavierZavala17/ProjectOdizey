@@ -68,7 +68,7 @@ public class PantallaAyuda implements Screen {
         TextureRegionDrawable trdBtnDontEnterR = new TextureRegionDrawable(new TextureRegion(textBtnDontEnterR));
 
         ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter, trdBtnDontEnterR);
-        btnDontEnter.setPosition(1020,121);
+        btnDontEnter.setPosition(1000,100);
         // CARGAR LA PANTALLA DE MAPAS
         btnDontEnter.addListener(new ClickListener() {
             @Override

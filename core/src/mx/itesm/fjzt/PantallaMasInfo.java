@@ -76,7 +76,7 @@ public class PantallaMasInfo implements Screen {
         TextureRegionDrawable trdBtnDontEnterR = new TextureRegionDrawable(new TextureRegion(textBtnDontEnterR));
 
         ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter, trdBtnDontEnterR);
-        btnDontEnter.setPosition(13,530);
+        btnDontEnter.setPosition(50,510);
         // CARGAR LA PANTALLA DE MAPAS
         btnDontEnter.addListener(new ClickListener() {
             @Override
@@ -102,8 +102,8 @@ public class PantallaMasInfo implements Screen {
         batch.draw(textFondo,0,0);
 
         //COORDENADAS ENGRANE MEDIANO
-        spriteEngraneMediano.setX(1271 - spriteEngraneMediano.getWidth()/2);
-        spriteEngraneMediano.setY(7 - spriteEngraneMediano.getHeight()/2);
+        spriteEngraneMediano.setX(1230 - spriteEngraneMediano.getWidth()/2);
+        spriteEngraneMediano.setY(50- spriteEngraneMediano.getHeight()/2);
         spriteEngraneMediano.rotate(0.35f);
         spriteEngraneMediano.draw(batch);
 
