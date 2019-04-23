@@ -142,10 +142,6 @@ public class PantallaAjustes extends Pantalla {
 
     }
 
-    @Override
-    public void hide() {
-
-    }
 
     @Override
     public void dispose() {

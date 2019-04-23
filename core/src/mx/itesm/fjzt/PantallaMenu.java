@@ -221,11 +221,6 @@ public class PantallaMenu extends Pantalla {
     }
 
     @Override
-    public void hide() {
-        dispose();
-    }
-
-    @Override
     public void dispose() {
         textFondo.dispose();
         textEngraneGrande.dispose();

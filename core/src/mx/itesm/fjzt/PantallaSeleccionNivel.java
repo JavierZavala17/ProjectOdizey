@@ -189,10 +189,6 @@ public class PantallaSeleccionNivel extends Pantalla {
 
     }
 
-    @Override
-    public void hide() {
-
-    }
 
     @Override
     public void dispose() {

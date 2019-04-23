@@ -165,11 +165,6 @@ public class PantallaLose extends Pantalla {
     }
 
     @Override
-    public void hide() {
-
-    }
-
-    @Override
     public void dispose() {
         batch.dispose();
     }
