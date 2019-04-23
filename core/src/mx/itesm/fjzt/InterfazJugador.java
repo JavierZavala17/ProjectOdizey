@@ -38,9 +38,9 @@ public class InterfazJugador implements Disposable {
         tabla.top();
         tabla.setFillParent(true);
 
-        countdownLabel = new Label(String.format("%03d", tiempoMundo), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        tiempoLabel = new Label("TIEMPO", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("NIVEL: 1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        countdownLabel = new Label(String.format("%03d", tiempoMundo), new LabelStyle(new BitmapFont(), Color.WHITE));
+        tiempoLabel = new Label("TIEMPO", new LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label("NIVEL: 1", new LabelStyle(new BitmapFont(), Color.WHITE));
 
         tabla.add(levelLabel).expandX().padTop(5);
         tabla.add(tiempoLabel).expandX().padTop(5);

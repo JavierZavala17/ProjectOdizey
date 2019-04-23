@@ -41,7 +41,7 @@ public class PantallaSeleccionNivel implements Screen {
     //MENU, Escenas, Independiente de la cámara(movimiento)
     private Stage escenaMenu; //Botones
 
-    private PantallaSeleccionNivel (JuegoDemo juego) {
+    public PantallaSeleccionNivel(JuegoDemo juego) {
         this.juego = juego;
     }
 

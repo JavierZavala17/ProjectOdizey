@@ -72,10 +72,10 @@ public class nivel1 extends Pantalla {
         mapLoader = new TmxMapLoader();
         mapa = mapLoader.load("Odizey1.tmx");
         renderer = new OrthogonalTiledMapRenderer(mapa,1/PX);
-        camara.position.set(vista.getWorldWidth()/2, vista.getWorldHeight()/2,0);
+        camara.position.set(vista.getWorldWidth()/2 + 740, vista.getWorldHeight()/2,0);
 
         mundo = new World(new Vector2(0,-10 ), true);
-        box2dRenderer = new Box2DDebugRenderer();
+        //box2dRenderer = new Box2DDebugRenderer();
 
         // Jugador
         jugador = new Jugador(mundo, this );
@@ -149,7 +149,7 @@ public class nivel1 extends Pantalla {
 
         renderer.render();
 
-        box2dRenderer.render(mundo,camara.combined);
+        //box2dRenderer.render(mundo,camara.combined);
 
         juego.batch.setProjectionMatrix(camara.combined);
         juego.batch.begin();
