@@ -18,15 +18,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static mx.itesm.fjzt.Pantalla.ANCHO;
 
-public class PantallaMasInfo implements Screen {
+public class PantallaMasInfo extends Pantalla {
 
     private final JuegoDemo juego;
-    // Camara del juego
-    private OrthographicCamera camera;
-    // Escalar
-    private Viewport vista;
-    // Optimizar los gráficos
-    private SpriteBatch batch;
 
     private Texture textFondo;
 

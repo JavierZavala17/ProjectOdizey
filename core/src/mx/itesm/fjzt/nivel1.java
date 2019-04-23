@@ -89,7 +89,7 @@ public class nivel1 extends Pantalla {
         for(MapObject object : mapa.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rectangulo = ((RectangleMapObject)object).getRectangle();
 
-             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
+            //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
             cuerpoDef.type = BodyDef.BodyType.StaticBody;
             cuerpoDef.position.set((rectangulo.getX() + rectangulo.getWidth()/2)/PX,(rectangulo.getY() + rectangulo.getHeight()/2)/PX);
 
@@ -137,7 +137,7 @@ public class nivel1 extends Pantalla {
 
     @Override
     public void show() {
-        }
+    }
 
     @Override
     public void render(float delta) {
@@ -196,8 +196,8 @@ public class nivel1 extends Pantalla {
     public void EventosInput(float dt){
         //Mover camara con click
         /** if(Gdx.input.isTouched()){
-            camara.position.x += 1000 * dt;
-        }**/
+         camara.position.x += 1000 * dt;
+         }**/
         //Salto
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){

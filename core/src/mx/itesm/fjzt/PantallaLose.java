@@ -2,7 +2,6 @@ package mx.itesm.fjzt;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,19 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
-import static mx.itesm.fjzt.Pantalla.ANCHO;
-
-public class PantallaLose implements Screen {
+public class PantallaLose extends Pantalla {
 
     private final JuegoDemo juego;
-    // Camara del juego
-    private OrthographicCamera camera;
-    // Escalar
-    private Viewport vista;
-    // Optimizar los gráficos
-    private SpriteBatch batch;
+
+    //Optimizar graficos
     private Texture textFondo;
 
     //Sprite de engrane grande
