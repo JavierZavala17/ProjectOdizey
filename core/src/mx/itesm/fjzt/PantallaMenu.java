@@ -141,7 +141,7 @@ public class PantallaMenu implements Screen {
         TextureRegionDrawable trdBtnAyuda = new TextureRegionDrawable(new TextureRegion(textBtnAyuda));
 
         Texture textBtnAyudaA = new Texture("btnAyuda2.png");
-        TextureRegionDrawable trdBtnAyudaA = new TextureRegionDrawable(new TextureRegion(textBtnAyuda));
+        TextureRegionDrawable trdBtnAyudaA = new TextureRegionDrawable(new TextureRegion(textBtnAyudaA));
 
         ImageButton btnAyuda = new ImageButton(trdBtnAyuda, trdBtnAyudaA);
         btnAyuda.setPosition(730,110);

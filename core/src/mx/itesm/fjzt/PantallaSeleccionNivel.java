@@ -149,7 +149,7 @@ public class PantallaSeleccionNivel implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new PantallaLose(juego));
+                juego.setScreen(new PantallaMenu(juego));
             }
         });
         escenaMenu.addActor(btnDontEnter);
