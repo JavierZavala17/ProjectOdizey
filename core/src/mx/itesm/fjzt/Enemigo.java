@@ -21,5 +21,4 @@ public abstract class Enemigo extends Sprite {
     protected abstract void crearEnemigo();
 
 }
-//JessicaAceves HOLA
-// HOLA
+
