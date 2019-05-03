@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -19,9 +18,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -49,13 +45,6 @@ public class nivel1 extends Pantalla {
     private Jugador jugador;
 
     //Alacran
-    private Alacran alacran;
-    private Alacran alacran2;
-    private Alacran alacran3;
-    private Alacran alacran4;
-    private Alacran alacran5;
-    private Alacran alacran6;
-    private Alacran alacran7;
 
     public nivel1(JuegoDemo juego) {
 
@@ -121,14 +110,6 @@ public class nivel1 extends Pantalla {
 
         mundo.setContactListener(new checaColisiones() );
 
-        alacran = new Alacran(this, (27*32/PX),9*32/PX);
-        alacran2 = new Alacran(this, 50*32/PX,15*32/PX);
-        alacran3 = new Alacran(this, 88*32/PX,9*32/PX);
-        alacran4 = new Alacran(this, 128*32/PX,9*32/PX);
-        alacran5 = new Alacran(this, 144*32/PX,9*32/PX);
-        alacran6 = new Alacran(this, 173*32/PX,9*32/PX);
-        alacran7 = new Alacran(this, 206*32/PX,9*32/PX);
-
     }
 
     public TextureAtlas getAtlas(){
@@ -154,13 +135,6 @@ public class nivel1 extends Pantalla {
         juego.batch.setProjectionMatrix(camara.combined);
         juego.batch.begin();
         jugador.draw(juego.batch);
-        alacran.draw(juego.batch);
-        alacran2.draw(juego.batch);
-        alacran3.draw(juego.batch);
-        alacran4.draw(juego.batch);
-        alacran5.draw(juego.batch);
-        alacran6.draw(juego.batch);
-        alacran7.draw(juego.batch);
         juego.batch.end();
 
         juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
@@ -220,19 +194,17 @@ public class nivel1 extends Pantalla {
         mundo.step(1/60f,6,2);
 
         //Movimiento jugador y camara
-        jugador.update(dt);
-        alacran.update(dt);
-        alacran2.update(dt);
-        alacran3.update(dt);
-        alacran4.update(dt);
-        alacran5.update(dt);
-        alacran6.update(dt);
-        alacran7.update(dt);
-        interfaz.update(dt);
+        float xCamara = jugador.getX();
+        if(jugador.getX()<ANCHO/2){
+            xCamara = ANCHO/2;
+        }
+        if(jugador.getX()>ANCHO){
+            xCamara = ANCHO/2;
+        }
 
-        camara.position.x = jugador.cuerpo.getPosition().x;
+        camara.position.x = xCamara;
+        camara.update(); //Cambio
 
-        camara.update();
         //Solo render a lo que la camara ve
         renderer.setView(camara);
     }

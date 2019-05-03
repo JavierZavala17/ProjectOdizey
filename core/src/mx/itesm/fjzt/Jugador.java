@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+
 import static mx.itesm.fjzt.Pantalla.PX;
 
 public class Jugador extends Sprite {
@@ -108,14 +109,16 @@ public class Jugador extends Sprite {
         shape.setAsBox(.4f,1.1f);
 
         fdef.shape = shape;
-        cuerpo.createFixture(fdef);
+        cuerpo.createFixture(fdef).setUserData("jugador");
     }
 
     public boolean estaMuerto(){
+
         return jugadorMuerto;
     }
 
     public float getTempo() {
+
         return tempo;
     }
 }

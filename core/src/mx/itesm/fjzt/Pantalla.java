@@ -20,7 +20,7 @@ public abstract class Pantalla implements Screen
     public static final float ALTO = 720;
     public static final float PX = 100;
 
-    public static final short JUGADOR = 2;
+    public static final short JUGADOR = 1;
     public static final short ENEMIGO = 2;
 
 

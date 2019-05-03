@@ -1,6 +1,5 @@
 package mx.itesm.fjzt;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -17,7 +16,7 @@ public class Alacran extends Enemigo {
     private Array<TextureRegion> frame;
 
 
-    public Alacran(mx.itesm.fjzt.nivel1 nivel, float x, float y) {
+    public Alacran(nivel1 nivel, float x, float y) {
         super(nivel, x, y);
         frame = new Array<TextureRegion>();
         for (int i = 0; i < 3; i++){
@@ -46,7 +45,7 @@ public class Alacran extends Enemigo {
         shape.setAsBox(.4f,.3f);
 
         fdef.shape = shape;
-        cuerpo.createFixture(fdef);
+        cuerpo.createFixture(fdef).setUserData("enemigo");
 
     }
 }
