@@ -26,19 +26,19 @@ public abstract class Pantalla implements Screen
 
     // Atributos disponibles solo en las subclases
     // Todas las pantallas tienen una cámara y una vista
-    protected OrthographicCamera camara;
+    protected OrthographicCamera camera;
     protected Viewport vista;
     // Todas las pantallas dibujan algo :)
     protected SpriteBatch batch;
 
     public Pantalla() {
         // Crea la cámara con las dimensiones del mundo
-        camara = new OrthographicCamera(ANCHO, ALTO);
+        camera = new OrthographicCamera(ANCHO, ALTO);
         // En el centro de la pantalla
-        camara.position.set(ANCHO / 2, ALTO / 2, 0);
-        camara.update();
+        camera.position.set(ANCHO / 2, ALTO / 2, 0);
+        camera.update();
         // La vista que escala los elementos gráficos
-        vista = new StretchViewport(ANCHO, ALTO, camara);
+        vista = new StretchViewport(ANCHO, ALTO, camera);
         // El objeto que administra los trazos gráficos
         batch = new SpriteBatch();
     }

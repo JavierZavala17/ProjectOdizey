@@ -1,8 +1,6 @@
 package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,21 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
-import javax.xml.soap.Text;
-
-import static mx.itesm.fjzt.Pantalla.ANCHO;
-
-public class PantallaMenu implements Screen {
+public class PantallaMenu extends Pantalla {
 
     private final JuegoDemo juego;
-    // Camara del juego
-    private OrthographicCamera camera;
-    // Escalar
-    private Viewport vista;
-    // Optimizar los gráficos
-    private SpriteBatch batch;
 
     private Texture textFondo;
 
@@ -141,7 +128,7 @@ public class PantallaMenu implements Screen {
         TextureRegionDrawable trdBtnAyuda = new TextureRegionDrawable(new TextureRegion(textBtnAyuda));
 
         Texture textBtnAyudaA = new Texture("btnAyuda2.png");
-        TextureRegionDrawable trdBtnAyudaA = new TextureRegionDrawable(new TextureRegion(textBtnAyuda));
+        TextureRegionDrawable trdBtnAyudaA = new TextureRegionDrawable(new TextureRegion(textBtnAyudaA));
 
         ImageButton btnAyuda = new ImageButton(trdBtnAyuda, trdBtnAyudaA);
         btnAyuda.setPosition(730,110);
@@ -231,11 +218,6 @@ public class PantallaMenu implements Screen {
     @Override
     public void resume() {
 
-    }
-
-    @Override
-    public void hide() {
-        dispose();
     }
 
     @Override

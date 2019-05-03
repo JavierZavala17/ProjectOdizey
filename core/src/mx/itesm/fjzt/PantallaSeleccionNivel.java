@@ -1,7 +1,6 @@
 package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,19 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
-import static mx.itesm.fjzt.Pantalla.ANCHO;
-
-public class PantallaSeleccionNivel implements Screen {
+public class PantallaSeleccionNivel extends Pantalla {
 
     private final JuegoDemo juego;
-    // Camara del juego
-    private OrthographicCamera camera;
-    // Escalar
-    private Viewport vista;
-    // Optimizar los gráficos
-    private SpriteBatch batch;
 
     private Texture textFondo;
 
@@ -149,7 +139,7 @@ public class PantallaSeleccionNivel implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new PantallaLose(juego));
+                juego.setScreen(new PantallaMenu(juego));
             }
         });
         escenaMenu.addActor(btnDontEnter);
@@ -199,10 +189,6 @@ public class PantallaSeleccionNivel implements Screen {
 
     }
 
-    @Override
-    public void hide() {
-
-    }
 
     @Override
     public void dispose() {
