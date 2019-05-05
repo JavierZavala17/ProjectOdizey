@@ -194,19 +194,15 @@ public class nivel1 extends Pantalla {
         mundo.step(1/60f,6,2);
 
         //Movimiento jugador y camara
-        float xCamara = jugador.getX();
-        if(jugador.getX()<ANCHO/2){
-            xCamara = ANCHO/2;
-        }
-        if(jugador.getX()>ANCHO){
-            xCamara = ANCHO/2;
-        }
 
-        camara.position.x = xCamara;
-        camara.update(); //Cambio
+        jugador.update(dt);
+        interfaz.update(dt);
+        camara.position.x = jugador.cuerpo.getPosition().x;
+        camara.update();
 
         //Solo render a lo que la camara ve
         renderer.setView(camara);
+
     }
 
     public TiledMap getMapa(){
