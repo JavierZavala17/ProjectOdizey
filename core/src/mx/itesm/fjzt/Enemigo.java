@@ -21,3 +21,4 @@ public abstract class Enemigo extends Sprite {
     protected abstract void crearEnemigo();
 
 }
+
