@@ -71,7 +71,7 @@ public class Alacran extends Enemigo {
     }
 
     public void draw(Batch batch) {
-        //eliminar alacran muerto luego de 1 seg
+        //eliminar alacran muerto luego de 1 segundo
         if(!destruido || tiempo < 1){
             super.draw(batch);
         }
