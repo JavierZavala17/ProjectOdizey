@@ -15,6 +15,8 @@ public class Alacran extends Enemigo {
     private Animation<TextureRegion> correr;
     private Array<TextureRegion> frame;
 
+    private boolean aDestruir;
+    private boolean destruido;
 
     public Alacran(nivel1 nivel, float x, float y) {
         super(nivel, x, y);
@@ -25,27 +27,33 @@ public class Alacran extends Enemigo {
         correr = new Animation(.4f,frame);
         tiempo = 0;
         setBounds(getX(),getY(),150/PX,50/PX);
+
+        aDestruir = false;
+        destruido = false;
+    }
+
+    @Override
+    protected void defineEnemigo() {
+
     }
 
     public void update(float dt){
         tiempo += dt;
-        setPosition(cuerpo.getPosition().x - getWidth()/2 , cuerpo.getPosition().y - getHeight() / 2 );
-        setRegion(correr.getKeyFrame(tiempo, true));
-    }
 
-    @Override
-    protected void crearEnemigo() {
-        BodyDef def = new BodyDef();
-        def.position.set(getX(),getY());
-        def.type = BodyDef.BodyType.StaticBody;
-        cuerpo = mundo.createBody(def);
-
-        FixtureDef fdef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(.4f,.3f);
-
-        fdef.shape = shape;
-        cuerpo.createFixture(fdef).setUserData("enemigo");
+        //Checar si destruido el enemigo
+        if(aDestruir && !destruido){
+            mundo.destroyBody(cuerpo);
+            destruido = true;
+            //enemigo muerto imagen
+        }
+        else{
+            cuerpo.setLinearVelocity(velocity);
+            //posicion
+            setPosition(cuerpo.getPosition().x - getWidth()/2 , cuerpo.getPosition().y - getHeight() / 2 );
+            setRegion(correr.getKeyFrame(tiempo, true));
+        }
 
     }
+
+
 }

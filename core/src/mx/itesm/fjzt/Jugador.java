@@ -31,6 +31,9 @@ public class Jugador extends Sprite {
     private boolean corriendoD;
 
     private boolean jugadorMuerto;
+    private boolean jugadorSaltando;
+
+    //Opcional , vidas : private int vidas = 3;
 
 
     public Jugador(World world, nivel1 screen){
