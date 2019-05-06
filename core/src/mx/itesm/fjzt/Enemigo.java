@@ -27,6 +27,8 @@ public abstract class Enemigo extends Sprite {
 
     public abstract void update(float dt);
 
+    public abstract void impactado();
+
     public void reverseVelocity(boolean x, boolean y){
         if(x){
             velocity.x = -velocity.x;

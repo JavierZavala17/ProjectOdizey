@@ -1,8 +1,10 @@
 package mx.itesm.fjzt;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
@@ -34,7 +36,21 @@ public class Alacran extends Enemigo {
 
     @Override
     protected void defineEnemigo() {
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(getX(),getY()); //change position
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        cuerpo = mundo.createBody(bdef);
 
+        FixtureDef fdef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(6/ Pantalla.PX );
+
+        //asignar mario_bit a mario
+        fdef.filter.categoryBits = Pantalla.BIT_ENEMIGO;
+        fdef.filter.maskBits = Pantalla.BIT_BALA | Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO;
+
+        fdef.shape = shape;
+        cuerpo.createFixture(fdef).setUserData(this);
     }
 
     public void update(float dt){
@@ -52,7 +68,17 @@ public class Alacran extends Enemigo {
             setPosition(cuerpo.getPosition().x - getWidth()/2 , cuerpo.getPosition().y - getHeight() / 2 );
             setRegion(correr.getKeyFrame(tiempo, true));
         }
+    }
 
+    public void draw(Batch batch) {
+        //eliminar alacran muerto
+        if(!destruido || tiempo < 1){
+            super.draw(batch);
+        }
+    }
+
+    public void impactado(){
+        aDestruir = true;
     }
 
 
