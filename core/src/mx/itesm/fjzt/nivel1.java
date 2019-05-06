@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -59,9 +60,10 @@ public class nivel1 extends Pantalla {
 
         //Tile Map Part
         mapLoader = new TmxMapLoader();
-        mapa = mapLoader.load("Odizey1.tmx");
+        mapa = mapLoader.load("Mapa1.tmx");
         renderer = new OrthogonalTiledMapRenderer(mapa,1/PX);
-        camara.position.set(vista.getWorldWidth()/2 + 740, vista.getWorldHeight()/2,0);
+        camara.position.set(vista.getWorldWidth()/2 , vista.getWorldHeight()/2,0);
+
 
         mundo = new World(new Vector2(0,-10 ), true);
         //box2dRenderer = new Box2DDebugRenderer();
@@ -94,7 +96,7 @@ public class nivel1 extends Pantalla {
         PolygonShape shapefin = new PolygonShape();
         FixtureDef fixturefin = new FixtureDef();
         Body cuerpofin;
-        for(MapObject object : mapa.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : mapa.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rectangulofin = ((RectangleMapObject)object).getRectangle();
 
             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
