@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 
 class checaColisiones implements ContactListener {
 
+
     @Override
     public void beginContact(Contact contact) {
 
@@ -23,7 +24,8 @@ class checaColisiones implements ContactListener {
 
         switch (colision) {
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_WIN:
-                Gdx.app.log("Ganaste","Ganaste");
+                Gdx.app.log("","Gano");
+                nivel1.ganar ++;
         }
 
     }

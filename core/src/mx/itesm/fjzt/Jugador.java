@@ -31,7 +31,7 @@ public class Jugador extends Sprite {
     private float tempo;
     private boolean corriendoD;
 
-    public boolean ganaste;
+
     private boolean jugadorMuerto;
     private boolean jugadorSaltando;
 
@@ -134,10 +134,6 @@ public class Jugador extends Sprite {
             cuerpo.applyLinearImpulse(new Vector2(0,6.5f), cuerpo.getWorldCenter(),true);
             actual = estados.saltando;
         }
-    }
-
-    public void hit(){
-        ganaste = true;
     }
 
 }

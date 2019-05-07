@@ -26,6 +26,8 @@ public class nivel1 extends Pantalla {
 
     private JuegoDemo juego;
 
+    public static int ganar = 1;
+
     private TextureAtlas atlas;
 
     //Camara y vistas
@@ -147,17 +149,10 @@ public class nivel1 extends Pantalla {
             juego.setScreen(new PantallaLose(juego));
         }
 
-        if(ganaste()){
+        if(ganar == 2){
             juego.setScreen(new PantallaWin(juego));
         }
 
-    }
-
-    private boolean ganaste() {
-        if( jugador.ganaste == true ){
-            return true;
-        }
-        return false;
     }
 
     private boolean finJuego() {
@@ -195,8 +190,8 @@ public class nivel1 extends Pantalla {
             jugador.saltar();
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.cuerpo.getLinearVelocity().x <= 2){
-            jugador.cuerpo.applyLinearImpulse(new Vector2(0.4f,0),jugador.cuerpo.getWorldCenter(), true);
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.cuerpo.getLinearVelocity().x <= 2){ //vel = 0.4f
+            jugador.cuerpo.applyLinearImpulse(new Vector2(4f,0),jugador.cuerpo.getWorldCenter(), true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador.cuerpo.getLinearVelocity().x >= -2){
             jugador.cuerpo.applyLinearImpulse(new Vector2(0-.4f,0),jugador.cuerpo.getWorldCenter(), true);
