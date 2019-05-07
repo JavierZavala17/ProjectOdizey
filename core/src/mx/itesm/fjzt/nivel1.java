@@ -142,6 +142,7 @@ public class nivel1 extends Pantalla {
         return false;
     }
 
+    //I WANNA DIE
     @Override
     public void resize(int width, int height) {
         vista.update(width, height);
