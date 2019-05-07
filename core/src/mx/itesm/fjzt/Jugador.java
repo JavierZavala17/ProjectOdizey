@@ -106,7 +106,7 @@ public class Jugador extends Sprite {
 
     private void defineJugador() {
         BodyDef def = new BodyDef();
-        def.position.set(60/PX,90/PX);
+        def.position.set(300/PX,360/PX);
         def.type = BodyDef.BodyType.DynamicBody;
         cuerpo = mundo.createBody(def);
 
@@ -115,7 +115,7 @@ public class Jugador extends Sprite {
         shape.setAsBox(.4f,1.1f);
 
         fdef.filter.categoryBits = Pantalla.BIT_ZILO;
-        fdef.filter.maskBits =  Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO | Pantalla.BIT_OBJETOS;
+        fdef.filter.maskBits =  Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO  | Pantalla.BIT_WIN;
 
         fdef.shape = shape;
         cuerpo.createFixture(fdef).setUserData(this);
