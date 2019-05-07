@@ -254,7 +254,7 @@ public class nivel1 extends Pantalla {
             return false;
         }
 
-        @Override
+        @Override //AJHFDVAHJKSBFJKA
         public boolean touchDragged(int screenX, int screenY, int pointer) {
             return false;
         }
