@@ -31,6 +31,7 @@ public class Jugador extends Sprite {
     private float tempo;
     private boolean corriendoD;
 
+    public boolean ganaste;
     private boolean jugadorMuerto;
     private boolean jugadorSaltando;
 
@@ -113,6 +114,9 @@ public class Jugador extends Sprite {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(.4f,1.1f);
 
+        //fdef.filter.categoryBits = Pantalla.BIT_JUGADOR;
+        //fdef.filter.maskBits = Pantalla.BIT_SUELO | Pantalla.BIT_OBJETOS | Pantalla.BIT_ENEMIGO;
+
         fdef.shape = shape;
         cuerpo.createFixture(fdef).setUserData("jugador");
     }
@@ -131,4 +135,9 @@ public class Jugador extends Sprite {
             actual = estados.saltando;
         }
     }
+
+    public void hit(){
+        ganaste = true;
+    }
+
 }

@@ -77,7 +77,7 @@ public class nivel1 extends Pantalla {
         FixtureDef fixture = new FixtureDef();
         Body cuerpo;
 
-        for(MapObject object : mapa.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : mapa.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rectangulo = ((RectangleMapObject)object).getRectangle();
 
             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
@@ -88,6 +88,7 @@ public class nivel1 extends Pantalla {
 
             shape.setAsBox(rectangulo.getWidth()/2/PX , rectangulo.getHeight()/2/PX );
             fixture.shape = shape;
+            fixture.filter.categoryBits = Pantalla.BIT_WIN;
             cuerpo.createFixture(fixture);
         }
 
@@ -146,6 +147,17 @@ public class nivel1 extends Pantalla {
             juego.setScreen(new PantallaLose(juego));
         }
 
+        if(ganaste()){
+            juego.setScreen(new PantallaWin(juego));
+        }
+
+    }
+
+    private boolean ganaste() {
+        if( jugador.ganaste == true ){
+            return true;
+        }
+        return false;
     }
 
     private boolean finJuego() {

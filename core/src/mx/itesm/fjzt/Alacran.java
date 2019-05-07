@@ -37,7 +37,7 @@ public class Alacran extends Enemigo {
     @Override
     protected void defineEnemigo() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(getX(),getY()); //change position
+        bdef.position.set(getX(),getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
         cuerpo = mundo.createBody(bdef);
 
@@ -45,7 +45,7 @@ public class Alacran extends Enemigo {
         CircleShape shape = new CircleShape();
         shape.setRadius(6/ Pantalla.PX );
 
-        //asignar mario_bit a mario
+        //asignar bit
         fdef.filter.categoryBits = Pantalla.BIT_ENEMIGO;
         fdef.filter.maskBits = Pantalla.BIT_BALA | Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO;
 

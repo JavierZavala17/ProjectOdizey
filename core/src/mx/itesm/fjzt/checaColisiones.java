@@ -21,6 +21,11 @@ class checaColisiones implements ContactListener {
 
         int colision = fixture1.getFilterData().categoryBits | fixture2.getFilterData().categoryBits;
 
+        switch (colision) {
+            case Pantalla.BIT_JUGADOR | Pantalla.BIT_WIN:
+                Gdx.app.log("Ganaste","Ganaste");
+        }
+
     }
 
     @Override
@@ -37,5 +42,6 @@ class checaColisiones implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
+
 
 }
