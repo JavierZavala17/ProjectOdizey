@@ -145,7 +145,7 @@ public class PantallaMenu extends Pantalla {
                 //Responder al evento del boton
                 juego.setScreen(new PantallaAyuda(juego));
             }
-        });
+        }); //AYUDA
         escenaMenu.addActor(btnAyuda);
 
         //Botón DontEnter
