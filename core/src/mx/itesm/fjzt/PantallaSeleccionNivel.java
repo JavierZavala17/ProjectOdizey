@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
+
 public class PantallaSeleccionNivel extends Pantalla {
 
     private final JuegoDemo juego;
@@ -38,11 +39,11 @@ public class PantallaSeleccionNivel extends Pantalla {
     @Override
     public void show() {
         // ~ Constructor
-        camera = new OrthographicCamera(ANCHO, ALTO);
-        camera.position.set(ANCHO/2, ALTO /2,0);
+        camera = new OrthographicCamera(ANCHO, PantallaCargando.ALTO);
+        camera.position.set(ANCHO/2,PantallaCargando.ALTO/2,0);
         camera.update();
         // Vista
-        vista = new StretchViewport(ANCHO, ALTO,camera);
+        vista = new StretchViewport(ANCHO,PantallaCargando.ALTO,camera);
         batch = new SpriteBatch();
 
         textFondo = new Texture("PantallaSeleccionNivelFondo.png");
@@ -198,3 +199,4 @@ public class PantallaSeleccionNivel extends Pantalla {
         textureEngranePequeño.dispose();
     }
 }
+

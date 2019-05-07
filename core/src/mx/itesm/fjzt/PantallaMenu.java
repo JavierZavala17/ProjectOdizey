@@ -1,6 +1,7 @@
 package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,20 +40,23 @@ public class PantallaMenu extends Pantalla {
     private Sprite spriteManecilla;
     private Texture textureManecilla;
 
+    private final AssetManager assetManager; // = new AssetManager();
+
 
 
     public PantallaMenu(JuegoDemo juego) {
         this.juego = juego;
+        assetManager = juego.getAssetManager();
     }
 
     @Override
     public void show() {
         // ~ Constructor
-        camera = new OrthographicCamera(ANCHO, ALTO);
-        camera.position.set(ANCHO/2, ALTO /2,0);
+        camera = new OrthographicCamera(ANCHO, PantallaCargando.ALTO);
+        camera.position.set(ANCHO/2,PantallaCargando.ALTO/2,0);
         camera.update();
         // Vista
-        vista = new StretchViewport(ANCHO, ALTO,camera);
+        vista = new StretchViewport(ANCHO,PantallaCargando.ALTO,camera);
         batch = new SpriteBatch();
 
         textFondo = new Texture("PantallaMenuFondo.png");
@@ -170,6 +174,7 @@ public class PantallaMenu extends Pantalla {
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        juego.iniciarMusica();
 
         batch.setProjectionMatrix(camera.combined);
 
