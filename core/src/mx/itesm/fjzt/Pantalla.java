@@ -29,6 +29,7 @@ public abstract class Pantalla implements Screen
     public static final short BIT_WIN = 32;
     public static final short BIT_SUELO = 64;
     public static final short BIT_ZILO = 128;
+    public static final short BIT_DESTRUIDO = 256;
 
     // Atributos disponibles solo en las subclases
     // Todas las pantallas tienen una cámara y una vista

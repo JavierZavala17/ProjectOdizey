@@ -22,7 +22,7 @@ public abstract class items {
 
     private Body cuerpo;
     private Rectangle limites;
-    private Fixture fix;
+    public Fixture fix;
     private nivel1 nivel;
     private MapObject objeto;
 
@@ -56,9 +56,9 @@ public abstract class items {
     }
 
         public TiledMapTileLayer.Cell getCell(){
-            TiledMapTileLayer layer = (TiledMapTileLayer) mapa.getLayers().get(7); //checar cel
+            TiledMapTileLayer layer = (TiledMapTileLayer) mapa.getLayers().get(6); //checar cel
             return layer.getCell((int)(cuerpo.getPosition().x*Pantalla.PX/16),
-                    (int)(cuerpo.getPosition().y*Pantalla.PX/16));  // 16 = tile size
+                    (int)(cuerpo.getPosition().y*Pantalla.PX/32));  // 16 = tile size
         }
     }
 

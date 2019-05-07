@@ -20,9 +20,9 @@ public class InterfazJugador implements Disposable {
     private Viewport vistaInterfaz;
 
     private float tiempoActual;
-    private Integer tiempoMundo;
+    public static Integer tiempoMundo;
 
-    private Label countdownLabel;
+    private static Label countdownLabel;
     private Label tiempoLabel;
     private Label levelLabel;
     private JuegoDemo juego;
@@ -65,6 +65,11 @@ public class InterfazJugador implements Disposable {
 
         }
 
+    }
+
+    public static void addTiempo(int value){
+        tiempoMundo += value;
+        countdownLabel.setText(String.format("%06d",tiempoMundo));
     }
 
     @Override
