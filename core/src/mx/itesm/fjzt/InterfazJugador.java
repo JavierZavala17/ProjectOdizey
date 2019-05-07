@@ -1,5 +1,6 @@
 package mx.itesm.fjzt;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -26,8 +27,10 @@ public class InterfazJugador implements Disposable {
     private Label levelLabel;
     private JuegoDemo juego;
 
+    private boolean tiempoAcabo; //Verdadero en 0
+
     public InterfazJugador(SpriteBatch batch){
-        tiempoMundo = 40;
+        tiempoMundo = 40; //40 0riginal
         tiempoActual = 0;
 
         vistaInterfaz = new FitViewport(PantallaCargando.ANCHO, PantallaCargando.ALTO, new OrthographicCamera());
@@ -55,7 +58,7 @@ public class InterfazJugador implements Disposable {
             if(tiempoMundo > 0){
                 tiempoMundo--;
             }else{
-                //
+                tiempoAcabo = true;
             }
             countdownLabel.setText(String.format("%03d",tiempoMundo));
             tiempoActual = 0;
@@ -67,5 +70,9 @@ public class InterfazJugador implements Disposable {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public boolean isTiempoAcabo(){
+        return tiempoAcabo;
     }
 }

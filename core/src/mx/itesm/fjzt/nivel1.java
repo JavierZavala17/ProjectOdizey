@@ -142,6 +142,17 @@ public class nivel1 extends Pantalla {
         juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
         interfaz.stage.draw();
 
+        if(finJuego()){
+            juego.setScreen(new PantallaLose(juego));
+        }
+
+    }
+
+    private boolean finJuego() {
+        if(interfaz.isTiempoAcabo()){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -161,12 +172,7 @@ public class nivel1 extends Pantalla {
 
     @Override
     public void dispose() {
-        mapa.dispose();
-        renderer.dispose();
-        mundo.dispose();
-        interfaz.dispose();
-        box2dRenderer.dispose();
-
+       batch.dispose();
     }
 
     public void EventosInput(float dt){
