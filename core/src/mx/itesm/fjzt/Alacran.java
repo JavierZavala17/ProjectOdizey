@@ -14,6 +14,7 @@ import static mx.itesm.fjzt.Pantalla.PX;
 public class Alacran extends Enemigo {
 
     private float tiempo;
+
     private Animation<TextureRegion> correr;
     private Array<TextureRegion> frame;
 
@@ -21,7 +22,9 @@ public class Alacran extends Enemigo {
     private boolean destruido;
 
     public Alacran(nivel1 nivel, float x, float y) {
+
         super(nivel, x, y);
+
         frame = new Array<TextureRegion>();
         for (int i = 0; i < 3; i++){
             frame.add(new TextureRegion(nivel.getAtlas().findRegion("Linea-Alacran"),4+(150*i),20,150,50));
@@ -62,7 +65,7 @@ public class Alacran extends Enemigo {
             destruido = true;
             //enemigo muerto imagen
         }
-        else{
+        else if(!destruido){
             cuerpo.setLinearVelocity(velocity);
             //posicion
             setPosition(cuerpo.getPosition().x - getWidth()/2 , cuerpo.getPosition().y - getHeight() / 2 );

@@ -19,12 +19,14 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class nivel1 extends Pantalla {
 
     private JuegoDemo juego;
+    private nivel1 nivel;
 
     public static int ganar = 1;
 
@@ -43,11 +45,13 @@ public class nivel1 extends Pantalla {
     //Fisicas con Box2D
     private World mundo;
     private Box2DDebugRenderer box2dRenderer;
+    private creadorMundo creator;
 
     //Jugador
     private Jugador jugador;
 
     //Alacran
+    private Array<Alacran> alacrans;
 
     public nivel1(JuegoDemo juego) {
 
@@ -73,48 +77,13 @@ public class nivel1 extends Pantalla {
         // Jugador
         jugador = new Jugador(mundo, this );
 
-        //Poner esto en clase de cada personaje
-        BodyDef cuerpoDef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fixture = new FixtureDef();
-        Body cuerpo;
-
-        for(MapObject object : mapa.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rectangulo = ((RectangleMapObject)object).getRectangle();
-
-            //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
-            cuerpoDef.type = BodyDef.BodyType.StaticBody;
-            cuerpoDef.position.set((rectangulo.getX() + rectangulo.getWidth()/2)/PX,(rectangulo.getY() + rectangulo.getHeight()/2)/PX);
-
-            cuerpo = mundo.createBody(cuerpoDef);
-
-            shape.setAsBox(rectangulo.getWidth()/2/PX , rectangulo.getHeight()/2/PX );
-            fixture.shape = shape;
-            fixture.filter.categoryBits = Pantalla.BIT_WIN;
-            cuerpo.createFixture(fixture);
-        }
-
-        //Salida
-        BodyDef findef = new BodyDef();
-        PolygonShape shapefin = new PolygonShape();
-        FixtureDef fixturefin = new FixtureDef();
-        Body cuerpofin;
-        for(MapObject object : mapa.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rectangulofin = ((RectangleMapObject)object).getRectangle();
-
-            //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
-            findef.type = BodyDef.BodyType.StaticBody;
-            findef.position.set((rectangulofin.getX() + rectangulofin.getWidth()/2)/PX,(rectangulofin.getY() + rectangulofin.getHeight()/2)/PX);
-
-            cuerpofin = mundo.createBody(findef);
-
-            shapefin.setAsBox(rectangulofin.getWidth()/2/PX , rectangulofin.getHeight()/2/PX );
-            fixturefin.shape = shapefin;
-            cuerpofin.createFixture(fixturefin);
-        }
-
+        creator = new creadorMundo(this);
         mundo.setContactListener(new checaColisiones() );
 
+    }
+
+    public Array<Alacran> getAlacran(){
+        return alacrans;
     }
 
     public TextureAtlas getAtlas(){
@@ -140,6 +109,9 @@ public class nivel1 extends Pantalla {
         juego.batch.setProjectionMatrix(camara.combined);
         juego.batch.begin();
         jugador.draw(juego.batch);
+        for(Enemigo enemigo: creator.getAlacranes()){
+            enemigo.draw(juego.batch);
+        }
         juego.batch.end();
 
         juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
@@ -208,6 +180,14 @@ public class nivel1 extends Pantalla {
         //Movimiento jugador y camara
 
         jugador.update(dt);
+
+        for(Enemigo enemigo: creator.getAlacranes()){
+            enemigo.update(dt);
+            if (enemigo.getX() < jugador.getX() + 224/Pantalla.PX){
+                enemigo.cuerpo.setActive(true);
+            }
+        }
+
         interfaz.update(dt);
         camara.position.x = jugador.cuerpo.getPosition().x;
         camara.update();

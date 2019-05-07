@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="250" height="23" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="23">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="250" height="23" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="33">
  <tileset firstgid="1" name="elementos" tilewidth="32" tileheight="32" tilecount="135" columns="9">
   <image source="elementos.png" width="288" height="500"/>
  </tileset>
@@ -102,5 +102,17 @@
  <objectgroup id="10" name="meta">
   <object id="21" x="7363.64" y="3.0303" width="87.8788" height="654.545"/>
   <object id="22" x="7460.61" y="1372.73"/>
+ </objectgroup>
+ <objectgroup id="11" name="enemigos">
+  <object id="23" x="503.03" y="487.879"/>
+  <object id="24" x="915.152" y="315.152"/>
+  <object id="25" x="1260.61" y="651.515"/>
+  <object id="26" x="2012.12" y="493.939"/>
+  <object id="27" x="2642.42" y="630.303"/>
+  <object id="28" x="2784.85" y="321.212"/>
+  <object id="29" x="3609.09" y="648.485"/>
+  <object id="30" x="5300" y="490.909"/>
+  <object id="31" x="5766.67" y="651.515"/>
+  <object id="32" x="7015.15" y="481.818"/>
  </objectgroup>
 </map>

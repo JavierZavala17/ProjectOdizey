@@ -19,7 +19,7 @@ public abstract class Enemigo extends Sprite {
         setPosition(x,y);
         defineEnemigo();
         velocity = new Vector2(1,0);
-        cuerpo.setActive(false); //stay there until wake up
+        cuerpo.setActive(false); //Se quedan quietos hasta nuevo aviso
 
     }
 
