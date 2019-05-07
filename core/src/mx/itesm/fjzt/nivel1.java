@@ -5,7 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -20,6 +22,11 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -50,6 +57,9 @@ public class nivel1 extends Pantalla {
 
     //Jugador
     private Jugador jugador;
+
+    //MENU, Escenas, Independiente de la cámara(movimiento)
+    private Stage escenaMenu; //Botones
 
     //Alacran
     private Array<Alacran> alacrans;
@@ -90,6 +100,33 @@ public class nivel1 extends Pantalla {
     @Override
     public void show() {
         Gdx.input.setCatchBackKey(true);
+
+        //Menú
+        crearMenu();
+
+        //Pasamos el control de INPUT a la escena
+        Gdx.input.setInputProcessor(escenaMenu);
+        Gdx.input.setCatchBackKey(true);
+    }
+
+    private void crearMenu() {
+        escenaMenu = new Stage(vista);
+        //Botón BACK
+        Texture textBtnDontEnter = new Texture("btnOtravez.png");
+        TextureRegionDrawable trdBtnDontEnter = new TextureRegionDrawable(new TextureRegion(textBtnDontEnter));
+
+        ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter);
+        btnDontEnter.setPosition(50,50);
+        // CARGAR LA PANTALLA DE MAPAS
+        btnDontEnter.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //Responder al evento del boton
+                juego.setScreen(new PantallaMenu(juego));
+            }
+        });
+        escenaMenu.addActor(btnDontEnter);
     }
 
     @Override
@@ -114,6 +151,7 @@ public class nivel1 extends Pantalla {
 
         juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
         interfaz.stage.draw();
+        escenaMenu.draw();
 
         if(finJuego() || ganar == 0){
             ganar = 1;

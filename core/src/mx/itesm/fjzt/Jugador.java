@@ -49,15 +49,15 @@ public class Jugador extends Sprite {
 
         //Correr
         Array<TextureRegion> frame = new Array<TextureRegion>();
-        for(int i = 0; i< 4;i++){
-            frame.add(new TextureRegion(getTexture(),12+(80*i),137,79,90));
+        for(int i = 0; i< 12 ;i++){
+            frame.add(new TextureRegion(getTexture(),8+(80*i),137,79,90));
         }
         jugadorCorre = new Animation(.2f,frame);
         frame.clear();
 
         //SALTAR
         for(int i = 4; i < 7; i++){
-            frame.add(new TextureRegion(getTexture(),12+(80*i),137,79,90));
+            frame.add(new TextureRegion(getTexture(),20+(80*i),137,79,90));
         }
         jugadorSalta = new Animation(.5f,frame);
 
