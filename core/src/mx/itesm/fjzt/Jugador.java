@@ -114,8 +114,8 @@ public class Jugador extends Sprite {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(.4f,1.1f);
 
-        //fdef.filter.categoryBits = Pantalla.BIT_JUGADOR;
-        //fdef.filter.maskBits = Pantalla.BIT_SUELO | Pantalla.BIT_OBJETOS | Pantalla.BIT_ENEMIGO;
+        fdef.filter.categoryBits = Pantalla.BIT_ZILO;
+        fdef.filter.maskBits =  Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO;
 
         fdef.shape = shape;
         cuerpo.createFixture(fdef).setUserData("jugador");

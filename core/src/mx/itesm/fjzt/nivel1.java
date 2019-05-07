@@ -82,10 +82,6 @@ public class nivel1 extends Pantalla {
 
     }
 
-    public Array<Alacran> getAlacran(){
-        return alacrans;
-    }
-
     public TextureAtlas getAtlas(){
         return atlas;
     }
@@ -163,10 +159,10 @@ public class nivel1 extends Pantalla {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.cuerpo.getLinearVelocity().x <= 2){ //vel = 0.4f
-            jugador.cuerpo.applyLinearImpulse(new Vector2(4f,0),jugador.cuerpo.getWorldCenter(), true);
+            jugador.cuerpo.applyLinearImpulse(new Vector2(.5f,0),jugador.cuerpo.getWorldCenter(), true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador.cuerpo.getLinearVelocity().x >= -2){
-            jugador.cuerpo.applyLinearImpulse(new Vector2(0-.4f,0),jugador.cuerpo.getWorldCenter(), true);
+            jugador.cuerpo.applyLinearImpulse(new Vector2(0-.5f,0),jugador.cuerpo.getWorldCenter(), true);
         }
 
     }
@@ -183,7 +179,7 @@ public class nivel1 extends Pantalla {
 
         for(Enemigo enemigo: creator.getAlacranes()){
             enemigo.update(dt);
-            if (enemigo.getX() < jugador.getX() + 224/Pantalla.PX){
+            if (enemigo.getX() < jugador.getX() + 700/Pantalla.PX){
                 enemigo.cuerpo.setActive(true);
             }
         }

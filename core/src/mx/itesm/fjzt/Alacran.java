@@ -50,7 +50,7 @@ public class Alacran extends Enemigo {
 
         //asignar bit
         fdef.filter.categoryBits = Pantalla.BIT_ENEMIGO;
-        fdef.filter.maskBits = Pantalla.BIT_BALA | Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO;
+        fdef.filter.maskBits = Pantalla.BIT_BALA | Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO | Pantalla.BIT_ZILO;
 
         fdef.shape = shape;
         cuerpo.createFixture(fdef).setUserData(this);

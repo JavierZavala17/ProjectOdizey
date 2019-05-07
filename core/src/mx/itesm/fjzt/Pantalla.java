@@ -20,13 +20,15 @@ public abstract class Pantalla implements Screen
     public static final float ALTO = 720;
     public static final float PX = 100;
 
-    public static final short BIT_SUELO = 0;
+
     public static final short BIT_JUGADOR = 1;
     public static final short BIT_ENEMIGO = 2;
     public static final short BIT_OBJETOS = 4;
     public static final short BIT_BALA = 8;
     public static final short BIT_PAREDES_ENEMIGOS = 16;
     public static final short BIT_WIN = 32;
+    public static final short BIT_SUELO = 64;
+    public static final short BIT_ZILO = 128;
 
     // Atributos disponibles solo en las subclases
     // Todas las pantallas tienen una cámara y una vista

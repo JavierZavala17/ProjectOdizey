@@ -18,7 +18,7 @@ public abstract class Enemigo extends Sprite {
         this.nivel1 = nivel;
         setPosition(x,y);
         defineEnemigo();
-        velocity = new Vector2(1,0);
+        velocity = new Vector2(-1.5f,-2.3f);
         cuerpo.setActive(false); //Se quedan quietos hasta nuevo aviso
 
     }
