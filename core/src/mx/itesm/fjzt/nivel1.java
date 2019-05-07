@@ -171,20 +171,17 @@ public class nivel1 extends Pantalla {
 
     public void EventosInput(float dt){
         //Mover camara con click
-        /** if(Gdx.input.isTouched()){
-         camara.position.x += 1000 * dt;
-         }**/
+
         //Salto
-
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            jugador.cuerpo.applyLinearImpulse(new Vector2(0,6.8f),jugador.cuerpo.getWorldCenter(), true);
-
+            jugador.saltar();
         }
+
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.cuerpo.getLinearVelocity().x <= 2){
-            jugador.cuerpo.applyLinearImpulse(new Vector2(0.2f,0),jugador.cuerpo.getWorldCenter(), true);
+            jugador.cuerpo.applyLinearImpulse(new Vector2(0.4f,0),jugador.cuerpo.getWorldCenter(), true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador.cuerpo.getLinearVelocity().x >= -2){
-            jugador.cuerpo.applyLinearImpulse(new Vector2(0-.2f,0),jugador.cuerpo.getWorldCenter(), true);
+            jugador.cuerpo.applyLinearImpulse(new Vector2(0-.4f,0),jugador.cuerpo.getWorldCenter(), true);
         }
 
     }

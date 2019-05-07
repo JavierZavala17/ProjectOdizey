@@ -3,6 +3,7 @@ package mx.itesm.fjzt;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -89,13 +90,14 @@ public class Jugador extends Sprite {
             region.flip(true, false);
             corriendoD = true;
         }
-        tempo = actual == anterior ? tempo + dt : 0; //Checar esto mas a detalle, es reiniciar el contador
+
+        tempo = actual == anterior ? tempo + dt : 0;
         anterior = actual;
         return region;
     }
 
     private estados getEstado() {
-        if(cuerpo.getLinearVelocity().y > 0){
+        if((cuerpo.getLinearVelocity().y > 0 && actual == estados.saltando )|| (cuerpo.getLinearVelocity().y < 0 && anterior == estados.saltando) ){
             return estados.saltando;
         }
         return estados.corriendo;
@@ -116,12 +118,17 @@ public class Jugador extends Sprite {
     }
 
     public boolean estaMuerto(){
-
         return jugadorMuerto;
     }
 
     public float getTempo() {
-
         return tempo;
+    }
+
+    public void saltar() {
+        if(actual != estados.saltando){
+            cuerpo.applyLinearImpulse(new Vector2(0,6.5f), cuerpo.getWorldCenter(),true);
+            actual = estados.saltando;
+        }
     }
 }
