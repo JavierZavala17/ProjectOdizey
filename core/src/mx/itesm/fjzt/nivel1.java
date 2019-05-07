@@ -2,6 +2,7 @@ package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -190,13 +191,13 @@ public class nivel1 extends Pantalla {
 
         for(Enemigo enemigo: creator.getAlacranes()){
             enemigo.update(dt);
-            if (enemigo.getX() < jugador.getX() + 700/Pantalla.PX){
+            if (enemigo.getX() < jugador.getX() + 1200/Pantalla.PX){
                 enemigo.cuerpo.setActive(true);
             }
         }
 
         interfaz.update(dt);
-        camara.position.x = jugador.cuerpo.getPosition().x;
+        camara.position.x = jugador.cuerpo.getPosition().x + 5;
         camara.update();
 
         //Solo render a lo que la camara ve
@@ -211,6 +212,7 @@ public class nivel1 extends Pantalla {
     public World getMundo(){
         return mundo;
     }
+
 
 
 }

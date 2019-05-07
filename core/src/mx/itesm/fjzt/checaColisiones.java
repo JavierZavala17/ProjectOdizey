@@ -23,8 +23,8 @@ class checaColisiones implements ContactListener {
         int colision = fixture1.getFilterData().categoryBits | fixture2.getFilterData().categoryBits;
 
         switch (colision) {
-            case Pantalla.BIT_JUGADOR | Pantalla.BIT_WIN:
-                Gdx.app.log("","Gano");
+            case Pantalla.BIT_ZILO | Pantalla.BIT_WIN:
+                //Gdx.app.log("","Gano");
                 nivel1.ganar ++;
                 break;
             case Pantalla.BIT_ENEMIGO | Pantalla.BIT_ZILO:
