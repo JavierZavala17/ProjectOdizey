@@ -39,4 +39,4 @@ public abstract class Enemigo extends Sprite {
     }
 
 }
-//hola chicos
+//hola chicos ya estan lo botones
