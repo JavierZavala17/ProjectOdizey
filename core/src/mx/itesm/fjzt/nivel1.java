@@ -13,7 +13,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2D;
@@ -91,7 +90,6 @@ public class nivel1 extends Pantalla {
     @Override
     public void show() {
         Gdx.input.setCatchBackKey(true);
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
     @Override
@@ -216,63 +214,6 @@ public class nivel1 extends Pantalla {
         return mundo;
     }
 
-    private class ProcesadorEntrada implements InputProcessor {
-
-        @Override
-        public boolean keyDown(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyUp(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyTyped(char character) {
-            return false;
-        }
-
-        // Coordenadas FISICAS
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            Vector3 v3 = new Vector3(screenX,screenY,0);
-            camera.unproject(v3);
-            if (v3.x > PantallaCargando.ANCHO/2 && v3.x < PantallaCargando.ALTO/2){
-                jugador.cuerpo.applyLinearImpulse(new Vector2(.5f,0),jugador.cuerpo.getWorldCenter(),true);
-            }else if (v3.x < PantallaCargando.ANCHO/2 && v3.x < PantallaCargando.ALTO/2){
-                jugador.cuerpo.applyLinearImpulse(new Vector2(-.5f,0),jugador.cuerpo.getWorldCenter(),true);
-            }else if (v3.x > PantallaCargando.ALTO/2){
-            jugador.cuerpo.applyLinearImpulse(new Vector2(.5f,5),jugador.cuerpo.getWorldCenter(),true);
-        }
-
-            return false;
-        }
-
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            return false;
-        }
-
-        @Override //AJHFDVAHJKSBFJKA
-        public boolean touchDragged(int screenX, int screenY, int pointer) {
-            return false;
-        }
-
-        @Override
-        public boolean mouseMoved(int screenX, int screenY) {
-            return false;
-        }
-
-        @Override
-        public boolean scrolled(int amount) {
-            return false;
-        }
 
 
-
-
-
-
-
-}}
+}
