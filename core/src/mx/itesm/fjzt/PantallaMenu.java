@@ -43,7 +43,7 @@ public class PantallaMenu extends Pantalla {
 
     private final AssetManager assetManager; // = new AssetManager();
 
-
+    private boolean musica = true;
 
     public PantallaMenu(JuegoDemo juego) {
         this.juego = juego;
@@ -167,15 +167,20 @@ public class PantallaMenu extends Pantalla {
             }
         });
         escenaMenu.addActor(btnDontEnter);
-
-        //Jugar, ajustes, ayuda, no entres
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        juego.iniciarMusica();
+
+        if(musica == true){
+            juego.iniciarMusica();
+        }
+        else if(musica == false){
+            juego.pausarMusica();
+        }
+
 
         batch.setProjectionMatrix(camera.combined);
 

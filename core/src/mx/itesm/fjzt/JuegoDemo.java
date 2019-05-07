@@ -10,7 +10,7 @@ public class JuegoDemo extends Game {
 
     public SpriteBatch batch;
     private final AssetManager assetManager;
-    private Music musicaFondo;
+    public Music musicaFondo;
 
     public JuegoDemo(){
         assetManager = new AssetManager();
@@ -37,7 +37,7 @@ public class JuegoDemo extends Game {
     }
 
     public void pausarMusica(){
-        musicaFondo.pause();
+        musicaFondo.stop();
     }
 
     public AssetManager getAssetManager() {

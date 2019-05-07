@@ -36,6 +36,8 @@ public class PantallaAjustes extends Pantalla {
     //MENU, Escenas, Independiente de la cámara(movimiento)
     private Stage escenaMenu; //Botones
 
+    private boolean musica = true;
+
     public PantallaAjustes (JuegoDemo juego) {
         this.juego = juego;
     }
@@ -87,11 +89,38 @@ public class PantallaAjustes extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //Responder al evento del boton
                 juego.setScreen(new PantallaMenu(juego));
             }
         });
         escenaMenu.addActor(btnDontEnter);
+
+        //Boton VOLUMEN
+        Texture textBntVolume = new Texture("btnVolumenON.png");
+        TextureRegionDrawable trdBtnVolume = new TextureRegionDrawable(new TextureRegion(textBntVolume));
+
+        Texture textBntVolumeR = new Texture("btnVolumenOFF.png");
+        TextureRegionDrawable trdBtnVolumeR = new TextureRegionDrawable(new TextureRegion(textBntVolumeR));
+
+        ImageButton btnVolume = new ImageButton(trdBtnVolume, trdBtnVolumeR);
+        btnVolume.setPosition(642 - btnVolume.getWidth()/2,339 - btnVolume.getHeight()/2);
+        // CARGAR LA PANTALLA DE MAPAS
+        btnVolume.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                if (musica = true){
+                    musica = false;
+                    juego.pausarMusica();
+                }
+
+                if (musica = false){
+                    musica = true;
+                    juego.musicaFondo.play();
+                }
+
+            }
+        });
+        escenaMenu.addActor(btnVolume);
     }
 
     @Override
