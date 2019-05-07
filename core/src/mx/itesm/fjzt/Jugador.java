@@ -118,7 +118,7 @@ public class Jugador extends Sprite {
         fdef.filter.maskBits =  Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO | Pantalla.BIT_OBJETOS;
 
         fdef.shape = shape;
-        cuerpo.createFixture(fdef).setUserData("jugador");
+        cuerpo.createFixture(fdef).setUserData(this);
     }
 
     public boolean estaMuerto(){
