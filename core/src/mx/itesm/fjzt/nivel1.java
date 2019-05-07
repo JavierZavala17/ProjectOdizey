@@ -88,6 +88,7 @@ public class nivel1 extends Pantalla {
 
     @Override
     public void show() {
+        Gdx.input.setCatchBackKey(true);
     }
 
     @Override
@@ -124,6 +125,13 @@ public class nivel1 extends Pantalla {
             juego.setScreen(new PantallaWin(juego));
         }
 
+        teclaBack();
+    }
+
+    private void teclaBack() {
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            juego.setScreen(new PantallaMenu(juego));
+        }
     }
 
     private boolean finJuego() {

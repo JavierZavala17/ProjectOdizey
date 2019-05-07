@@ -1,6 +1,7 @@
 package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -67,7 +68,7 @@ public class PantallaWin extends Pantalla {
         crearMenu();
         //Pasamos el control de INPUT a la escena
         Gdx.input.setInputProcessor(escenaMenu);
-        Gdx.input.setCatchBackKey(false);
+        Gdx.input.setCatchBackKey(true);
     }
 
     private void crearMenu() {
@@ -145,6 +146,13 @@ public class PantallaWin extends Pantalla {
         batch.end();
 
         escenaMenu.draw();
+        teclaBack();
+    }
+
+    private void teclaBack() {
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            juego.setScreen(new PantallaMenu(juego));
+        }
     }
 
     @Override
