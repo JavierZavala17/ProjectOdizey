@@ -113,11 +113,14 @@ public class nivel1 extends Pantalla {
         juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
         interfaz.stage.draw();
 
-        if(finJuego()){
+        if(finJuego() || ganar == 0){
+            ganar = 1;
             juego.setScreen(new PantallaLose(juego));
+
         }
 
         if(ganar == 2){
+            ganar = 1;
             juego.setScreen(new PantallaWin(juego));
         }
 

@@ -30,10 +30,12 @@ class checaColisiones implements ContactListener {
             case Pantalla.BIT_ENEMIGO | Pantalla.BIT_ZILO:
                 if(fixture1.getFilterData().categoryBits == Pantalla.BIT_JUGADOR){
                     //((Jugador) fixture1.getUserData()).hit();
-                    Gdx.app.log("","muere");
+                    //Gdx.app.log("","muere");
+                    nivel1.ganar--;
                 } else {
                     //((Jugador) fixture2.getUserData()).hit();
-                    Gdx.app.log("","muere");
+                    //Gdx.app.log("","muere");
+                    nivel1.ganar--;
                 }
         }
 
