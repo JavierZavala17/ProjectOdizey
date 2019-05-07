@@ -39,8 +39,7 @@ class checaColisiones implements ContactListener {
                 }
                 break;
             case Pantalla.BIT_ZILO | Pantalla.BIT_OBJETOS:
-                if(fixture2.getFilterData().categoryBits == Pantalla.BIT_OBJETOS) {
-                    Gdx.app.log("", "Toco objeto");
+                if(fixture2.getFilterData().categoryBits == Pantalla.BIT_ZILO) {
                 }
                 break;
         }

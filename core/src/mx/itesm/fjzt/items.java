@@ -24,7 +24,7 @@ public abstract class items {
     private Rectangle limites;
     public Fixture fix;
     private nivel1 nivel;
-    private MapObject objeto;
+    public MapObject objeto;
 
     public items(nivel1 nivel, MapObject objecto) {
         this.objeto = objecto;
@@ -56,7 +56,7 @@ public abstract class items {
     }
 
         public TiledMapTileLayer.Cell getCell(){
-            TiledMapTileLayer layer = (TiledMapTileLayer) mapa.getLayers().get(6); //checar cel
+            TiledMapTileLayer layer = (TiledMapTileLayer) mapa.getLayers().get(2); //checar cel
             return layer.getCell((int)(cuerpo.getPosition().x*Pantalla.PX/16),
                     (int)(cuerpo.getPosition().y*Pantalla.PX/32));  // 16 = tile size
         }
