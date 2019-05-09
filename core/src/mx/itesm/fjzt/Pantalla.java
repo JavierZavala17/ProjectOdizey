@@ -1,6 +1,7 @@
 package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,6 +38,7 @@ public abstract class Pantalla implements Screen
     protected Viewport vista;
     // Todas las pantallas dibujan algo :)
     protected SpriteBatch batch;
+    protected Preferences preferencias;
 
     public Pantalla() {
         // Crea la cámara con las dimensiones del mundo
