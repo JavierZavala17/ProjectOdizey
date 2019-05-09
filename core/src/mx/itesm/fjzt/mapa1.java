@@ -314,7 +314,24 @@ public class mapa1 extends Pantalla {
                 }
             });
             this.addActor(btnMenu);
-            //WAAAAAA
+
+            manager.load("btnReiniciar.png",Texture.class);
+            manager.finishLoading();
+            textureMenu = manager.get("btnReiniciar.png");
+            TextureRegionDrawable trdReiniciar = new TextureRegionDrawable(new TextureRegion(textureMenu));
+            ImageButton btnReiniciar = new ImageButton(trdReiniciar);
+            btnReiniciar.setPosition((ANCHO/2- btnReiniciar.getWidth()/2), (ALTO/2)-50);
+            btnReiniciar.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al menú
+                    musicaFondo.stop();
+                    juego.setScreen(new mapa1(juego));
+
+                }
+            });
+            this.addActor(btnReiniciar);
+
             textureBtnPausa = manager.get("btnPausa.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(textureBtnPausa));
@@ -324,6 +341,7 @@ public class mapa1 extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // return to the game
+                    musicaFondo.stop();
                     cargarMapa();
                     Gdx.input.setInputProcessor(escenaHUD);
                     estado= EstadoJuego.JUGANDO;

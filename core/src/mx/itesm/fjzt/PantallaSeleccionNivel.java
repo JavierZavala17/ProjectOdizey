@@ -88,6 +88,7 @@ public class PantallaSeleccionNivel extends Pantalla {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
                 musicaMenus = false;
+                music.stop();
                 savePreferences();
                 juego.setScreen(new mapa1(juego));
             }
