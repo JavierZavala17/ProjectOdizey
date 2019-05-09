@@ -119,13 +119,7 @@ public class PantallaAjustes extends Pantalla {
         final ImageButton btnVolumeOff = new ImageButton(trdBtnVolumeOFF);
         btnVolumeOff.setPosition(642 - btnVolumeOff.getWidth()/2,339 - btnVolumeOff.getHeight()/2);
 
-
-        //POSICIONES DE LOS BOTONES
-
-
-
-        //LISTENERS
-        // CARGAR LA PANTALLA DE MAPAS
+        // LISTENERS
         btnBack.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -142,7 +136,6 @@ public class PantallaAjustes extends Pantalla {
                 musicaMenu = false;
                 escenaMenu.addActor(btnVolumeON);
                 btnVolumeOff.remove();
-
             }
         });
 
@@ -153,8 +146,6 @@ public class PantallaAjustes extends Pantalla {
                 musicaMenu = true;
                 escenaMenu.addActor(btnVolumeOff);
                 btnVolumeON.remove();
-
-
             }
         });
 
