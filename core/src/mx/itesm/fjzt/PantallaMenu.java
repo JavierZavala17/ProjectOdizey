@@ -88,6 +88,7 @@ public class PantallaMenu extends Pantalla {
         if (musicaMenus){
             cargarMusica();
         }
+
         //Pasamos el control de INPUT a la escena
         Gdx.input.setInputProcessor(escenaMenu);
         Gdx.input.setCatchBackKey(true);
