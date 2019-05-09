@@ -38,6 +38,7 @@ public class PantallaWin extends Pantalla {
 
 
     public PantallaWin (JuegoDemo juego) {
+        super(juego);
         this.juego = juego;
     }
 

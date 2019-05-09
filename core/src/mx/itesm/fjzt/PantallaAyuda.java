@@ -25,6 +25,7 @@ public class PantallaAyuda extends Pantalla {
 
 
     public PantallaAyuda (JuegoDemo juego) {
+        super(juego);
         this.juego = juego;
     }
 

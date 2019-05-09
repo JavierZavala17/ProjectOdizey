@@ -2,8 +2,6 @@ package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -42,14 +40,10 @@ public class PantallaMenu extends Pantalla {
     private Sprite spriteManecilla;
     private Texture textureManecilla;
 
-    private final AssetManager assetManager; // = new AssetManager();
-    private boolean musicaMenus;
-    private boolean MUSIC_VOLUME_DEFAULT = true;
-    private Music music;
 
     public PantallaMenu(JuegoDemo juego) {
+        super(juego);
         this.juego = juego;
-        assetManager = juego.getAssetManager();
         this.preferencias = juego.getPreferences();
     }
 
@@ -85,6 +79,7 @@ public class PantallaMenu extends Pantalla {
         //Menú
         crearMenu();
 
+        //Musica
         if (musicaMenus){
             cargarMusica();
         }
@@ -92,13 +87,6 @@ public class PantallaMenu extends Pantalla {
         //Pasamos el control de INPUT a la escena
         Gdx.input.setInputProcessor(escenaMenu);
         Gdx.input.setCatchBackKey(true);
-    }
-
-    private void cargarMusica() {
-        assetManager.load("MenuMusic.mp3", Music.class);
-        assetManager.finishLoading();
-        music = juego.getAssetManager().get("MenuMusic.mp3");
-        music.play();
     }
 
     private void crearMenu() {
@@ -112,16 +100,6 @@ public class PantallaMenu extends Pantalla {
 
         ImageButton btnPlay = new ImageButton(trdBtnPlay,trdBtnPlayP);
         btnPlay.setPosition(790,280);
-        escenaMenu.addActor(btnPlay);
-        //Agregar el LISTENER
-        btnPlay.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                //Responder al evento del boton
-                juego.setScreen(new PantallaSeleccionNivel(juego));
-            }
-        });
 
         //Botón Ajustes
         Texture textBtnAjustes = new Texture("btnAjustes.png");
@@ -132,16 +110,6 @@ public class PantallaMenu extends Pantalla {
 
         ImageButton btnHelp = new ImageButton(trdBtnAjustes, trdBtnAjustedsS);
         btnHelp.setPosition(760,195);
-        // CARGAR LA PANTALLA DE MAPAS
-        btnHelp.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                super.clicked(event, x, y);
-                //Responder al evento del boton
-                juego.setScreen(new PantallaAjustes(juego));
-            }
-        });
-        escenaMenu.addActor(btnHelp);
 
         //Botón Ayuda
         Texture textBtnAyuda = new Texture("btnAyuda.png");
@@ -152,16 +120,6 @@ public class PantallaMenu extends Pantalla {
 
         ImageButton btnAyuda = new ImageButton(trdBtnAyuda, trdBtnAyudaA);
         btnAyuda.setPosition(730,110);
-        // CARGAR LA PANTALLA DE MAPAS
-        btnAyuda.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                //Responder al evento del boton
-                juego.setScreen(new PantallaAyuda(juego));
-            }
-        }); //AYUDA
-        escenaMenu.addActor(btnAyuda);
 
         //Botón DontEnter
         Texture textBtnDontEnter = new Texture("btnCreditos.png");
@@ -172,7 +130,35 @@ public class PantallaMenu extends Pantalla {
 
         ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter, trdBtnDontEnterR);
         btnDontEnter.setPosition(700,25);
-        // CARGAR LA PANTALLA DE MAPAS
+
+        //LISTENERS
+        btnPlay.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //Responder al evento del boton
+                juego.setScreen(new PantallaSeleccionNivel(juego));
+            }
+        });
+
+        btnHelp.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                super.clicked(event, x, y);
+                //Responder al evento del boton
+                juego.setScreen(new PantallaAjustes(juego));
+            }
+        });
+
+        btnAyuda.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //Responder al evento del boton
+                juego.setScreen(new PantallaAyuda(juego));
+            }
+        });
+
         btnDontEnter.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -181,8 +167,14 @@ public class PantallaMenu extends Pantalla {
                 juego.setScreen(new PantallaMasInfo(juego));
             }
         });
+
+        //ACTORS
+        escenaMenu.addActor(btnPlay);
+        escenaMenu.addActor(btnHelp);
+        escenaMenu.addActor(btnAyuda);
         escenaMenu.addActor(btnDontEnter);
 
+        //Musica
         musicaMenus = preferencias.getBoolean("musicaMenu", MUSIC_VOLUME_DEFAULT);
     }
 

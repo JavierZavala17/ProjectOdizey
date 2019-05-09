@@ -30,6 +30,7 @@ public class PantallaMasInfo extends Pantalla {
 
 
     public PantallaMasInfo (JuegoDemo juego) {
+        super(juego);
         this.juego = juego;
     }
 

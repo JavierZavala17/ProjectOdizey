@@ -2,6 +2,8 @@ package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -34,7 +36,9 @@ public class PantallaSeleccionNivel extends Pantalla {
     private Stage escenaMenu; //Botones
 
     public PantallaSeleccionNivel(JuegoDemo juego) {
+        super(juego);
         this.juego = juego;
+        this.preferencias = juego.getPreferences();
     }
 
     @Override
@@ -59,6 +63,7 @@ public class PantallaSeleccionNivel extends Pantalla {
 
         //Menú
         crearMenu();
+
         //Pasamos el control de INPUT a la escena
         Gdx.input.setInputProcessor(escenaMenu);
         Gdx.input.setCatchBackKey(true);
@@ -82,6 +87,8 @@ public class PantallaSeleccionNivel extends Pantalla {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
+                musicaMenus = false;
+                savePreferences();
                 juego.setScreen(new mapa1(juego));
             }
         });
@@ -145,7 +152,11 @@ public class PantallaSeleccionNivel extends Pantalla {
             }
         });
         escenaMenu.addActor(btnDontEnter);
+
+        //Musica
+        musicaMenus = preferencias.getBoolean("musicaMenu", MUSIC_VOLUME_DEFAULT);
     }
+
 
     @Override
     public void render(float delta) {

@@ -39,6 +39,7 @@ public class PantallaLose extends Pantalla {
     private Stage escenaMenu; //Botones
 
     public PantallaLose (JuegoDemo juego) {
+        super(juego);
         this.juego = juego;
     }
 

@@ -26,8 +26,9 @@ public class PantallaCargando extends Pantalla {
     private Sprite spriteEngranePequeño;
     private Texture textureEngranePequeño;
 
-    public PantallaCargando(JuegoDemo juegoDemo) {
-        this.juego = juegoDemo;
+    public PantallaCargando(JuegoDemo juego) {
+        super(juego);
+        this.juego = juego;
     }
 
     @Override
@@ -80,6 +81,7 @@ public class PantallaCargando extends Pantalla {
         contadorTiempo += delta;
         if (contadorTiempo>=2){
             //Contó 2s
+            musicaMenus = true;
             juego.setScreen(new PantallaMenu(juego));
         }
     }

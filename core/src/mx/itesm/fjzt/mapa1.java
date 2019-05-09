@@ -7,7 +7,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,8 +25,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import javax.xml.soap.Text;
 
 public class mapa1 extends Pantalla {
 
@@ -58,6 +55,7 @@ public class mapa1 extends Pantalla {
     private Objeto btnPausa;
 
     //Musica
+    private final AssetManager manager;
     private Music musicaFondo;
     private Sound effectoDisparo;
 
@@ -71,13 +69,15 @@ public class mapa1 extends Pantalla {
     private Texture textureCuadro;
 
     //AssetManager
-    private AssetManager manager;
+    private AssetManager assetManager;
     private EstadoJuego estado = EstadoJuego.JUGANDO;
     private EscenaPausa escenaPausa;
 
     public mapa1(JuegoDemo juego) {
+        super(juego);
         this.juego = juego;
         manager = juego.getAssetManager();
+        this.preferencias = juego.getPreferences();
     }
 
     @Override
@@ -87,7 +87,7 @@ public class mapa1 extends Pantalla {
         cargarMapa();
         crearHUD();
 
-        cargarMusica();
+        cargarMusicas();
 
         // El input es el joystick virtual y el botón
         Gdx.input.setInputProcessor(escenaHUD);
@@ -190,9 +190,8 @@ public class mapa1 extends Pantalla {
         texturaSilo = manager.get("Linea-Silo-Co.png");
     }
 
-    private void cargarMusica() {
+    private void cargarMusicas() {
         musicaFondo = manager.get("musicaLevel1.mp3");
-
         musicaFondo.setLooping(true);
         musicaFondo.play();
 
@@ -306,8 +305,10 @@ public class mapa1 extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-
-                    juego.setScreen(new PantallaMenu(juego));
+                    musicaFondo.stop();
+                    musicaMenus = true;
+                    savePreferences();
+                    juego.setScreen(new PantallaCargando(juego));
 
                 }
             });
