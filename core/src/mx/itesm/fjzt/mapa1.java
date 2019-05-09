@@ -5,7 +5,10 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
@@ -49,8 +53,9 @@ public class mapa1 extends Pantalla {
     private Stage escenaHUD;
 
     //Btn Pausa : Pendiente
-    // private Texture textureBtnPausa;
-    //private Objecto btnPausa;
+    private Texture textureBtnPausa;
+    private Texture textureMenu;
+    private Objeto btnPausa;
 
     //Musica
     private Music musicaFondo;
@@ -60,10 +65,15 @@ public class mapa1 extends Pantalla {
     //Joystick
     private Touchpad pad;
 
+    //Pausa
+    //Sprite de Cuadrado
+    private Sprite spriteCuadro;
+    private Texture textureCuadro;
+
     //AssetManager
     private AssetManager manager;
     private EstadoJuego estado = EstadoJuego.JUGANDO;
-    // private EscenaPausa escenaPausa;  Crear escena pausa
+    private EscenaPausa escenaPausa;
 
     public mapa1(JuegoDemo juego) {
         this.juego = juego;
@@ -144,8 +154,10 @@ public class mapa1 extends Pantalla {
         });
         escenaHUD.addActor(btnSalto);
 
-        /*// Pausa
-        Texture texturaPausa = manager.get("comun/btnPausa.png");
+        // Pausa
+        manager.load("btnPausa.png",Texture.class);
+        manager.finishLoading();
+        Texture texturaPausa = manager.get("btnPausa.png");
         TextureRegionDrawable trBtnPausa = new TextureRegionDrawable(new TextureRegion(texturaPausa));
         ImageButton btnPausa = new ImageButton(trBtnPausa);
         btnPausa.setPosition(ANCHO-btnPausa.getWidth(), ALTO-btnPausa.getHeight());
@@ -164,12 +176,12 @@ public class mapa1 extends Pantalla {
                 return true;
             }
         });
-        escenaHUD.addActor(btnPausa);*/
+        escenaHUD.addActor(btnPausa);
     }
 
     private void crearObjetos() {
         silo = new JugadorNuevo(texturaSilo,0,64);
-        silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.MOV_DERECHA);
+        silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.QUIETO);
     }
 
     private void cargarTexturas() {
@@ -179,7 +191,7 @@ public class mapa1 extends Pantalla {
     }
 
     private void cargarMusica() {
-        musicaFondo = manager.get("MenuMusic.mp3");
+        musicaFondo = manager.get("musicaLevel1.mp3");
 
         musicaFondo.setLooping(true);
         musicaFondo.play();
@@ -189,9 +201,9 @@ public class mapa1 extends Pantalla {
     private void cargarMapa() {
         mapLoader = new TmxMapLoader();
         mapa = mapLoader.load("Mapa1.tmx");
-        manager.load("MenuMusic.mp3",Music.class);
+        manager.load("musicaLevel1.mp3",Music.class);
         manager.finishLoading();
-        musicaFondo = manager.get("MenuMusic.mp3");
+        musicaFondo = manager.get("musicaLevel1.mp3");
         musicaFondo.setLooping(true);
         musicaFondo.play();
 
@@ -218,6 +230,10 @@ public class mapa1 extends Pantalla {
         // HUD
         batch.setProjectionMatrix(camaraHUD.combined);
         escenaHUD.draw();
+
+        if (estado==EstadoJuego.PAUSADO) {
+            escenaPausa.draw();
+        }
 
 
 
@@ -250,9 +266,69 @@ public class mapa1 extends Pantalla {
 
     @Override
     public void dispose() {
-        manager.unload("musicaLevel1.mp3");
+        /*manager.unload("musicaLevel1.mp3");
         manager.unload("Mapa1.tmx");
-        manager.unload("Linea-Silo-Co.png");
+        manager.unload("Linea-Silo-Co.png");*/
 
+    }
+
+    // La escena que se muestra cuando el juego se pausa
+    // (simplificado, ver la misma escena en PantallaWhackAMole)
+    private class EscenaPausa extends Stage
+    {
+        public EscenaPausa(Viewport vista, SpriteBatch batch) {
+            super(vista, batch);
+
+            Pixmap pixmap = new Pixmap((int) (ANCHO), (int) (ALTO), Pixmap.Format.RGBA8888);
+            pixmap.setColor(1f, 1f, 1f, .5f);
+            pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
+            Texture texturaRectangulo = new Texture(pixmap);
+            pixmap.dispose();
+            Image rectImg = new Image(texturaRectangulo);
+            rectImg.setPosition(0,0);
+            this.addActor(rectImg);
+
+
+            manager.load("CuadroAjustes.png",Texture.class);
+            manager.finishLoading();
+            textureCuadro = manager.get("CuadroAjustes.png");
+            Image cuadroImg = new Image(textureCuadro);
+            cuadroImg.setPosition(0,0);
+            this.addActor(cuadroImg);
+
+            manager.load("btnMenu.png",Texture.class);
+            manager.finishLoading();
+            textureMenu = manager.get("btnMenu.png");
+            TextureRegionDrawable trdSalir = new TextureRegionDrawable(new TextureRegion(textureMenu));
+            ImageButton btnMenu = new ImageButton(trdSalir);
+            btnMenu.setPosition((ANCHO/2- btnMenu.getWidth()/2), (ALTO/2)+50);
+            btnMenu.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al menú
+
+                    juego.setScreen(new PantallaMenu(juego));
+
+                }
+            });
+            this.addActor(btnMenu);
+
+            textureBtnPausa = manager.get("btnPausa.png");
+            TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
+                    new TextureRegion(textureBtnPausa));
+            ImageButton btnPausa = new ImageButton(trdContinuar);
+            btnPausa.setPosition(ANCHO-btnPausa.getWidth(), ALTO-btnPausa.getHeight());
+            btnPausa.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // return to the game
+                    cargarMapa();
+                    Gdx.input.setInputProcessor(escenaHUD);
+                    estado= EstadoJuego.JUGANDO;
+                }
+            });
+            this.addActor(btnPausa);
+
+        }
     }
 }
