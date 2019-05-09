@@ -295,6 +295,7 @@ public class mapa1 extends Pantalla {
             cuadroImg.setPosition(0,0);
             this.addActor(cuadroImg);
 
+
             manager.load("btnMenu.png",Texture.class);
             manager.finishLoading();
             textureMenu = manager.get("btnMenu.png");
