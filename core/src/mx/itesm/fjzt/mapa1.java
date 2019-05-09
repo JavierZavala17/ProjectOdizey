@@ -77,7 +77,6 @@ public class mapa1 extends Pantalla {
         cargarMapa();
         crearHUD();
 
-        juego.pausarMusica();
         cargarMusica();
 
         // El input es el joystick virtual y el botón
