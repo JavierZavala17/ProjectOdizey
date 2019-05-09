@@ -4,14 +4,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:isGame="true"
         android:appCategory="game"
-        android:label="@string/app_name"
+        android:label="Project Odizey"
         android:theme="@style/GdxTheme" >
         <activity
             android:name="mx.itesm.fjzt.AndroidLauncher"
-            android:label="@string/app_name" 
+            android:label="Project Odizey"
             android:screenOrientation="landscape"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout">
             <intent-filter>

@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2D;
@@ -72,28 +73,28 @@ public class nivel1 extends Pantalla {
 
         // camara = new OrthographicCamera(Pantalla.ANCHO,Pantalla.ALTO);
         camara = new OrthographicCamera(ANCHO, ALTO);
-        vista = new StretchViewport(ANCHO/PX, ALTO/PX, camara);
+        vista = new StretchViewport(ANCHO / PX, ALTO / PX, camara);
         interfaz = new InterfazJugador(juego.batch);
 
         //Tile Map Part
         mapLoader = new TmxMapLoader();
         mapa = mapLoader.load("Mapa1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(mapa,1/PX);
-        camara.position.set(vista.getWorldWidth()/2 , vista.getWorldHeight()/2,0);
+        renderer = new OrthogonalTiledMapRenderer(mapa, 1 / PX);
+        camara.position.set(vista.getWorldWidth() / 2, vista.getWorldHeight() / 2, 0);
 
 
-        mundo = new World(new Vector2(0,-10 ), true);
+        mundo = new World(new Vector2(0, -10), true);
         //box2dRenderer = new Box2DDebugRenderer();
 
         // Jugador
-        jugador = new Jugador(mundo, this );
+        jugador = new Jugador(mundo, this);
 
         creator = new creadorMundo(this);
-        mundo.setContactListener(new checaColisiones() );
+        mundo.setContactListener(new checaColisiones());
 
     }
 
-    public TextureAtlas getAtlas(){
+    public TextureAtlas getAtlas() {
         return atlas;
     }
 
@@ -101,12 +102,7 @@ public class nivel1 extends Pantalla {
     public void show() {
         Gdx.input.setCatchBackKey(true);
 
-        //Menú
-        crearMenu();
-
-        //Pasamos el control de INPUT a la escena
-        Gdx.input.setInputProcessor(escenaMenu);
-        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
     private void crearMenu() {
@@ -116,7 +112,7 @@ public class nivel1 extends Pantalla {
         TextureRegionDrawable trdBtnDontEnter = new TextureRegionDrawable(new TextureRegion(textBtnDontEnter));
 
         ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter);
-        btnDontEnter.setPosition(50,50);
+        btnDontEnter.setPosition(50, 50);
         // CARGAR LA PANTALLA DE MAPAS
         btnDontEnter.addListener(new ClickListener() {
             @Override
@@ -133,7 +129,7 @@ public class nivel1 extends Pantalla {
     public void render(float delta) {
         update(delta);
 
-        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //juego.batch.setProjectionMatrix(camara.combined);
 
@@ -144,22 +140,21 @@ public class nivel1 extends Pantalla {
         juego.batch.setProjectionMatrix(camara.combined);
         juego.batch.begin();
         jugador.draw(juego.batch);
-        for(Enemigo enemigo: creator.getAlacranes()){
+        for (Enemigo enemigo : creator.getAlacranes()) {
             enemigo.draw(juego.batch);
         }
         juego.batch.end();
 
         juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
         interfaz.stage.draw();
-        escenaMenu.draw();
 
-        if(finJuego() || ganar == 0){
+        if (finJuego() || ganar == 0) {
             ganar = 1;
             juego.setScreen(new PantallaLose(juego));
 
         }
 
-        if(ganar == 2){
+        if (ganar == 2) {
             ganar = 1;
             juego.setScreen(new PantallaWin(juego));
         }
@@ -168,13 +163,13 @@ public class nivel1 extends Pantalla {
     }
 
     private void teclaBack() {
-        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
             juego.setScreen(new PantallaMenu(juego));
         }
     }
 
     private boolean finJuego() {
-        if(interfaz.isTiempoAcabo()){
+        if (interfaz.isTiempoAcabo()) {
             return true;
         }
         return false;
@@ -198,39 +193,39 @@ public class nivel1 extends Pantalla {
 
     @Override
     public void dispose() {
-       batch.dispose();
+        batch.dispose();
     }
 
-    public void EventosInput(float dt){
+    public void EventosInput(float dt) {
         //Mover camara con click
 
         //Salto
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             jugador.saltar();
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.cuerpo.getLinearVelocity().x <= 2){ //vel = 0.4f
-            jugador.cuerpo.applyLinearImpulse(new Vector2(.5f,0),jugador.cuerpo.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && jugador.cuerpo.getLinearVelocity().x <= 2) { //vel = 0.4f
+            jugador.cuerpo.applyLinearImpulse(new Vector2(.5f, 0), jugador.cuerpo.getWorldCenter(), true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador.cuerpo.getLinearVelocity().x >= -2){
-            jugador.cuerpo.applyLinearImpulse(new Vector2(0-.5f,0),jugador.cuerpo.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && jugador.cuerpo.getLinearVelocity().x >= -2) {
+            jugador.cuerpo.applyLinearImpulse(new Vector2(0 - .5f, 0), jugador.cuerpo.getWorldCenter(), true);
         }
 
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         EventosInput(dt);
 
         //Calculos por segundo
-        mundo.step(1/60f,6,2);
+        mundo.step(1 / 60f, 6, 2);
 
         //Movimiento jugador y camara
 
         jugador.update(dt);
 
-        for(Enemigo enemigo: creator.getAlacranes()){
+        for (Enemigo enemigo : creator.getAlacranes()) {
             enemigo.update(dt);
-            if (enemigo.getX() < jugador.getX() + 1200/Pantalla.PX){
+            if (enemigo.getX() < jugador.getX() + 1200 / Pantalla.PX) {
                 enemigo.cuerpo.setActive(true);
             }
         }
@@ -244,14 +239,70 @@ public class nivel1 extends Pantalla {
 
     }
 
-    public TiledMap getMapa(){
+    public TiledMap getMapa() {
         return mapa;
     }
 
-    public World getMundo(){
+    public World getMundo() {
         return mundo;
     }
 
+    private class ProcesadorEntrada implements InputProcessor {
+
+        @Override
+        public boolean keyDown(int keycode) {
+
+            return true;
+        }
+
+        @Override
+        public boolean keyUp(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyTyped(char character) {
+            return false;
+        }
+
+        // Coordenadas FISICAS
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            Vector3 v3 = new Vector3(screenX, screenY, 0);
+            camera.unproject(v3);
+
+            if (v3.x < PantallaCargando.ANCHO / 2 && v3.x > PantallaCargando.ALTO / 2) {
+                jugador.cuerpo.applyLinearImpulse(new Vector2(-.5f, 0), jugador.cuerpo.getWorldCenter(), true);
+            } else if (v3.x > PantallaCargando.ANCHO / 2 && v3.x < PantallaCargando.ALTO / 2) {
+                jugador.cuerpo.applyLinearImpulse(new Vector2(.5f, 0), jugador.cuerpo.getWorldCenter(), true);
+            } else if (v3.x > PantallaCargando.ALTO / 2) {
+                jugador.cuerpo.applyLinearImpulse(new Vector2(1f, 5), jugador.cuerpo.getWorldCenter(), true);
+            }
+
+            return false;
+        }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+
+            return false;
+        }
+
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            return false;
+        }
+
+        @Override
+        public boolean scrolled(int amount) {
+            return false;
+        }
 
 
+    }
 }

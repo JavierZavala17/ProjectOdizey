@@ -82,7 +82,7 @@ public class PantallaSeleccionNivel extends Pantalla {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new nivel1(juego));
+                juego.setScreen(new mapa1(juego));
             }
         });
 
@@ -121,7 +121,7 @@ public class PantallaSeleccionNivel extends Pantalla {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                juego.setScreen(new nivel1(juego));
+                juego.setScreen(new mapa1(juego));
             }
         });
         escenaMenu.addActor(btnAyuda);
