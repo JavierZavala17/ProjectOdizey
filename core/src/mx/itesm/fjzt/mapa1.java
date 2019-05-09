@@ -81,6 +81,7 @@ public class mapa1 extends Pantalla {
 
         // El input es el joystick virtual y el botón
         Gdx.input.setInputProcessor(escenaHUD);
+
     }
 
     private void crearHUD() {
