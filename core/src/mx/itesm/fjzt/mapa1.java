@@ -313,7 +313,7 @@ public class mapa1 extends Pantalla {
                 }
             });
             this.addActor(btnMenu);
-
+            //WAAAAAA
             textureBtnPausa = manager.get("btnPausa.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(textureBtnPausa));
