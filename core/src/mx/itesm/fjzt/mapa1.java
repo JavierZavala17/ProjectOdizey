@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,6 +26,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import javax.xml.soap.Text;
 
 public class mapa1 extends Pantalla {
 
@@ -55,7 +58,6 @@ public class mapa1 extends Pantalla {
     private Objeto btnPausa;
 
     //Musica
-    private final AssetManager manager;
     private Music musicaFondo;
     private Sound effectoDisparo;
 
@@ -69,7 +71,7 @@ public class mapa1 extends Pantalla {
     private Texture textureCuadro;
 
     //AssetManager
-    private AssetManager assetManager;
+    private AssetManager manager;
     private EstadoJuego estado = EstadoJuego.JUGANDO;
     private EscenaPausa escenaPausa;
 
@@ -77,7 +79,6 @@ public class mapa1 extends Pantalla {
         super(juego);
         this.juego = juego;
         manager = juego.getAssetManager();
-        this.preferencias = juego.getPreferences();
     }
 
     @Override
@@ -192,6 +193,7 @@ public class mapa1 extends Pantalla {
 
     private void cargarMusicas() {
         musicaFondo = manager.get("musicaLevel1.mp3");
+
         musicaFondo.setLooping(true);
         musicaFondo.play();
 
@@ -295,7 +297,6 @@ public class mapa1 extends Pantalla {
             cuadroImg.setPosition(0,0);
             this.addActor(cuadroImg);
 
-
             manager.load("btnMenu.png",Texture.class);
             manager.finishLoading();
             textureMenu = manager.get("btnMenu.png");
@@ -307,9 +308,8 @@ public class mapa1 extends Pantalla {
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
                     musicaFondo.stop();
-                    musicaMenus = true;
-                    savePreferences();
-                    juego.setScreen(new PantallaCargando(juego));
+
+                    juego.setScreen(new PantallaMenu(juego));
 
                 }
             });
@@ -326,6 +326,7 @@ public class mapa1 extends Pantalla {
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
                     musicaFondo.stop();
+
                     juego.setScreen(new mapa1(juego));
 
                 }
@@ -341,7 +342,6 @@ public class mapa1 extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // return to the game
-                    musicaFondo.stop();
                     cargarMapa();
                     Gdx.input.setInputProcessor(escenaHUD);
                     estado= EstadoJuego.JUGANDO;

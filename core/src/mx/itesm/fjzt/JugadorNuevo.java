@@ -90,6 +90,7 @@ public class JugadorNuevo extends Objeto{
     // Realiza el salto
     private void moverVertical(TiledMap mapa) {
         float delta = Gdx.graphics.getDeltaTime()*200;
+
         switch (estadoSalto) {
             case SUBIENDO:
                 sprite.setY(sprite.getY()+delta);
@@ -125,7 +126,7 @@ public class JugadorNuevo extends Objeto{
             TiledMapTileLayer.Cell celdaDerecha = capa.getCell(x, y);
             if (celdaDerecha != null) {
                 Object tipo = celdaDerecha.getTile().getProperties().get("tipo");
-                if (!"ladrillo".equals(tipo)) {
+                if (!"plataforma".equals(tipo)) {
                     celdaDerecha = null;  // Puede pasar
                 }
             }
@@ -146,7 +147,7 @@ public class JugadorNuevo extends Objeto{
             TiledMapTileLayer.Cell celdaIzquierda = capa.getCell(xIzq, y);
             if (celdaIzquierda != null) {
                 Object tipo = celdaIzquierda.getTile().getProperties().get("tipo");
-                if (!"ladrillo".equals(tipo)) {
+                if (!"plataforma".equals(tipo)) {
                     celdaIzquierda = null;  // Puede pasar
                 }
             }
