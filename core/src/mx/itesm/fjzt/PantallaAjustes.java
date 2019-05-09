@@ -2,6 +2,8 @@ package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 public class PantallaAjustes extends Pantalla {
 
     private final JuegoDemo juego;
+    private final AssetManager assetManager;
 
     private Texture textFondo;
 
@@ -36,10 +39,15 @@ public class PantallaAjustes extends Pantalla {
     //MENU, Escenas, Independiente de la cámara(movimiento)
     private Stage escenaMenu; //Botones
 
-    private boolean musica = true;
+    private Music music;
+    private boolean musicaMenu;
+    private boolean MUSIC_VOLUME_DEFAULT = true;
+
 
     public PantallaAjustes (JuegoDemo juego) {
         this.juego = juego;
+        assetManager = juego.getAssetManager();
+        this.preferencias = juego.getPreferences();
     }
 
     @Override
@@ -67,11 +75,24 @@ public class PantallaAjustes extends Pantalla {
 
         //Menú
         crearMenu();
+
+        if (musicaMenu){
+            cargarMusica();
+        }
+
         //Pasamos el control de INPUT a la escena
         Gdx.input.setInputProcessor(escenaMenu);
         Gdx.input.setCatchBackKey(true);
 
     }
+
+    private void cargarMusica() {
+        assetManager.load("MenuMusic.mp3", Music.class);
+        assetManager.finishLoading();
+        music = juego.getAssetManager().get("MenuMusic.mp3");
+        music.play();
+    }
+
 
     private void crearMenu() {
         escenaMenu = new Stage(vista);
@@ -82,45 +103,71 @@ public class PantallaAjustes extends Pantalla {
         Texture textBtnDontEnterR = new Texture("btnRegresar2.png");
         TextureRegionDrawable trdBtnDontEnterR = new TextureRegionDrawable(new TextureRegion(textBtnDontEnterR));
 
-        ImageButton btnDontEnter = new ImageButton(trdBtnDontEnter, trdBtnDontEnterR);
-        btnDontEnter.setPosition(10,22);
+        ImageButton btnBack = new ImageButton(trdBtnDontEnter, trdBtnDontEnterR);
+        btnBack.setPosition(10,22);
+
+        //Boton VOLUMEN ON
+        Texture textBntVolumeON = new Texture("btnVolumenOFF.png");
+        TextureRegionDrawable trdBtnVolumeON = new TextureRegionDrawable(new TextureRegion(textBntVolumeON));
+        final ImageButton btnVolumeON = new ImageButton(trdBtnVolumeON);
+        btnVolumeON.setPosition(642 - btnVolumeON.getWidth()/2,339 - btnVolumeON.getHeight()/2);
+
+        //Boton VOLUMEN OFF
+        Texture textBntVolumeOFF = new Texture("btnVolumenON.png");
+        TextureRegionDrawable trdBtnVolumeOFF = new TextureRegionDrawable(new TextureRegion(textBntVolumeOFF));
+
+        final ImageButton btnVolumeOff = new ImageButton(trdBtnVolumeOFF);
+        btnVolumeOff.setPosition(642 - btnVolumeOff.getWidth()/2,339 - btnVolumeOff.getHeight()/2);
+
+
+        //POSICIONES DE LOS BOTONES
+
+
+
+        //LISTENERS
         // CARGAR LA PANTALLA DE MAPAS
-        btnDontEnter.addListener(new ClickListener() {
+        btnBack.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 juego.setScreen(new PantallaMenu(juego));
+                savePreferences();
             }
         });
-        escenaMenu.addActor(btnDontEnter);
 
-        //Boton VOLUMEN
-        Texture textBntVolume = new Texture("btnVolumenON.png");
-        TextureRegionDrawable trdBtnVolume = new TextureRegionDrawable(new TextureRegion(textBntVolume));
-
-        Texture textBntVolumeR = new Texture("btnVolumenOFF.png");
-        TextureRegionDrawable trdBtnVolumeR = new TextureRegionDrawable(new TextureRegion(textBntVolumeR));
-
-        ImageButton btnVolume = new ImageButton(trdBtnVolume, trdBtnVolumeR);
-        btnVolume.setPosition(642 - btnVolume.getWidth()/2,339 - btnVolume.getHeight()/2);
-        // CARGAR LA PANTALLA DE MAPAS
-        btnVolume.addListener(new ClickListener() {
+        btnVolumeOff.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                if (musica = true){
-                    musica = false;
-                    juego.pausarMusica();
-                }
-
-                if (musica = false){
-                    musica = true;
-                    juego.musicaFondo.play();
-                }
+                musicaMenu = false;
+                escenaMenu.addActor(btnVolumeON);
+                btnVolumeOff.remove();
 
             }
         });
-        escenaMenu.addActor(btnVolume);
+
+        btnVolumeON.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                musicaMenu = true;
+                escenaMenu.addActor(btnVolumeOff);
+                btnVolumeON.remove();
+
+
+            }
+        });
+
+        escenaMenu.addActor(btnBack);
+        escenaMenu.addActor(btnVolumeON);
+        escenaMenu.addActor(btnVolumeOff);
+
+        musicaMenu = preferencias.getBoolean("musicaMenu", MUSIC_VOLUME_DEFAULT);
+    }
+
+    private void savePreferences() {
+        preferencias.putBoolean("musicaMenu", musicaMenu);
+        preferencias.flush();
     }
 
     @Override
@@ -171,7 +218,7 @@ public class PantallaAjustes extends Pantalla {
 
     @Override
     public void pause() {
-
+        savePreferences();
     }
 
     @Override

@@ -3,6 +3,7 @@ package mx.itesm.fjzt;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -42,12 +43,14 @@ public class PantallaMenu extends Pantalla {
     private Texture textureManecilla;
 
     private final AssetManager assetManager; // = new AssetManager();
-
-    private boolean musica = true;
+    private boolean musicaMenus;
+    private boolean MUSIC_VOLUME_DEFAULT = true;
+    private Music music;
 
     public PantallaMenu(JuegoDemo juego) {
         this.juego = juego;
         assetManager = juego.getAssetManager();
+        this.preferencias = juego.getPreferences();
     }
 
     @Override
@@ -81,9 +84,20 @@ public class PantallaMenu extends Pantalla {
 
         //Menú
         crearMenu();
+
+        if (musicaMenus){
+            cargarMusica();
+        }
         //Pasamos el control de INPUT a la escena
         Gdx.input.setInputProcessor(escenaMenu);
         Gdx.input.setCatchBackKey(true);
+    }
+
+    private void cargarMusica() {
+        assetManager.load("MenuMusic.mp3", Music.class);
+        assetManager.finishLoading();
+        music = juego.getAssetManager().get("MenuMusic.mp3");
+        music.play();
     }
 
     private void crearMenu() {
@@ -167,20 +181,14 @@ public class PantallaMenu extends Pantalla {
             }
         });
         escenaMenu.addActor(btnDontEnter);
+
+        musicaMenus = preferencias.getBoolean("musicaMenu", MUSIC_VOLUME_DEFAULT);
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        if(musica == true){
-            juego.iniciarMusica();
-        }
-        else if(musica == false){
-            juego.pausarMusica();
-        }
-
 
         batch.setProjectionMatrix(camera.combined);
 
