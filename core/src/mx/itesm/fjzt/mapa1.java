@@ -14,6 +14,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -75,6 +84,11 @@ public class mapa1 extends Pantalla {
     private EstadoJuego estado = EstadoJuego.JUGANDO;
     private EscenaPausa escenaPausa;
 
+    //BOX2D Física
+    private World mundo; //Simulación
+    private Body cuerpo; //recibe la simulación
+    private Box2DDebugRenderer debug;
+
     public mapa1(JuegoDemo juego) {
         super(juego);
         this.juego = juego;
@@ -84,9 +98,12 @@ public class mapa1 extends Pantalla {
     @Override
     public void show() {
         cargarTexturas();
+
         crearObjetos();
         cargarMapa();
         crearHUD();
+        configurarFisica();
+
 
         cargarMusicas();
 
@@ -181,7 +198,7 @@ public class mapa1 extends Pantalla {
     }
 
     private void crearObjetos() {
-        silo = new JugadorNuevo(texturaSilo,0,64);
+        silo = new JugadorNuevo(texturaSilo,32,64);
         silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.QUIETO);
     }
 
@@ -214,8 +231,34 @@ public class mapa1 extends Pantalla {
         rendererMapa.setView(camera);
     }
 
+    private void configurarFisica() {
+        Box2D.init();
+        mundo = new World(new Vector2(0,-9.81f),true);
+        BodyDef def = new BodyDef();
+        def.type = BodyDef.BodyType.DynamicBody;
+        def.position.set(silo.getX(),silo.getY());
+        cuerpo = mundo.createBody(def);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(silo.getWidth()/2,silo.getHeight()/2);
+        FixtureDef fix = new FixtureDef();
+        fix.shape = shape;
+        fix.density = 1f;
+        Fixture fixture = cuerpo.createFixture(fix);
+        shape.dispose();
+
+        //Agregar los bloques solidos (se configurarion en el mapa)
+        ConvertidorMapa.crearCuerpos(mapa,mundo);
+        debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo
+
+    }
     @Override
     public void render(float delta) {
+
+        mundo.step(delta,6,2);
+        silo.setX(cuerpo.getPosition().x);
+        silo.setY(cuerpo.getPosition().y);
+
+
         silo.actualizar(mapa);
         actualizarCamara();
         borrarPantalla();
@@ -235,6 +278,8 @@ public class mapa1 extends Pantalla {
         if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw();
         }
+
+        debug.render(mundo,camera.combined);
 
 
 
@@ -267,9 +312,6 @@ public class mapa1 extends Pantalla {
 
     @Override
     public void dispose() {
-        /*manager.unload("musicaLevel1.mp3");
-        manager.unload("Mapa1.tmx");
-        manager.unload("Linea-Silo-Co.png");*/
 
     }
 

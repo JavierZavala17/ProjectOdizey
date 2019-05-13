@@ -29,13 +29,9 @@ public class JugadorNuevo extends Objeto{
         TextureRegion texturaCompleta = new TextureRegion(textura);
         // La divide en 4 frames de 32x64 (ver marioSprite.png)
         TextureRegion[][] texturaPersonaje = texturaCompleta.split(104,128);
-        // Crea la animación con tiempo de 0.25 segundos entre frames.
         spriteAnimado = new Animation(0.1f,  texturaPersonaje[0][0], texturaPersonaje[0][1],texturaPersonaje[0][2],texturaPersonaje[0][3],texturaPersonaje[0][4],texturaPersonaje[0][5],texturaPersonaje[0][6],texturaPersonaje[0][7],texturaPersonaje[0][8],texturaPersonaje[0][9],texturaPersonaje[0][10] ,texturaPersonaje[0][11]);
-        // Animación infinita
         spriteAnimado.setPlayMode(Animation.PlayMode.LOOP);
-        // Inicia el timer que contará tiempo para saber qué frame se dibuja
         timerAnimacion = 0;
-        // Crea el sprite con el personaje quieto (idle)
         sprite = new Sprite(texturaPersonaje[0][2]);    // QUIETO
         sprite.setPosition(x,y);    // Posición inicial
 
@@ -120,6 +116,7 @@ public class JugadorNuevo extends Objeto{
         float nuevaX = sprite.getX();
         // ¿Quiere ir a la Derecha?
         if ( estadoMovimiento==EstadoMovimiento.MOV_DERECHA) {
+
             // Obtiene el bloque del lado derecho. Asigna null si puede pasar.
             int x = (int) ((sprite.getX() + 32) / 32);   // Convierte coordenadas del mundo en coordenadas del mapa
             int y = (int) (sprite.getY() / 32);
@@ -198,6 +195,28 @@ public class JugadorNuevo extends Objeto{
             yOriginal = sprite.getY();
             alturaSalto = 0;
         }
+    }
+
+    public float getX() {
+        return sprite.getX();
+    }
+
+    public float getY() { return sprite.getY();}
+
+    public float getWidth() {
+        return sprite.getWidth();
+    }
+
+    public float getHeight() {
+        return sprite.getHeight();
+    }
+
+    public void setX(float x) {
+        sprite.setX(x);
+    }
+
+    public void setY(float y) {
+        sprite.setY(y);
     }
 
     public enum EstadoMovimiento {
