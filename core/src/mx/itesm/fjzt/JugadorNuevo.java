@@ -37,6 +37,7 @@ public class JugadorNuevo extends Objeto{
 
         // Salto
         alturaSalto = 0;
+
     }
 
     // Dibuja el personaje
