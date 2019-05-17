@@ -6,25 +6,43 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+
+import static mx.itesm.fjzt.Pantalla.PX;
 
 public class JugadorNuevo extends Objeto{
 
-    private final float VELOCIDAD_X = 2;      // Velocidad horizontal
-
-    private Animation<TextureRegion> spriteAnimado;         // Animación caminando
-    private float timerAnimacion;                           // Tiempo para cambiar frames de la animación
-
+    protected EstadoSalto estadoSalto = EstadoSalto.EN_PISO;
     protected EstadoMovimiento estadoMovimiento = EstadoMovimiento.QUIETO;
 
+    //Fisica
+    public World mundo;
+    public Body cuerpo;
+
+    private Animation<TextureRegion> spriteAnimado;         // Animación caminando
+
+    private final float VELOCIDAD_X = 2;      // Velocidad horizontal
+
+    private float timerAnimacion;          // Tiempo para cambiar frames de la animación
+
     // Salto
-    protected EstadoSalto estadoSalto = EstadoSalto.EN_PISO;
     private float alturaSalto;  // altura actual, inicia en cero
     private float yOriginal;
 
+
     // Recibe una imagen con varios frames (ver marioSprite.png)
     public JugadorNuevo(Texture textura, float x, float y) {
+
         // Lee la textura como región
         TextureRegion texturaCompleta = new TextureRegion(textura);
         // La divide en 4 frames de 32x64 (ver marioSprite.png)
@@ -88,18 +106,24 @@ public class JugadorNuevo extends Objeto{
     private void moverVertical(TiledMap mapa) {
         float delta = Gdx.graphics.getDeltaTime()*200;
 
+        int x = (int) ((sprite.getX() + 32) / 32);   // Convierte coordenadas del mundo en coordenadas del mapa
+        int y = (int) (sprite.getY() / 32);
+        TiledMapTileLayer plataforma = (TiledMapTileLayer) mapa.getLayers().get(2);
+        TiledMapTileLayer.Cell celdaDerecha = plataforma.getCell(x, y);
+        TiledMapTileLayer.Cell celdaIzquierda = plataforma.getCell(x,y);
+
         switch (estadoSalto) {
             case SUBIENDO:
                 sprite.setY(sprite.getY()+delta);
                 alturaSalto += delta;
-                if (alturaSalto>=1.5*sprite.getHeight()) {
+                if (alturaSalto>=1.5*sprite.getHeight() || celdaDerecha != null || celdaIzquierda != null) {
                     estadoSalto = EstadoSalto.BAJANDO;
                 }
                 break;
             case BAJANDO:
                 sprite.setY(sprite.getY()-delta);
                 alturaSalto -= delta;
-                if (alturaSalto<=0) {
+                if (alturaSalto<=0 ) {
                     estadoSalto = EstadoSalto.EN_PISO;
                     alturaSalto = 0;
                     sprite.setY(yOriginal);
@@ -113,11 +137,14 @@ public class JugadorNuevo extends Objeto{
     private void moverHorizontal(TiledMap mapa) {
         // Obtiene la primer capa del mapa (en este caso es la única)
         TiledMapTileLayer capa = (TiledMapTileLayer) mapa.getLayers().get(0);
+        /* Nota: Is the layer a tile layer or an object layer? Only tile layers will be instances of TiledMapTileLayer*/
         // Ejecutar movimiento horizontal
         float nuevaX = sprite.getX();
         // ¿Quiere ir a la Derecha?
         if ( estadoMovimiento==EstadoMovimiento.MOV_DERECHA) {
 
+
+            /**
             // Obtiene el bloque del lado derecho. Asigna null si puede pasar.
             int x = (int) ((sprite.getX() + 32) / 32);   // Convierte coordenadas del mundo en coordenadas del mapa
             int y = (int) (sprite.getY() / 32);
@@ -136,6 +163,7 @@ public class JugadorNuevo extends Objeto{
                     sprite.setX(nuevaX);
                 }
             }
+             **/
         }
         // ¿Quiere ir a la izquierda?
         if ( estadoMovimiento==EstadoMovimiento.MOV_IZQUIERDA) {
@@ -233,4 +261,6 @@ public class JugadorNuevo extends Objeto{
         EN_PISO,
         SALTANDO    // General, puede estar subiendo o bajando
     }
+
+
 }

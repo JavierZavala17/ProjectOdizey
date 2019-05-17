@@ -40,6 +40,9 @@ import javax.xml.soap.Text;
 
 public class mapa1 extends Pantalla {
 
+    //Ganar o Perder
+    public static int ganar = 1;
+
     //Dimensiones
     public static final int ANCHO_MAPA = 8000;
     public static final int ALTO_MAPA = 736;
@@ -89,10 +92,18 @@ public class mapa1 extends Pantalla {
     private Body cuerpo; //recibe la simulación
     private Box2DDebugRenderer debug;
 
+    //Saltar
+    private boolean saltar = false;
+
+    //Interfaz
+    private InterfazJugador interfaz;
+
+
     public mapa1(JuegoDemo juego) {
         super(juego);
         this.juego = juego;
         manager = juego.getAssetManager();
+        interfaz = new InterfazJugador(juego.batch);
     }
 
     @Override
@@ -140,10 +151,15 @@ public class mapa1 extends Pantalla {
                 Touchpad pad = (Touchpad) actor;
                 if (pad.getKnobPercentX()>0.20) {
                     silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.MOV_DERECHA);
+                    cuerpo.applyLinearImpulse(new Vector2(180000,0),cuerpo.getWorldCenter(), true);
+
                 } else if (pad.getKnobPercentX()<-0.20){
                     silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.MOV_IZQUIERDA);
+                    cuerpo.applyLinearImpulse(new Vector2(-180000,0),cuerpo.getWorldCenter(), true);
+
                 } else {
                     silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.QUIETO);
+                    cuerpo.setLinearVelocity(new Vector2(0,0));
                 }
             }
         });
@@ -166,8 +182,13 @@ public class mapa1 extends Pantalla {
         btnSalto.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                silo.saltar();
+
+                if(saltar == false){
+                    cuerpo.applyLinearImpulse(new Vector2(0,18000), cuerpo.getWorldCenter(),true);
+                    saltar = true;
+                }
                 return true;
+
             }
         });
         escenaHUD.addActor(btnSalto);
@@ -232,32 +253,37 @@ public class mapa1 extends Pantalla {
     }
 
     private void configurarFisica() {
-        Box2D.init();
+        //Box2D.init();
+
         mundo = new World(new Vector2(0,-9.81f),true);
+
         BodyDef def = new BodyDef();
+        def.position.set(silo.getX(),silo.getY()); //Posicion del sprite
         def.type = BodyDef.BodyType.DynamicBody;
-        def.position.set(silo.getX(),silo.getY());
         cuerpo = mundo.createBody(def);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(silo.getWidth()/2,silo.getHeight()/2);
-        FixtureDef fix = new FixtureDef();
-        fix.shape = shape;
-        fix.density = 1f;
-        Fixture fixture = cuerpo.createFixture(fix);
-        shape.dispose();
+
+        //Crea el box de personaje
+         FixtureDef fix = new FixtureDef();
+         PolygonShape shape = new PolygonShape();
+         shape.setAsBox(silo.getWidth()/2,silo.getHeight()/2);  //
+
+         fix.shape = shape;
+         Fixture fixture = cuerpo.createFixture(fix);
 
         //Agregar los bloques solidos (se configurarion en el mapa)
         ConvertidorMapa.crearCuerpos(mapa,mundo);
-        debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo
+        debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo, muestra las cajas de colision
 
     }
     @Override
     public void render(float delta) {
 
+        //Parte de la fisica, quitar si configurarF Desactivadp
         mundo.step(delta,6,2);
         silo.setX(cuerpo.getPosition().x);
         silo.setY(cuerpo.getPosition().y);
 
+        interfaz.update(delta);
 
         silo.actualizar(mapa);
         actualizarCamara();
@@ -273,16 +299,35 @@ public class mapa1 extends Pantalla {
 
         // HUD
         batch.setProjectionMatrix(camaraHUD.combined);
+        juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
+        interfaz.stage.draw();
         escenaHUD.draw();
+
+
 
         if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw();
         }
-
+        //Si desactivado el debug en configurarF, quitar
         debug.render(mundo,camera.combined);
 
+        if(finJuego() || ganar == 0){
+            ganar = 1;
+            juego.setScreen(new PantallaLose(juego));
 
+        }
 
+        if(ganar == 2){
+            ganar = 1;
+            juego.setScreen(new PantallaWin(juego));
+        }
+    }
+
+    private boolean finJuego() {
+        if(interfaz.isTiempoAcabo()){
+            return true;
+        }
+        return false;
     }
 
     private void actualizarCamara() {
@@ -298,6 +343,7 @@ public class mapa1 extends Pantalla {
             camera.position.set(ANCHO/2, ALTO/2,0);
         }
         camera.update();
+
     }
 
     @Override
