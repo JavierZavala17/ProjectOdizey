@@ -81,6 +81,7 @@ public class mapa1 extends Pantalla {
     //Sprite de Cuadrado
     private Sprite spriteCuadro;
     private Texture textureCuadro;
+    private Texture textureFondo;
 
     //AssetManager
     private AssetManager manager;
@@ -255,7 +256,7 @@ public class mapa1 extends Pantalla {
     private void configurarFisica() {
         //Box2D.init();
 
-        mundo = new World(new Vector2(0,-9.81f),true);
+        mundo = new World(new Vector2(0,-50f),true);
 
         BodyDef def = new BodyDef();
         def.position.set(silo.getX(),silo.getY()); //Posicion del sprite
@@ -278,30 +279,32 @@ public class mapa1 extends Pantalla {
     @Override
     public void render(float delta) {
 
-        //Parte de la fisica, quitar si configurarF Desactivadp
-        mundo.step(delta,6,2);
-        silo.setX(cuerpo.getPosition().x);
-        silo.setY(cuerpo.getPosition().y);
+        if(estado==EstadoJuego.JUGANDO) {
+            //Parte de la fisica, quitar si configurarF Desactivadp
+            mundo.step(delta, 6, 2);
+            silo.setX(cuerpo.getPosition().x);
+            silo.setY(cuerpo.getPosition().y);
 
-        interfaz.update(delta);
+            interfaz.update(delta);
 
-        silo.actualizar(mapa);
-        actualizarCamara();
-        borrarPantalla();
+            silo.actualizar(mapa);
+            actualizarCamara();
+            borrarPantalla();
 
-        batch.setProjectionMatrix(camera.combined);
-        rendererMapa.setView(camera);
-        rendererMapa.render();
+            batch.setProjectionMatrix(camera.combined);
+            rendererMapa.setView(camera);
+            rendererMapa.render();
 
-        batch.begin();
-        silo.dibujar(batch);
-        batch.end();
+            batch.begin();
+            silo.dibujar(batch);
+            batch.end();
 
-        // HUD
-        batch.setProjectionMatrix(camaraHUD.combined);
-        juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
-        interfaz.stage.draw();
-        escenaHUD.draw();
+            // HUD
+            batch.setProjectionMatrix(camaraHUD.combined);
+            juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
+            interfaz.stage.draw();
+            escenaHUD.draw();
+        }
 
 
 
@@ -378,6 +381,14 @@ public class mapa1 extends Pantalla {
             this.addActor(rectImg);
 
 
+
+            manager.load("PantallaAjustesFondo.png",Texture.class);
+            manager.finishLoading();
+            textureFondo = manager.get("PantallaAjustesFondo.png");
+            Image fondoImg = new Image(textureFondo);
+            fondoImg.setPosition(0,0);
+            this.addActor(fondoImg);
+
             manager.load("CuadroAjustes.png",Texture.class);
             manager.finishLoading();
             textureCuadro = manager.get("CuadroAjustes.png");
@@ -390,7 +401,7 @@ public class mapa1 extends Pantalla {
             textureMenu = manager.get("btnMenu.png");
             TextureRegionDrawable trdSalir = new TextureRegionDrawable(new TextureRegion(textureMenu));
             ImageButton btnMenu = new ImageButton(trdSalir);
-            btnMenu.setPosition((ANCHO/2- btnMenu.getWidth()/2), (ALTO/2)+50);
+            btnMenu.setPosition((ANCHO/2- btnMenu.getWidth()/2), (ALTO/2)-150);
             btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -422,11 +433,12 @@ public class mapa1 extends Pantalla {
             this.addActor(btnReiniciar);
 
 
-            textureBtnPausa = manager.get("btnPausa.png");
-            TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
-                    new TextureRegion(textureBtnPausa));
+            manager.load("btnContinuar.png",Texture.class);
+            manager.finishLoading();
+            textureBtnPausa = manager.get("btnContinuar.png");
+            TextureRegionDrawable trdContinuar = new TextureRegionDrawable(new TextureRegion(textureBtnPausa));
             ImageButton btnPausa = new ImageButton(trdContinuar);
-            btnPausa.setPosition(ANCHO-btnPausa.getWidth(), ALTO-btnPausa.getHeight());
+            btnPausa.setPosition(ANCHO/2-btnPausa.getWidth()/2, (ALTO/2)+50);
             btnPausa.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
