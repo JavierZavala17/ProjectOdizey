@@ -251,6 +251,7 @@ public class mapa1 extends Pantalla {
 
         rendererMapa = new OrthogonalTiledMapRenderer(mapa, batch);
         rendererMapa.setView(camera);
+
     }
 
     private void configurarFisica() {
