@@ -47,9 +47,7 @@ public abstract class Pantalla implements Screen
     //Todas las pantallas usan musica y juego
     private final JuegoDemo juego;
     private final AssetManager assetManager; // = new AssetManager();
-    public boolean musicaMenus;
-    public boolean MUSIC_VOLUME_DEFAULT = true;
-    protected static Music music;
+
 
     public Pantalla(JuegoDemo juego) {
         this.juego = juego;
@@ -69,18 +67,6 @@ public abstract class Pantalla implements Screen
     protected void borrarPantalla() {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }
-
-    protected void cargarMusica(){
-        assetManager.load("MenuMusic.mp3", Music.class);
-        assetManager.finishLoading();
-        music = assetManager.get("MenuMusic.mp3");
-        music.play();
-    }
-
-    protected void savePreferences() {
-        preferencias.putBoolean("musicaMenu", musicaMenus);
-        preferencias.flush();
     }
 
     @Override

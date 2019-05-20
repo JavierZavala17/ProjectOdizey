@@ -81,7 +81,6 @@ public class PantallaCargando extends Pantalla {
         contadorTiempo += delta;
         if (contadorTiempo>=2){
             //Contó 2s
-            musicaMenus = true;
             juego.setScreen(new PantallaMenu(juego));
         }
     }

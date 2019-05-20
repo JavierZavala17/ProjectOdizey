@@ -2,6 +2,8 @@ package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,10 +38,16 @@ public class PantallaAjustes extends Pantalla {
     //MENU, Escenas, Independiente de la cámara(movimiento)
     private Stage escenaMenu; //Botones
 
+    //Preferencias
+    private Preferences pref = Gdx.app.getPreferences("usarPref");
+    boolean musicON = pref.getBoolean("musicON");
+
+    //Musica
+    private Music musica;
+
     public PantallaAjustes (JuegoDemo juego) {
         super(juego);
         this.juego = juego;
-        this.preferencias = juego.getPreferences();
     }
 
     @Override
@@ -68,10 +76,22 @@ public class PantallaAjustes extends Pantalla {
         //Menú
         crearMenu();
 
+        //Musica
+        cargarMusica();
+
+        if (musicON){
+            musica.play();
+        }
+
         //Pasamos el control de INPUT a la escena
         Gdx.input.setInputProcessor(escenaMenu);
         Gdx.input.setCatchBackKey(true);
 
+    }
+
+    public void cargarMusica() {
+        musica = Gdx.audio.newMusic(Gdx.files.internal("MenuMusic.mp3"));
+        musica.setLooping(true);
     }
 
 
@@ -106,7 +126,6 @@ public class PantallaAjustes extends Pantalla {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 juego.setScreen(new PantallaMenu(juego));
-                savePreferences();
             }
         });
 
@@ -114,9 +133,9 @@ public class PantallaAjustes extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                musicaMenus = false;
-                music.stop();
-                savePreferences();
+                pref.putBoolean("musicON",false);
+                pref.flush();
+                musica.stop();
                 escenaMenu.addActor(btnVolumeON);
                 btnVolumeOff.remove();
             }
@@ -126,13 +145,18 @@ public class PantallaAjustes extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                musicaMenus = true;
-                music.play();
-                savePreferences();
+                pref.putBoolean("musicON",true);
+                pref.flush();
                 escenaMenu.addActor(btnVolumeOff);
                 btnVolumeON.remove();
             }
         });
+
+        if (pref.getBoolean("musicON")){
+            escenaMenu.addActor(btnVolumeON);
+        } else {
+            escenaMenu.addActor(btnVolumeOff);
+        }
 
         //ACTORS
         escenaMenu.addActor(btnBack);
@@ -140,7 +164,11 @@ public class PantallaAjustes extends Pantalla {
         escenaMenu.addActor(btnVolumeOff);
 
         //MUSICA
-        musicaMenus = preferencias.getBoolean("musicaMenu", MUSIC_VOLUME_DEFAULT);
+        if(pref.getBoolean("musicON")){
+            escenaMenu.addActor(btnVolumeON);
+        }else {
+            escenaMenu.addActor(btnVolumeOff);
+        }
     }
 
     @Override
@@ -191,7 +219,7 @@ public class PantallaAjustes extends Pantalla {
 
     @Override
     public void pause() {
-        savePreferences();
+
     }
 
     @Override

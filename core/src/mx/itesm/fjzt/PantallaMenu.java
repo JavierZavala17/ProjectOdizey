@@ -2,6 +2,8 @@ package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -40,11 +42,16 @@ public class PantallaMenu extends Pantalla {
     private Sprite spriteManecilla;
     private Texture textureManecilla;
 
+    //Usar preferences
+    private Preferences pref = Gdx.app.getPreferences("usarPref");
+    boolean musicON = pref.getBoolean("musicON");
+
+    //Musica
+    private Music musica;
 
     public PantallaMenu(JuegoDemo juego) {
         super(juego);
         this.juego = juego;
-        this.preferencias = juego.getPreferences();
     }
 
     @Override
@@ -80,13 +87,19 @@ public class PantallaMenu extends Pantalla {
         crearMenu();
 
         //Musica
-        if (musicaMenus){
-            cargarMusica();
-        }
+        cargarMusica();
 
+        if (musicON) {
+            musica.play();
+        }
         //Pasamos el control de INPUT a la escena
         Gdx.input.setInputProcessor(escenaMenu);
         Gdx.input.setCatchBackKey(true);
+    }
+
+    public void cargarMusica() {
+        musica = Gdx.audio.newMusic(Gdx.files.internal("MenuMusic.mp3"));
+        musica.setLooping(true);
     }
 
     private void crearMenu() {
@@ -138,6 +151,9 @@ public class PantallaMenu extends Pantalla {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
                 juego.setScreen(new PantallaSeleccionNivel(juego));
+                if (musicON){
+                    musica.pause();
+                }
             }
         });
 
@@ -147,6 +163,9 @@ public class PantallaMenu extends Pantalla {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
                 juego.setScreen(new PantallaAjustes(juego));
+                if (musicON){
+                    musica.pause();
+                }
             }
         });
 
@@ -156,6 +175,9 @@ public class PantallaMenu extends Pantalla {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
                 juego.setScreen(new PantallaAyuda(juego));
+                if (musicON){
+                    musica.pause();
+                }
             }
         });
 
@@ -165,6 +187,9 @@ public class PantallaMenu extends Pantalla {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
                 juego.setScreen(new PantallaMasInfo(juego));
+                if (musicON){
+                    musica.pause();
+                }
             }
         });
 
@@ -174,8 +199,6 @@ public class PantallaMenu extends Pantalla {
         escenaMenu.addActor(btnAyuda);
         escenaMenu.addActor(btnDontEnter);
 
-        //Musica
-        musicaMenus = preferencias.getBoolean("musicaMenu", MUSIC_VOLUME_DEFAULT);
     }
 
     @Override
