@@ -42,16 +42,18 @@ public class JugadorNuevo extends Objeto{
 
     // Recibe una imagen con varios frames (ver marioSprite.png)
     public JugadorNuevo(Texture textura, float x, float y) {
+        width = 64;
+        height = 96;
 
         // Lee la textura como región
         TextureRegion texturaCompleta = new TextureRegion(textura);
-        // La divide en 4 frames de 32x64 (ver marioSprite.png)
         TextureRegion[][] texturaPersonaje = texturaCompleta.split(104,128);
         spriteAnimado = new Animation(0.1f,  texturaPersonaje[0][0], texturaPersonaje[0][1],texturaPersonaje[0][2],texturaPersonaje[0][3],texturaPersonaje[0][4],texturaPersonaje[0][5],texturaPersonaje[0][6],texturaPersonaje[0][7],texturaPersonaje[0][8],texturaPersonaje[0][9],texturaPersonaje[0][10] ,texturaPersonaje[0][11]);
         spriteAnimado.setPlayMode(Animation.PlayMode.LOOP);
         timerAnimacion = 0;
         sprite = new Sprite(texturaPersonaje[0][2]);    // QUIETO
-        sprite.setPosition(x,y);    // Posición inicial
+        sprite.setPosition(x,y);// Posición inicial
+        rectangle.set(x-1,y-1,width+2,height+2);
 
         // Salto
         alturaSalto = 0;
@@ -135,70 +137,24 @@ public class JugadorNuevo extends Objeto{
 
     // Mueve el personaje a la derecha/izquierda, prueba choques con paredes
     private void moverHorizontal(TiledMap mapa) {
-        // Obtiene la primer capa del mapa (en este caso es la única)
-        TiledMapTileLayer capa = (TiledMapTileLayer) mapa.getLayers().get(0);
-        /* Nota: Is the layer a tile layer or an object layer? Only tile layers will be instances of TiledMapTileLayer*/
-        // Ejecutar movimiento horizontal
-        float nuevaX = sprite.getX();
-        // ¿Quiere ir a la Derecha?
-        if ( estadoMovimiento==EstadoMovimiento.MOV_DERECHA) {
 
-
-            /**
-            // Obtiene el bloque del lado derecho. Asigna null si puede pasar.
-            int x = (int) ((sprite.getX() + 32) / 32);   // Convierte coordenadas del mundo en coordenadas del mapa
-            int y = (int) (sprite.getY() / 32);
-            TiledMapTileLayer.Cell celdaDerecha = capa.getCell(x, y);
-            if (celdaDerecha != null) {
-                Object tipo = celdaDerecha.getTile().getProperties().get("tipo");
-                if (!"plataforma".equals(tipo)) {
-                    celdaDerecha = null;  // Puede pasar
-                }
-            }
-            if ( celdaDerecha==null) {
-                // Ejecutar movimiento horizontal
-                nuevaX += VELOCIDAD_X;
-                // Prueba que no salga del mundo por la derecha
-                if (nuevaX <= mapa1.ANCHO_MAPA - sprite.getWidth()) {
-                    sprite.setX(nuevaX);
-                }
-            }
-             **/
-        }
-        // ¿Quiere ir a la izquierda?
-        if ( estadoMovimiento==EstadoMovimiento.MOV_IZQUIERDA) {
-            int xIzq = (int) ((sprite.getX()) / 32);
-            int y = (int) (sprite.getY() / 32);
-            // Obtiene el bloque del lado izquierdo. Asigna null si puede pasar.
-            TiledMapTileLayer.Cell celdaIzquierda = capa.getCell(xIzq, y);
-            if (celdaIzquierda != null) {
-                Object tipo = celdaIzquierda.getTile().getProperties().get("tipo");
-                if (!"plataforma".equals(tipo)) {
-                    celdaIzquierda = null;  // Puede pasar
-                }
-            }
-            if ( celdaIzquierda==null) {
-                // Prueba que no salga del mundo por la izquierda
-                nuevaX -= VELOCIDAD_X;
-                if (nuevaX >= 0) {
-                    sprite.setX(nuevaX);
-                }
-            }
-        }
     }
 
     // Revisa si toca una moneda
-    public boolean recolectarMonedas(TiledMap mapa) {
+    public boolean recolectarReloj(TiledMap mapa) {
         // Revisar si toca una moneda (pies)
-        TiledMapTileLayer capa = (TiledMapTileLayer)mapa.getLayers().get(0);
+        TiledMapTileLayer capa = (TiledMapTileLayer)mapa.getLayers().get("relojes");
+        int x1 = (int)(sprite.getX()+32/32);
         int x = (int)(sprite.getX()/32);
-        int y = (int)(sprite.getY()/32)+1;
+        int y = (int)((sprite.getY())/32);
+        int y1 = (int)((sprite.getY()+32)/32);
+        int y2= (int)((sprite.getY()+64)/32);
         TiledMapTileLayer.Cell celda = capa.getCell(x,y);
         if (celda!=null ) {
             Object tipo = celda.getTile().getProperties().get("tipo");
-            if ( "moneda".equals(tipo) ) {
-                //capa.setCell(x,y,null);    // Borra la moneda del mapa
-                capa.setCell(x,y,capa.getCell(0,4)); // Cuadro azul en lugar de la moneda
+            if ( "reloj".equals(tipo) ) {
+                capa.setCell(x,y,null);    // Borra la moneda del mapa
+                InterfazJugador.tiempoMundo += 10;
                 return true;
             }
         }
@@ -206,8 +162,8 @@ public class JugadorNuevo extends Objeto{
     }
 
     // Accesor de estadoMovimiento
-    public EstadoMovimiento getEstadoMovimiento() {
-        return estadoMovimiento;
+    public EstadoSalto getEstadoSalto(){
+        return estadoSalto;
     }
 
     // Modificador de estadoMovimiento

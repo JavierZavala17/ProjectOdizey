@@ -107,6 +107,7 @@ public class Jugador extends Sprite {
     private void defineJugador() {
         BodyDef def = new BodyDef();
         def.position.set(300/PX,360/PX);
+
         def.type = BodyDef.BodyType.DynamicBody;
         cuerpo = mundo.createBody(def);
 

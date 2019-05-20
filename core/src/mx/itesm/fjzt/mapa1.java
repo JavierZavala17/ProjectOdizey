@@ -63,6 +63,7 @@ public class mapa1 extends Pantalla {
     private OrthographicCamera camaraHUD;
     private Viewport vistaHUD;
     private Stage escenaHUD;
+    private Texture textBarra;
 
     //Btn Pausa : Pendiente
     private Texture textureBtnPausa;
@@ -99,6 +100,16 @@ public class mapa1 extends Pantalla {
     //Interfaz
     private InterfazJugador interfaz;
 
+    //Marcadores
+    private int tiempo = 0;
+
+    private Texto texto;
+
+    //Vida
+    private Texture vidaCompleta;
+    private Texture vidaMenosUno;
+    private Texture vidaMenosDos;
+
 
     public mapa1(JuegoDemo juego) {
         super(juego);
@@ -110,7 +121,6 @@ public class mapa1 extends Pantalla {
     @Override
     public void show() {
         cargarTexturas();
-
         crearObjetos();
         cargarMapa();
         crearHUD();
@@ -121,6 +131,10 @@ public class mapa1 extends Pantalla {
 
         // El input es el joystick virtual y el botón
         Gdx.input.setInputProcessor(escenaHUD);
+
+
+
+        texto = new Texto();
 
     }
 
@@ -184,9 +198,9 @@ public class mapa1 extends Pantalla {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-                if(saltar == false){
-                    cuerpo.applyLinearImpulse(new Vector2(0,18000), cuerpo.getWorldCenter(),true);
-                    saltar = true;
+                if(silo.getEstadoSalto()!= JugadorNuevo.EstadoSalto.SALTANDO){
+                    cuerpo.applyLinearImpulse(new Vector2(0,1800000),cuerpo.getWorldCenter(), true);
+                    silo.estadoSalto = JugadorNuevo.EstadoSalto.SALTANDO;
                 }
                 return true;
 
@@ -200,7 +214,7 @@ public class mapa1 extends Pantalla {
         Texture texturaPausa = manager.get("btnPausa.png");
         TextureRegionDrawable trBtnPausa = new TextureRegionDrawable(new TextureRegion(texturaPausa));
         ImageButton btnPausa = new ImageButton(trBtnPausa);
-        btnPausa.setPosition(ANCHO-btnPausa.getWidth(), ALTO-btnPausa.getHeight());
+        btnPausa.setPosition(ANCHO-btnPausa.getWidth()-10, ALTO-btnPausa.getHeight()-10);
         btnPausa.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -226,8 +240,19 @@ public class mapa1 extends Pantalla {
 
     private void cargarTexturas() {
         manager.load("Linea-Silo-Co.png",Texture.class);
+        manager.load("interfaz.png", Texture.class);
+        manager.load("vidacompleta.png", Texture.class);
+        manager.load("vidamenosuno.png", Texture.class);
+        manager.load("vidamenosdos.png", Texture.class);
         manager.finishLoading();
+
         texturaSilo = manager.get("Linea-Silo-Co.png");
+
+        textBarra = manager.get("interfaz.png");
+
+        vidaCompleta = manager.get("vidacompleta.png");
+        vidaMenosUno = manager.get("vidamenosuno.png");
+        vidaMenosDos = manager.get("vidamenosdos.png");
     }
 
     private void cargarMusicas() {
@@ -257,20 +282,20 @@ public class mapa1 extends Pantalla {
     private void configurarFisica() {
         //Box2D.init();
 
-        mundo = new World(new Vector2(0,-50f),true);
+        mundo = new World(new Vector2(0,-30f),true);
 
         BodyDef def = new BodyDef();
-        def.position.set(silo.getX(),silo.getY()); //Posicion del sprite
+        def.position.set(20,128); //Posicion del sprite
         def.type = BodyDef.BodyType.DynamicBody;
         cuerpo = mundo.createBody(def);
 
         //Crea el box de personaje
-         FixtureDef fix = new FixtureDef();
-         PolygonShape shape = new PolygonShape();
-         shape.setAsBox(silo.getWidth()/2,silo.getHeight()/2);  //
+        FixtureDef fix = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(silo.getWidth()/4,silo.getHeight()/2-1);  //
 
-         fix.shape = shape;
-         Fixture fixture = cuerpo.createFixture(fix);
+        fix.shape = shape;
+        cuerpo.createFixture(fix);
 
         //Agregar los bloques solidos (se configurarion en el mapa)
         ConvertidorMapa.crearCuerpos(mapa,mundo);
@@ -283,12 +308,13 @@ public class mapa1 extends Pantalla {
         if(estado==EstadoJuego.JUGANDO) {
             //Parte de la fisica, quitar si configurarF Desactivadp
             mundo.step(delta, 6, 2);
-            silo.setX(cuerpo.getPosition().x);
-            silo.setY(cuerpo.getPosition().y);
+            silo.setX(cuerpo.getPosition().x- (silo.getWidth()/2));
+            silo.setY(cuerpo.getPosition().y-silo.getHeight()/2);
 
             interfaz.update(delta);
 
             silo.actualizar(mapa);
+            silo.recolectarReloj(mapa);
             actualizarCamara();
             borrarPantalla();
 
@@ -296,15 +322,27 @@ public class mapa1 extends Pantalla {
             rendererMapa.setView(camera);
             rendererMapa.render();
 
+
+
             batch.begin();
             silo.dibujar(batch);
+            batch.draw(textBarra,camera.position.x-ANCHO/2,0);
+            batch.draw(vidaCompleta,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+            texto.mostrarTexto(batch,"[ Nivel:1 ]",camera.position.x-ANCHO/2 + 330,705);
+            texto.mostrarTexto(batch,"[ Tiempo:  "+ interfaz.tiempoMundo()+" ]",camera.position.x-ANCHO/2 + 1030,705);
+
+
             batch.end();
 
             // HUD
             batch.setProjectionMatrix(camaraHUD.combined);
-            juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
-            interfaz.stage.draw();
+            /*juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
+            interfaz.stage.draw();*/
             escenaHUD.draw();
+
+            if(cuerpo.getLinearVelocity().y == 0){
+                silo.estadoSalto = JugadorNuevo.EstadoSalto.EN_PISO;
+            }
         }
 
 

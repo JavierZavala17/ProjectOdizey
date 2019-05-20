@@ -17,23 +17,28 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 public class InterfazJugador implements Disposable {
 
     public Stage stage;
-    private Viewport vistaInterfaz;
+    //private Viewport vistaInterfaz;
 
     private float tiempoActual;
     public static Integer tiempoMundo;
 
-    private static Label countdownLabel;
-    private Label tiempoLabel;
-    private Label levelLabel;
-    private JuegoDemo juego;
+    //private static Label countdownLabel;
+    //private Label tiempoLabel;
+    //private Label levelLabel;
+    //private JuegoDemo juego;
+
+
+
 
     private boolean tiempoAcabo; //Verdadero en 0
 
     public InterfazJugador(SpriteBatch batch){
-        tiempoMundo = 40; //40 0riginal
+
+
+        tiempoMundo = 100; //40 0riginal
         tiempoActual = 0;
 
-        vistaInterfaz = new FitViewport(PantallaCargando.ANCHO, PantallaCargando.ALTO, new OrthographicCamera());
+        /*vistaInterfaz = new FitViewport(PantallaCargando.ANCHO, PantallaCargando.ALTO, new OrthographicCamera());
         stage = new Stage(vistaInterfaz, batch);
 
         Table tabla = new Table();
@@ -44,11 +49,13 @@ public class InterfazJugador implements Disposable {
         tiempoLabel = new Label("TIEMPO", new LabelStyle(new BitmapFont(), Color.WHITE));
         levelLabel = new Label("NIVEL: 1", new LabelStyle(new BitmapFont(), Color.WHITE));
 
+
+
         tabla.add(levelLabel).expandX().padTop(5);
         tabla.add(tiempoLabel).expandX().padTop(5);
         tabla.add(countdownLabel).expandX().padTop(5);
 
-        stage.addActor(tabla);
+        stage.addActor(tabla);*/
 
     }
 
@@ -60,7 +67,7 @@ public class InterfazJugador implements Disposable {
             }else{
                 tiempoAcabo = true;
             }
-            countdownLabel.setText(String.format("%03d",tiempoMundo));
+            //countdownLabel.setText(String.format("%03d",tiempoMundo));
             tiempoActual = 0;
 
         }
@@ -69,7 +76,7 @@ public class InterfazJugador implements Disposable {
 
     public static void addTiempo(int value){
         tiempoMundo += value;
-        countdownLabel.setText(String.format("%06d",tiempoMundo));
+        //countdownLabel.setText(String.format("%06d",tiempoMundo));
     }
 
     @Override
@@ -79,5 +86,9 @@ public class InterfazJugador implements Disposable {
 
     public boolean isTiempoAcabo(){
         return tiempoAcabo;
+    }
+
+    public String tiempoMundo(){
+        return String.format("%03d", tiempoMundo);
     }
 }
