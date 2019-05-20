@@ -11,7 +11,6 @@ import mx.itesm.fjzt.PantallaCargando;
 public class JuegoDemo extends Game {
 
     private final AssetManager assetManager;
-    private Preferences preferences;
     public SpriteBatch batch;
 
     public JuegoDemo(){
@@ -22,14 +21,13 @@ public class JuegoDemo extends Game {
     public void create(){
         batch = new SpriteBatch();
         setScreen(new PantallaCargando(this));
-        preferences = Gdx.app.getPreferences(JuegoDemo.class.getName());
+
+        Preferences pref = Gdx.app.getPreferences("usarPreferencias");
+        pref.putBoolean("musicaOn", true);
+        pref.flush();
     }
 
     public AssetManager getAssetManager() {
         return assetManager;
-    }
-
-    public Preferences getPreferences(){
-        return preferences;
     }
 }

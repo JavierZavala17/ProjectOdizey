@@ -2,6 +2,7 @@ package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -35,10 +36,16 @@ public class PantallaSeleccionNivel extends Pantalla {
     //MENU, Escenas, Independiente de la cámara(movimiento)
     private Stage escenaMenu; //Botones
 
+    //Preferencias
+    private Preferences pref = Gdx.app.getPreferences("usarPref");
+    boolean musicON = pref.getBoolean("musicON");
+
+    //Musica
+    private Music musica;
+
     public PantallaSeleccionNivel(JuegoDemo juego) {
         super(juego);
         this.juego = juego;
-        this.preferencias = juego.getPreferences();
     }
 
     @Override
@@ -64,6 +71,8 @@ public class PantallaSeleccionNivel extends Pantalla {
         //Menú
         crearMenu();
 
+        //Musica
+
         //Pasamos el control de INPUT a la escena
         Gdx.input.setInputProcessor(escenaMenu);
         Gdx.input.setCatchBackKey(true);
@@ -87,9 +96,9 @@ public class PantallaSeleccionNivel extends Pantalla {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
-                musicaMenus = false;
-                savePreferences();
                 juego.setScreen(new mapa1(juego));
+                pref.putBoolean("musicON",false);
+                pref.flush();
             }
         });
 
@@ -109,6 +118,8 @@ public class PantallaSeleccionNivel extends Pantalla {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
                 juego.setScreen(new nivel1(juego));
+                pref.putBoolean("musicON",false);
+                pref.flush();
             }
         });
         escenaMenu.addActor(btnHelp);
@@ -129,6 +140,8 @@ public class PantallaSeleccionNivel extends Pantalla {
                 super.clicked(event, x, y);
                 //Responder al evento del boton
                 juego.setScreen(new nivel1(juego));
+                pref.putBoolean("musicON",false);
+                pref.flush();
             }
         });
         escenaMenu.addActor(btnAyuda);
@@ -154,7 +167,6 @@ public class PantallaSeleccionNivel extends Pantalla {
         escenaMenu.addActor(btnDontEnter);
 
         //Musica
-        musicaMenus = preferencias.getBoolean("musicaMenu", MUSIC_VOLUME_DEFAULT);
     }
 
 

@@ -2,6 +2,8 @@ package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,6 +25,12 @@ public class PantallaAyuda extends Pantalla {
     //MENU, Escenas, Independiente de la cámara(movimiento)
     private Stage escenaMenu; //Botones
 
+    //Preferencias
+    private Preferences pref = Gdx.app.getPreferences("usarPref");
+    boolean musicON = pref.getBoolean("musicON");
+
+    //Musica
+    private Music musica;
 
     public PantallaAyuda (JuegoDemo juego) {
         super(juego);
@@ -43,6 +51,7 @@ public class PantallaAyuda extends Pantalla {
 
         //Menú
         crearMenu();
+
         //Pasamos el control de INPUT a la escena
         Gdx.input.setInputProcessor(escenaMenu);
         Gdx.input.setCatchBackKey(true);
