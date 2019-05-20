@@ -31,7 +31,7 @@ class checaColisiones implements ContactListener {
                 if(fixture1.getFilterData().categoryBits == Pantalla.BIT_JUGADOR){
                     //((Jugador) fixture1.getUserData()).hit();
                     //Gdx.app.log("","muere");
-                    nivel1.ganar--;
+                    mapa1.ganar--;
                 } else {
                     //((Jugador) fixture2.getUserData()).hit();
                     //Gdx.app.log("","muere");
@@ -39,7 +39,9 @@ class checaColisiones implements ContactListener {
                 }
                 break;
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_OBJETOS:
-                InterfazJugador.addTiempo(10);
+                InterfazJugador.addTiempo(5);
+                ((reloj)(fixture1.getUserData())).setCategoryFilter(Pantalla.BIT_DESTRUIDO);
+                ((reloj)(fixture2.getUserData())).setCategoryFilter(Pantalla.BIT_DESTRUIDO);
                 break;
         }
 

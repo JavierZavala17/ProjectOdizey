@@ -110,17 +110,14 @@ public class mapa1 extends Pantalla {
     private Texture vidaMenosUno;
     private Texture vidaMenosDos;
 
+    //Crear reloj
+    private reloj reloj;
 
     public mapa1(JuegoDemo juego) {
         super(juego);
         this.juego = juego;
         manager = juego.getAssetManager();
         interfaz = new InterfazJugador(juego.batch);
-
-        mundo = new World(new Vector2(0,-30f),true);
-        mundo.setContactListener(new checaColisiones() );
-
-
     }
 
     @Override
@@ -129,8 +126,8 @@ public class mapa1 extends Pantalla {
         crearObjetos();
         cargarMapa();
         crearHUD();
-        configurarFisica();
 
+        configurarFisica();
 
 
         cargarMusicas();
@@ -286,8 +283,11 @@ public class mapa1 extends Pantalla {
     }
 
     private void configurarFisica() {
-        //Box2D.init();
+        Box2D.init();
 
+        mundo = new World(new Vector2(0,-30f),true);
+        new ConvertidorMapa(mapa,mundo);
+        new reloj(mapa,mundo);
 
 
         BodyDef def = new BodyDef();
@@ -303,15 +303,20 @@ public class mapa1 extends Pantalla {
         fix.shape = shape;
         cuerpo.createFixture(fix);
 
+        fix.filter.categoryBits = Pantalla.BIT_ZILO;
+        fix.filter.maskBits =  Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_OBJETOS| Pantalla.BIT_SUELO  | Pantalla.BIT_WIN;
+
         //Agregar los bloques solidos (se configurarion en el mapa)
-        ConvertidorMapa.crearCuerpos(mapa,mundo);
         debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo, muestra las cajas de colision
+        mundo.setContactListener(new checaColisiones() );
 
     }
     @Override
     public void render(float delta) {
 
         if(estado==EstadoJuego.JUGANDO) {
+
+
             //Parte de la fisica, quitar si configurarF Desactivadp
             mundo.step(delta, 6, 2);
             silo.setX(cuerpo.getPosition().x- (silo.getWidth()/2));
@@ -434,9 +439,9 @@ public class mapa1 extends Pantalla {
             fondoImg.setPosition(0,0);
             this.addActor(fondoImg);
 
-            manager.load("CuadroPausa.png",Texture.class);
+            manager.load("CuadroAjustes.png",Texture.class);
             manager.finishLoading();
-            textureCuadro = manager.get("CuadroPausa.png");
+            textureCuadro = manager.get("CuadroAjustes.png");
             Image cuadroImg = new Image(textureCuadro);
             cuadroImg.setPosition(0,0);
             this.addActor(cuadroImg);
