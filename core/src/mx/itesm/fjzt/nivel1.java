@@ -139,12 +139,12 @@ public class nivel1 extends Pantalla {
         for(Enemigo enemigo: creator.getAlacranes()){
             enemigo.draw(juego.batch);
         }
-        juego.batch.end();
+
 
         juego.batch.setProjectionMatrix(interfaz.stage.getCamera().combined);
         interfaz.stage.draw();
         escenaMenu.draw();
-
+        juego.batch.end();
         if(finJuego() || ganar == 0){
             ganar = 1;
             juego.setScreen(new PantallaLose(juego));

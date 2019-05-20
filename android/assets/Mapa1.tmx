@@ -445,7 +445,11 @@
   <object id="18" x="1760" y="512" width="384" height="32"/>
   <object id="42" x="8" y="0" width="7976" height="8"/>
   <object id="46" x="-32" y="0" width="32" height="736"/>
+  <object id="47" x="0" y="768"/>
   <object id="48" x="0" y="0" height="288"/>
+  <object id="49" x="512" y="864"/>
+  <object id="64" x="7904" y="0" width="96" height="672"/>
+  <object id="65" x="8160" y="1184"/>
  </objectgroup>
  <objectgroup id="10" name="meta" offsetx="544" offsety="0">
   <object id="21" x="7363.64" y="3.0303" width="87.8788" height="668.97"/>

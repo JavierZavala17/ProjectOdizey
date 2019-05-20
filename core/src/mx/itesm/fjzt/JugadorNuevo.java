@@ -144,11 +144,8 @@ public class JugadorNuevo extends Objeto{
     public boolean recolectarReloj(TiledMap mapa) {
         // Revisar si toca una moneda (pies)
         TiledMapTileLayer capa = (TiledMapTileLayer)mapa.getLayers().get("relojes");
-        int x1 = (int)(sprite.getX()+32/32);
         int x = (int)(sprite.getX()/32);
         int y = (int)((sprite.getY())/32);
-        int y1 = (int)((sprite.getY()+32)/32);
-        int y2= (int)((sprite.getY()+64)/32);
         TiledMapTileLayer.Cell celda = capa.getCell(x,y);
         if (celda!=null ) {
             Object tipo = celda.getTile().getProperties().get("tipo");

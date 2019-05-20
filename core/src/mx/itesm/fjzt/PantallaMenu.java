@@ -222,8 +222,6 @@ public class PantallaMenu extends Pantalla {
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
             Gdx.app.exit();
 
-            //Por si queremos que se cierre de golpe
-            //System.exit(0);
         }
     }
 

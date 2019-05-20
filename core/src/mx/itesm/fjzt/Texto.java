@@ -10,7 +10,7 @@ public class Texto {
     GlyphLayout glyph = new GlyphLayout();
 
     public Texto() {
-        font = new BitmapFont(Gdx.files.internal("Jugend.fnt"));
+        font = new BitmapFont(Gdx.files.internal("jugend.fnt"));
     }
 
     public void mostrarTexto(SpriteBatch batch, String mensaje, float x, float y) {
