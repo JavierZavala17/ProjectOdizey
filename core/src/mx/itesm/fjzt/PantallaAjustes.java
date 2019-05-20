@@ -152,12 +152,6 @@ public class PantallaAjustes extends Pantalla {
             }
         });
 
-        if (pref.getBoolean("musicON")){
-            escenaMenu.addActor(btnVolumeON);
-        } else {
-            escenaMenu.addActor(btnVolumeOff);
-        }
-
         //ACTORS
         escenaMenu.addActor(btnBack);
         escenaMenu.addActor(btnVolumeON);
