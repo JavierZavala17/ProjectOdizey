@@ -37,7 +37,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class mapa2 extends Pantalla {
 
     //Ganar o Perder
-    public static int ganar = 6;
+    public static int ganar = 1;
 
     //Dimensiones
     public static final int ANCHO_MAPA = 8000;
@@ -319,7 +319,7 @@ public class mapa2 extends Pantalla {
             interfaz.update(delta);
 
             silo.actualizar(mapa);
-            silo.recolectarReloj(mapa);
+            //silo.recolectarReloj(mapa);
             actualizarCamara();
             borrarPantalla();
 
@@ -364,8 +364,8 @@ public class mapa2 extends Pantalla {
 
         }
 
-        if(ganar > 0){
-            ganar = 3;
+        if(ganar >=2){
+            ganar = 1;
             juego.setScreen(new PantallaWin(juego));
         }
     }

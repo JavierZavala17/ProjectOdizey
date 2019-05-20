@@ -327,7 +327,7 @@ public class mapa1 extends Pantalla {
             interfaz.update(delta);
 
             silo.actualizar(mapa);
-            silo.recolectarReloj(mapa);
+            //silo.recolectarReloj(mapa);
             actualizarCamara();
             borrarPantalla();
 

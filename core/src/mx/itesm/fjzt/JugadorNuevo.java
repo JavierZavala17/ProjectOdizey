@@ -141,6 +141,8 @@ public class JugadorNuevo extends Objeto{
     }
 
     // Revisa si toca una moneda
+
+    /**
     public boolean recolectarReloj(TiledMap mapa) {
         // Revisar si toca una moneda (pies)
         TiledMapTileLayer capa = (TiledMapTileLayer)mapa.getLayers().get("relojes");
@@ -157,6 +159,7 @@ public class JugadorNuevo extends Objeto{
         }
         return false;
     }
+     **/
 
     // Accesor de estadoMovimiento
     public EstadoSalto getEstadoSalto(){
