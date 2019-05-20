@@ -220,7 +220,8 @@ public class PantallaMenu extends Pantalla {
 
     private void teclaBack() {
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            juego.setScreen(new PantallaMenu(juego));
+            Gdx.app.exit();
+            System.exit(0);
         }
     }
 

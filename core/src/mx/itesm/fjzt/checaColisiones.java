@@ -23,11 +23,11 @@ class checaColisiones implements ContactListener {
         int colision = fixture1.getFilterData().categoryBits | fixture2.getFilterData().categoryBits;
 
         switch (colision) {
-            case Pantalla.BIT_ZILO | Pantalla.BIT_WIN:
+            case Pantalla.BIT_JUGADOR | Pantalla.BIT_WIN:
                 //Gdx.app.log("","Gano");
-                nivel1.ganar ++;
+                mapa1.ganar ++;
                 break;
-            case Pantalla.BIT_ENEMIGO | Pantalla.BIT_ZILO:
+            case Pantalla.BIT_ENEMIGO | Pantalla.BIT_JUGADOR:
                 if(fixture1.getFilterData().categoryBits == Pantalla.BIT_JUGADOR){
                     //((Jugador) fixture1.getUserData()).hit();
                     //Gdx.app.log("","muere");
@@ -35,12 +35,11 @@ class checaColisiones implements ContactListener {
                 } else {
                     //((Jugador) fixture2.getUserData()).hit();
                     //Gdx.app.log("","muere");
-                    nivel1.ganar--;
+                    mapa1.ganar--;
                 }
                 break;
-            case Pantalla.BIT_ZILO | Pantalla.BIT_OBJETOS:
-                if(fixture2.getFilterData().categoryBits == Pantalla.BIT_ZILO) {
-                }
+            case Pantalla.BIT_JUGADOR | Pantalla.BIT_OBJETOS:
+                InterfazJugador.addTiempo(10);
                 break;
         }
 

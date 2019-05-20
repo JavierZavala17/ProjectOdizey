@@ -110,6 +110,8 @@ public class mapa1 extends Pantalla {
     private Texture vidaMenosUno;
     private Texture vidaMenosDos;
 
+    //Crear cajas
+
 
     public mapa1(JuegoDemo juego) {
         super(juego);
@@ -124,6 +126,7 @@ public class mapa1 extends Pantalla {
         crearObjetos();
         cargarMapa();
         crearHUD();
+
         configurarFisica();
 
 
@@ -280,9 +283,10 @@ public class mapa1 extends Pantalla {
     }
 
     private void configurarFisica() {
-        //Box2D.init();
+        Box2D.init();
 
         mundo = new World(new Vector2(0,-30f),true);
+        new ConvertidorMapa(mapa,mundo);
 
         BodyDef def = new BodyDef();
         def.position.set(20,128); //Posicion del sprite
@@ -297,15 +301,20 @@ public class mapa1 extends Pantalla {
         fix.shape = shape;
         cuerpo.createFixture(fix);
 
+        fix.filter.categoryBits = Pantalla.BIT_ZILO;
+        fix.filter.maskBits =  Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO  | Pantalla.BIT_WIN;
+
         //Agregar los bloques solidos (se configurarion en el mapa)
-        ConvertidorMapa.crearCuerpos(mapa,mundo);
         debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo, muestra las cajas de colision
+        mundo.setContactListener(new checaColisiones() );
 
     }
     @Override
     public void render(float delta) {
 
         if(estado==EstadoJuego.JUGANDO) {
+
+
             //Parte de la fisica, quitar si configurarF Desactivadp
             mundo.step(delta, 6, 2);
             silo.setX(cuerpo.getPosition().x- (silo.getWidth()/2));
