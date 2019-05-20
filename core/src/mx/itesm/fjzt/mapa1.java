@@ -434,9 +434,9 @@ public class mapa1 extends Pantalla {
             fondoImg.setPosition(0,0);
             this.addActor(fondoImg);
 
-            manager.load("CuadroAjustes.png",Texture.class);
+            manager.load("CuadroPausa.png",Texture.class);
             manager.finishLoading();
-            textureCuadro = manager.get("CuadroAjustes.png");
+            textureCuadro = manager.get("CuadroPausa.png");
             Image cuadroImg = new Image(textureCuadro);
             cuadroImg.setPosition(0,0);
             this.addActor(cuadroImg);
