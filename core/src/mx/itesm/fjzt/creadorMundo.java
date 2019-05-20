@@ -60,14 +60,11 @@ public class creadorMundo {
             cuerpofin.createFixture(fixturefin);
         }
 
-        //crear relojes
-        for(MapObject object : mapa.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
-            new reloj(nivel,object);
-        }
 
-        //Create all goombas
+        //Crear alacranes
+
         alacranes = new Array<Alacran>();
-        for(MapObject object : mapa.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : mapa.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             alacranes.add(new Alacran( nivel , rect.x/Pantalla.PX, rect.y/Pantalla.PX));
         }

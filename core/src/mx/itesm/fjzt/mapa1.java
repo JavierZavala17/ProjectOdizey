@@ -41,7 +41,7 @@ import javax.xml.soap.Text;
 public class mapa1 extends Pantalla {
 
     //Ganar o Perder
-    public static int ganar = 1;
+    public static int ganar = 6;
 
     //Dimensiones
     public static final int ANCHO_MAPA = 8000;
@@ -109,6 +109,10 @@ public class mapa1 extends Pantalla {
     private Texture vidaCompleta;
     private Texture vidaMenosUno;
     private Texture vidaMenosDos;
+
+    //Reloj
+    private reloj reloj;
+    private enemigoLvl1 enemigoLvl1;
 
 
     public mapa1(JuegoDemo juego) {
@@ -286,9 +290,7 @@ public class mapa1 extends Pantalla {
     }
 
     private void configurarFisica() {
-        //Box2D.init();
-
-
+        Box2D.init();
 
         BodyDef def = new BodyDef();
         def.position.set(20,128); //Posicion del sprite
@@ -299,6 +301,8 @@ public class mapa1 extends Pantalla {
         FixtureDef fix = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(silo.getWidth()/4,silo.getHeight()/2-1);  //
+        fix.filter.categoryBits = Pantalla.BIT_JUGADOR;
+        fix.filter.maskBits =  Pantalla.BIT_JUGADOR | Pantalla.BIT_SUELO | Pantalla.BIT_ZILO | Pantalla.BIT_ENEMIGO | Pantalla.BIT_OBJETOS;
 
         fix.shape = shape;
         cuerpo.createFixture(fix);
@@ -306,6 +310,9 @@ public class mapa1 extends Pantalla {
         //Agregar los bloques solidos (se configurarion en el mapa)
         ConvertidorMapa.crearCuerpos(mapa,mundo);
         debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo, muestra las cajas de colision
+
+        reloj = new reloj(mapa,mundo);
+        enemigoLvl1 = new enemigoLvl1(mapa,mundo);
 
     }
     @Override
@@ -359,14 +366,14 @@ public class mapa1 extends Pantalla {
         //Si desactivado el debug en configurarF, quitar
         debug.render(mundo,camera.combined);
 
-        if(finJuego() || ganar == 0){
+        if(finJuego() || ganar <= 0){
             ganar = 1;
             juego.setScreen(new PantallaLose(juego));
 
         }
 
-        if(ganar == 2){
-            ganar = 1;
+        if(ganar > 0){
+            ganar = 3;
             juego.setScreen(new PantallaWin(juego));
         }
     }
