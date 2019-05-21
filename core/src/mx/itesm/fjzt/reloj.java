@@ -22,6 +22,8 @@ public class reloj {
     protected Fixture fixture;
     protected MapObject object;
 
+    public static int usos = 5;
+
     public reloj(TiledMap mapa, World mundo) {
 
         //Reloj

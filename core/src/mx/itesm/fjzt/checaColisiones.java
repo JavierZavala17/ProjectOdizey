@@ -53,7 +53,41 @@ class checaColisiones implements ContactListener {
                 //Gdx.app.log("","score" + mapa1.ganar);
                 break;
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_OBJETOS:
-                InterfazJugador.addTiempo(10);
+                if(fixture1.getFilterData().categoryBits == Pantalla.BIT_ENEMIGO){
+                    if(reloj.usos == 5){
+                        InterfazJugador.addTiempo(10);
+                        reloj.usos --;
+                    } else if(reloj.usos == 4) {
+                        InterfazJugador.addTiempo(10);
+                        reloj.usos--;
+                    }else if(reloj.usos == 3) {
+                        InterfazJugador.addTiempo(10);
+                        reloj.usos--;
+                    }else if(reloj.usos == 2) {
+                        InterfazJugador.addTiempo(10);
+                        reloj.usos--;
+                    }else if(reloj.usos == 1) {
+                        InterfazJugador.addTiempo(10);
+                        reloj.usos--;
+                    }
+                }else{
+                    if(reloj.usos == 5){
+                        InterfazJugador.addTiempo(10);
+                        reloj.usos --;
+                    } else if(reloj.usos == 4) {
+                        InterfazJugador.addTiempo(10);
+                        reloj.usos--;
+                    }else if(reloj.usos == 3) {
+                        InterfazJugador.addTiempo(10);
+                        reloj.usos--;
+                    }else if(reloj.usos == 2) {
+                        InterfazJugador.addTiempo(10);
+                        reloj.usos--;
+                    }else if(reloj.usos == 1) {
+                        InterfazJugador.addTiempo(10);
+                        reloj.usos--;
+                    }
+                }
                 break;
         }
 
