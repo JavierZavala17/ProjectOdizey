@@ -35,7 +35,6 @@ class checaColisiones implements ContactListener {
                     mapa1.vidaPersonaje -= 1;
                     break;
                 }else if(mapa1.vidaPersonaje==1){
-
                     mapa1.ganar -= 1;
                 }
                 //Gdx.app.log("","score" + mapa1.ganar);
