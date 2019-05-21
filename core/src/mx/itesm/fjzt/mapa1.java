@@ -86,7 +86,7 @@ public class mapa1 extends Pantalla {
 
     //AssetManager
     private AssetManager manager;
-    private EstadoJuego estado = EstadoJuego.JUGANDO;
+    public EstadoJuego estado = EstadoJuego.JUGANDO;
     private EscenaPausa escenaPausa;
 
     //BOX2D Física
@@ -121,7 +121,7 @@ public class mapa1 extends Pantalla {
         manager = juego.getAssetManager();
         interfaz = new InterfazJugador(juego.batch);
 
-        mundo = new World(new Vector2(0,-30f),true);
+        mundo = new World(new Vector2(0,-50f),true);
         mundo.setContactListener(new checaColisiones() );
 
 
@@ -209,7 +209,7 @@ public class mapa1 extends Pantalla {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 if(silo.getEstadoSalto()!= JugadorNuevo.EstadoSalto.SALTANDO){
-                    cuerpo.applyLinearImpulse(new Vector2(0,1800000),cuerpo.getWorldCenter(), true);
+                    cuerpo.applyForceToCenter(0,20000000,true);
                     silo.estadoSalto = JugadorNuevo.EstadoSalto.SALTANDO;
                 }
                 return true;
@@ -310,7 +310,7 @@ public class mapa1 extends Pantalla {
 
         //Agregar los bloques solidos (se configurarion en el mapa)
         ConvertidorMapa.crearCuerpos(mapa,mundo);
-        debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo, muestra las cajas de colision
+        //debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo, muestra las cajas de colision
 
         reloj = new reloj(mapa,mundo);
         enemigoLvl1 = new enemigoLvl1(mapa,mundo);
@@ -363,15 +363,15 @@ public class mapa1 extends Pantalla {
             escenaPausa.draw();
         }
         //Si desactivado el debug en configurarF, quitar
-        debug.render(mundo,camera.combined);
+        //debug.render(mundo,camera.combined);
 
-        if(finJuego() || ganar <= 0){
+        if(finJuego() || estado == EstadoJuego.PIERDE){
             ganar = 1;
             juego.setScreen(new PantallaLose(juego));
 
         }
 
-        if(ganar >= 2){
+        if(ganar >= 2 || estado==EstadoJuego.GANA){
             ganar = 1;
             juego.setScreen(new PantallaWin(juego));
         }
@@ -379,6 +379,7 @@ public class mapa1 extends Pantalla {
 
     private boolean finJuego() {
         if(interfaz.isTiempoAcabo()){
+            estado = EstadoJuego.PIERDE;
             return true;
         }
         return false;
