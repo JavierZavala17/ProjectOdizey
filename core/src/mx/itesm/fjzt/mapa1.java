@@ -43,6 +43,8 @@ public class mapa1 extends Pantalla {
     //Ganar o Perder
     public static int ganar = 1;
 
+    public static int vidaPersonaje = 3;
+
     //Dimensiones
     public static final int ANCHO_MAPA = 8000;
     public static final int ALTO_MAPA = 736;
@@ -121,7 +123,7 @@ public class mapa1 extends Pantalla {
         manager = juego.getAssetManager();
         interfaz = new InterfazJugador(juego.batch);
 
-        mundo = new World(new Vector2(0,-50f),true);
+        mundo = new World(new Vector2(0,-35f),true);
         mundo.setContactListener(new checaColisiones() );
 
 
@@ -176,11 +178,11 @@ public class mapa1 extends Pantalla {
                 Touchpad pad = (Touchpad) actor;
                 if (pad.getKnobPercentX()>0.20) {
                     silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.MOV_DERECHA);
-                    cuerpo.applyLinearImpulse(new Vector2(180000,0),cuerpo.getWorldCenter(), true);
+                    cuerpo.applyForceToCenter(180000,0,true);
 
                 } else if (pad.getKnobPercentX()<-0.20){
                     silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.MOV_IZQUIERDA);
-                    cuerpo.applyLinearImpulse(new Vector2(-180000,0),cuerpo.getWorldCenter(), true);
+                    cuerpo.applyForceToCenter(-180000,0,true);
 
                 } else {
                     silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.QUIETO);
@@ -209,7 +211,7 @@ public class mapa1 extends Pantalla {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 if(silo.getEstadoSalto()!= JugadorNuevo.EstadoSalto.SALTANDO){
-                    cuerpo.applyForceToCenter(0,20000000,true);
+                    cuerpo.applyLinearImpulse(new Vector2(cuerpo.getLinearVelocity().x,(999000000)),cuerpo.getWorldCenter(), true);
                     silo.estadoSalto = JugadorNuevo.EstadoSalto.SALTANDO;
                 }
                 return true;
@@ -244,7 +246,7 @@ public class mapa1 extends Pantalla {
     }
 
     private void crearObjetos() {
-        silo = new JugadorNuevo(texturaSilo,32,64);
+        silo = new JugadorNuevo(texturaSilo,3,32,64);
         silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.QUIETO);
     }
 
@@ -328,6 +330,7 @@ public class mapa1 extends Pantalla {
             interfaz.update(delta);
 
             silo.actualizar(mapa);
+            silo.setVida(vidaPersonaje);
             //silo.recolectarReloj(mapa);
             actualizarCamara();
             borrarPantalla();
@@ -340,8 +343,16 @@ public class mapa1 extends Pantalla {
 
             batch.begin();
             silo.dibujar(batch);
+            System.out.print(vidaPersonaje);
+
             batch.draw(textBarra,camera.position.x-ANCHO/2,0);
-            batch.draw(vidaCompleta,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+            if (silo.getVida()== 3) {
+                batch.draw(vidaCompleta,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+            } else if (silo.getVida() == 2) {
+                batch.draw(vidaMenosUno,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+            } else if (silo.getVida() == 1) {
+                batch.draw(vidaMenosDos,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+            }
             texto.mostrarTexto(batch,"[ Nivel:1 ]",camera.position.x-ANCHO/2 + 330,705);
             texto.mostrarTexto(batch,"[ Tiempo:  "+ interfaz.tiempoMundo()+" ]",camera.position.x-ANCHO/2 + 1030,705);
 
@@ -357,6 +368,8 @@ public class mapa1 extends Pantalla {
             if(cuerpo.getLinearVelocity().y == 0){
                 silo.estadoSalto = JugadorNuevo.EstadoSalto.EN_PISO;
             }
+
+
         }
 
         if (estado==EstadoJuego.PAUSADO) {

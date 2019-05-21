@@ -24,6 +24,8 @@ public class JugadorNuevo extends Objeto{
 
     protected EstadoSalto estadoSalto = EstadoSalto.EN_PISO;
     protected EstadoMovimiento estadoMovimiento = EstadoMovimiento.QUIETO;
+    protected int vida;
+
 
     //Fisica
     public World mundo;
@@ -41,9 +43,10 @@ public class JugadorNuevo extends Objeto{
 
 
     // Recibe una imagen con varios frames (ver marioSprite.png)
-    public JugadorNuevo(Texture textura, float x, float y) {
+    public JugadorNuevo(Texture textura,int vida, float x, float y) {
         width = 64;
         height = 96;
+        this.vida = vida;
 
         // Lee la textura como región
         TextureRegion texturaCompleta = new TextureRegion(textura);
@@ -180,6 +183,14 @@ public class JugadorNuevo extends Objeto{
             yOriginal = sprite.getY();
             alturaSalto = 0;
         }
+    }
+
+    public void setVida(int vida){
+        this.vida = vida;
+    }
+
+    public int getVida() {
+        return vida;
     }
 
     public float getX() {

@@ -238,7 +238,7 @@ public class mapa2 extends Pantalla {
     }
 
     private void crearObjetos() {
-        silo = new JugadorNuevo(texturaSilo,32,64);
+        silo = new JugadorNuevo(texturaSilo,3,32,64);
         silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.QUIETO);
     }
 

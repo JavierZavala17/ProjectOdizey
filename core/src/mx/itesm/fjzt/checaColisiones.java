@@ -28,7 +28,16 @@ class checaColisiones implements ContactListener {
                 mapa1.ganar ++;
                 break;
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_ENEMIGO:
-                mapa1.ganar -= 1;
+                if(mapa1.vidaPersonaje==3){
+                    mapa1.vidaPersonaje -= 1;
+                    break;
+                }else if(mapa1.vidaPersonaje==2){
+                    mapa1.vidaPersonaje -= 1;
+                    break;
+                }else if(mapa1.vidaPersonaje==1){
+
+                    mapa1.ganar -= 1;
+                }
                 //Gdx.app.log("","score" + mapa1.ganar);
                 break;
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_OBJETOS:
