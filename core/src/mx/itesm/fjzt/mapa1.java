@@ -110,6 +110,7 @@ public class mapa1 extends Pantalla {
     private Texture vidaCompleta;
     private Texture vidaMenosUno;
     private Texture vidaMenosDos;
+    private Texture vidaMenosTres;
 
     //Reloj
     private reloj reloj;
@@ -123,6 +124,7 @@ public class mapa1 extends Pantalla {
         interfaz = new InterfazJugador(juego.batch);
         mundo = new World(new Vector2(0,-35f),true);
         mundo.setContactListener(new checaColisiones() );
+        vidaPersonaje = 3;
 
     }
 
@@ -237,7 +239,7 @@ public class mapa1 extends Pantalla {
     }
 
     private void crearObjetos() {
-        silo = new JugadorNuevo(texturaSilo,3,32,64);
+        silo = new JugadorNuevo(texturaSilo,vidaPersonaje,32,64);
         silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.QUIETO);
     }
 
@@ -247,6 +249,7 @@ public class mapa1 extends Pantalla {
         manager.load("vidacompleta.png", Texture.class);
         manager.load("vidamenosuno.png", Texture.class);
         manager.load("vidamenosdos.png", Texture.class);
+        manager.load("vidamenostres.png", Texture.class);
         manager.finishLoading();
 
         texturaSilo = manager.get("Linea-Silo-Co.png");
@@ -256,6 +259,7 @@ public class mapa1 extends Pantalla {
         vidaCompleta = manager.get("vidacompleta.png");
         vidaMenosUno = manager.get("vidamenosuno.png");
         vidaMenosDos = manager.get("vidamenosdos.png");
+        vidaMenosTres = manager.get("vidamenostres.png");
     }
 
     private void cargarMusicas() {
@@ -339,7 +343,12 @@ public class mapa1 extends Pantalla {
             }else{
                 silo.dibujar(batch);
             }
-            invunerabilidad-=1;
+
+            if(invunerabilidad > 0){
+                invunerabilidad -= 1;
+            }
+
+
 
 
 
@@ -351,6 +360,7 @@ public class mapa1 extends Pantalla {
             } else if (silo.getVida() == 1) {
                 batch.draw(vidaMenosDos,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
             }else{
+                batch.draw(vidaMenosTres,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
                 musicaFondo.stop();
                 juego.setScreen(new PantallaLose(juego));
             }
