@@ -348,10 +348,6 @@ public class mapa1 extends Pantalla {
                 invunerabilidad -= 1;
             }
 
-
-
-
-
             batch.draw(textBarra,camera.position.x-ANCHO/2,0);
             if (silo.getVida()== 3) {
                 batch.draw(vidaCompleta,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
