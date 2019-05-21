@@ -21,7 +21,7 @@ public class ConvertidorMapa2 {
         Body cuerpo;
 
         //Salida
-        for(MapObject object : mapa.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : mapa.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rectangulo = ((RectangleMapObject)object).getRectangle();
 
             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
@@ -41,7 +41,7 @@ public class ConvertidorMapa2 {
         PolygonShape shapefin = new PolygonShape();
         FixtureDef fixturefin = new FixtureDef();
         Body cuerpofin;
-        for(MapObject object : mapa.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : mapa.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rectangulofin = ((RectangleMapObject)object).getRectangle();
 
             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
@@ -60,7 +60,7 @@ public class ConvertidorMapa2 {
         PolygonShape clockFin = new PolygonShape();
         FixtureDef clockfix = new FixtureDef();
         Body clockcuerpo;
-        for (MapObject object : mapa.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : mapa.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rectangulofin = ((RectangleMapObject) object).getRectangle();
 
             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
@@ -82,7 +82,7 @@ public class ConvertidorMapa2 {
         PolygonShape clockFin2 = new PolygonShape();
         FixtureDef clockfix2 = new FixtureDef();
         Body clockcuerpo2;
-        for (MapObject object : mapa.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : mapa.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rectangulofin = ((RectangleMapObject) object).getRectangle();
 
             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )

@@ -1,5 +1,6 @@
 package mx.itesm.fjzt;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -19,7 +20,7 @@ class checaColisiones2 implements ContactListener {
 
         switch (colision) {
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_WIN:
-                //Gdx.app.log("","Gano");
+                Gdx.app.log("","Gano");
                 mapa2.ganar ++;
                 break;
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_ENEMIGO:

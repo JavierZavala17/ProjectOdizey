@@ -378,7 +378,7 @@ public class mapa1 extends Pantalla {
         //Si desactivado el debug en configurarF, quitar
         //debug.render(mundo,camera.combined);
 
-        if(finJuego() || estado == EstadoJuego.PIERDE){
+        if(finJuego() || estado == EstadoJuego.PIERDE || ganar < 0){
             ganar = 1;
             juego.setScreen(new PantallaLose(juego));
 
