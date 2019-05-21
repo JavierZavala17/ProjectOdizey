@@ -1,10 +1,5 @@
 package mx.itesm.fjzt;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -54,38 +49,38 @@ class checaColisiones implements ContactListener {
                 break;
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_OBJETOS:
                 if(fixture1.getFilterData().categoryBits == Pantalla.BIT_ENEMIGO){
-                    if(reloj.usos == 5){
+                    if(Reloj.usos == 5){
                         InterfazJugador.addTiempo(10);
-                        reloj.usos --;
-                    } else if(reloj.usos == 4) {
+                        Reloj.usos --;
+                    } else if(Reloj.usos == 4) {
                         InterfazJugador.addTiempo(10);
-                        reloj.usos--;
-                    }else if(reloj.usos == 3) {
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 3) {
                         InterfazJugador.addTiempo(10);
-                        reloj.usos--;
-                    }else if(reloj.usos == 2) {
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 2) {
                         InterfazJugador.addTiempo(10);
-                        reloj.usos--;
-                    }else if(reloj.usos == 1) {
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 1) {
                         InterfazJugador.addTiempo(10);
-                        reloj.usos--;
+                        Reloj.usos--;
                     }
                 }else{
-                    if(reloj.usos == 5){
+                    if(Reloj.usos == 5){
                         InterfazJugador.addTiempo(10);
-                        reloj.usos --;
-                    } else if(reloj.usos == 4) {
+                        Reloj.usos --;
+                    } else if(Reloj.usos == 4) {
                         InterfazJugador.addTiempo(10);
-                        reloj.usos--;
-                    }else if(reloj.usos == 3) {
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 3) {
                         InterfazJugador.addTiempo(10);
-                        reloj.usos--;
-                    }else if(reloj.usos == 2) {
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 2) {
                         InterfazJugador.addTiempo(10);
-                        reloj.usos--;
-                    }else if(reloj.usos == 1) {
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 1) {
                         InterfazJugador.addTiempo(10);
-                        reloj.usos--;
+                        Reloj.usos--;
                     }
                 }
                 break;

@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class reloj {
+public class Reloj {
 
     protected World world;
     protected TiledMap map;
@@ -24,7 +24,7 @@ public class reloj {
 
     public static int usos = 5;
 
-    public reloj(TiledMap mapa, World mundo) {
+    public Reloj(TiledMap mapa, World mundo) {
 
         //Reloj
         BodyDef clock = new BodyDef();

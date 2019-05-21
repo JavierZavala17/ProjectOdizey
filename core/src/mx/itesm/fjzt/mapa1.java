@@ -3,11 +3,9 @@ package mx.itesm.fjzt;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,15 +17,12 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -37,8 +32,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import javax.xml.soap.Text;
 
 public class mapa1 extends Pantalla {
 
@@ -113,7 +106,7 @@ public class mapa1 extends Pantalla {
     private Texture vidaMenosTres;
 
     //Reloj
-    private reloj reloj;
+    private Reloj reloj;
     private enemigoLvl1 enemigoLvl1;
 
 
@@ -309,7 +302,7 @@ public class mapa1 extends Pantalla {
         ConvertidorMapa.crearCuerpos(mapa,mundo);
         //debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo, muestra las cajas de colision
 
-        reloj = new reloj(mapa,mundo);
+        reloj = new Reloj(mapa,mundo);
         enemigoLvl1 = new enemigoLvl1(mapa,mundo);
 
     }
@@ -337,12 +330,8 @@ public class mapa1 extends Pantalla {
 
 
             batch.begin();
-            if(invunerabilidad > 0){
-                SequenceAction flicker = new SequenceAction(Actions.fadeOut(0.25f), Actions.fadeIn(0.25f));
-                silo.addAction(Actions.repeat(6, flicker));
-            }else{
-                silo.dibujar(batch);
-            }
+            silo.dibujar(batch);
+
 
             if(invunerabilidad > 0){
                 invunerabilidad -= 1;
@@ -434,6 +423,17 @@ public class mapa1 extends Pantalla {
     @Override
     public void dispose() {
 
+
+    }
+
+    public void init(){
+        cargarMusicas();
+        vidaPersonaje = 3;
+        silo.setVida(vidaPersonaje);
+        configurarFisica();
+        InterfazJugador.tiempoMundo=100;
+        Reloj.usos = 5;
+
     }
 
     // La escena que se muestra cuando el juego se pausa
@@ -497,8 +497,9 @@ public class mapa1 extends Pantalla {
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
                     musicaFondo.stop();
-
-                    juego.setScreen(new mapa1(juego));
+                    init();
+                    Gdx.input.setInputProcessor(escenaHUD);
+                    estado= EstadoJuego.JUGANDO;
 
                 }
             });
@@ -515,7 +516,6 @@ public class mapa1 extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // return to the game
-                    cargarMapa();
                     Gdx.input.setInputProcessor(escenaHUD);
                     estado= EstadoJuego.JUGANDO;
                 }
