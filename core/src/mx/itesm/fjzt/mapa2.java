@@ -36,6 +36,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class mapa2 extends Pantalla {
 
+    //Vidas
+    public static int vidaPersonaje = 3;
+
     //Ganar o Perder
     public static int ganar = 1;
 
@@ -319,6 +322,7 @@ public class mapa2 extends Pantalla {
             interfaz.update(delta);
 
             silo.actualizar(mapa);
+            silo.setVida(vidaPersonaje);
             //silo.recolectarReloj(mapa);
             actualizarCamara();
             borrarPantalla();
@@ -331,6 +335,16 @@ public class mapa2 extends Pantalla {
 
             batch.begin();
             silo.dibujar(batch);
+
+            batch.draw(textBarra,camera.position.x-ANCHO/2,0);
+            if (silo.getVida()== 3) {
+                batch.draw(vidaCompleta,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+            } else if (silo.getVida() == 2) {
+                batch.draw(vidaMenosUno,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+            } else if (silo.getVida() == 1) {
+                batch.draw(vidaMenosDos,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+            }
+
             batch.draw(textBarra,camera.position.x-ANCHO/2,0);
             batch.draw(vidaCompleta,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
             texto.mostrarTexto(batch,"[ Nivel:2 ]",camera.position.x-ANCHO/2 + 330,705);

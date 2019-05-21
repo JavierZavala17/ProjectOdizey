@@ -74,7 +74,6 @@ public class mapa1 extends Pantalla {
 
     //Musica
     private Music musicaFondo;
-    private Sound effectoDisparo;
 
 
     //Joystick
@@ -102,9 +101,6 @@ public class mapa1 extends Pantalla {
     //Interfaz
     private InterfazJugador interfaz;
 
-    //Marcadores
-    private int tiempo = 0;
-
     private Texto texto;
 
     //Vida
@@ -122,10 +118,8 @@ public class mapa1 extends Pantalla {
         this.juego = juego;
         manager = juego.getAssetManager();
         interfaz = new InterfazJugador(juego.batch);
-
         mundo = new World(new Vector2(0,-35f),true);
         mundo.setContactListener(new checaColisiones() );
-
 
     }
 
@@ -136,16 +130,10 @@ public class mapa1 extends Pantalla {
         cargarMapa();
         crearHUD();
         configurarFisica();
-
-
-
         cargarMusicas();
 
         // El input es el joystick virtual y el botón
         Gdx.input.setInputProcessor(escenaHUD);
-
-
-
         texto = new Texto();
 
     }
@@ -343,7 +331,7 @@ public class mapa1 extends Pantalla {
 
             batch.begin();
             silo.dibujar(batch);
-            System.out.print(vidaPersonaje);
+           // System.out.print(vidaPersonaje);
 
             batch.draw(textBarra,camera.position.x-ANCHO/2,0);
             if (silo.getVida()== 3) {
