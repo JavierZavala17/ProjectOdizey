@@ -116,7 +116,7 @@ public class mapa2 extends Pantalla {
         interfaz = new InterfazJugador(juego.batch);
 
         mundo = new World(new Vector2(0,-30f),true);
-        mundo.setContactListener(new checaColisiones() );
+        mundo.setContactListener(new checaColisiones2() );
 
 
     }
@@ -296,7 +296,7 @@ public class mapa2 extends Pantalla {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(silo.getWidth()/4,silo.getHeight()/2-1);  //
         fix.filter.categoryBits = Pantalla.BIT_JUGADOR;
-        fix.filter.maskBits =  Pantalla.BIT_JUGADOR | Pantalla.BIT_SUELO | Pantalla.BIT_ZILO | Pantalla.BIT_ENEMIGO | Pantalla.BIT_OBJETOS;
+        fix.filter.maskBits =  Pantalla.BIT_JUGADOR | Pantalla.BIT_SUELO | Pantalla.BIT_ZILO | Pantalla.BIT_ENEMIGO | Pantalla.BIT_OBJETOS | Pantalla.BIT_WIN;
 
         fix.shape = shape;
         cuerpo.createFixture(fix);
