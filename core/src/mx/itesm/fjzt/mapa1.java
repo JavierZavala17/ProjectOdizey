@@ -340,6 +340,9 @@ public class mapa1 extends Pantalla {
                 batch.draw(vidaMenosUno,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
             } else if (silo.getVida() == 1) {
                 batch.draw(vidaMenosDos,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+            }else{
+                musicaFondo.stop();
+                juego.setScreen(new PantallaLose(juego));
             }
             texto.mostrarTexto(batch,"[ Nivel:1 ]",camera.position.x-ANCHO/2 + 330,705);
             texto.mostrarTexto(batch,"[ Tiempo:  "+ interfaz.tiempoMundo()+" ]",camera.position.x-ANCHO/2 + 1030,705);

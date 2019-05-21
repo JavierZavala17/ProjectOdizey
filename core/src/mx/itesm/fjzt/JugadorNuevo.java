@@ -143,26 +143,6 @@ public class JugadorNuevo extends Objeto{
 
     }
 
-    // Revisa si toca una moneda
-
-    /**
-    public boolean recolectarReloj(TiledMap mapa) {
-        // Revisar si toca una moneda (pies)
-        TiledMapTileLayer capa = (TiledMapTileLayer)mapa.getLayers().get("relojes");
-        int x = (int)(sprite.getX()/32);
-        int y = (int)((sprite.getY())/32);
-        TiledMapTileLayer.Cell celda = capa.getCell(x,y);
-        if (celda!=null ) {
-            Object tipo = celda.getTile().getProperties().get("tipo");
-            if ( "reloj".equals(tipo) ) {
-                capa.setCell(x,y,null);    // Borra la moneda del mapa
-                InterfazJugador.tiempoMundo += 10;
-                return true;
-            }
-        }
-        return false;
-    }
-     **/
 
     // Accesor de estadoMovimiento
     public EstadoSalto getEstadoSalto(){

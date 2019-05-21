@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class enemigoLvl1{
+public class enemigoLvl1 extends Objeto{
 
     protected World world;
     protected TiledMap map;
