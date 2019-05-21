@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="280" height="23" tilewidth="32" tileheight="32" infinite="0" nextlayerid="21" nextobjectid="80">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="280" height="23" tilewidth="32" tileheight="32" infinite="0" nextlayerid="21" nextobjectid="83">
  <tileset firstgid="1" name="elementos" tilewidth="32" tileheight="32" tilecount="135" columns="9">
   <image source="elementos.png" width="288" height="500"/>
   <tile id="15">
@@ -457,6 +457,7 @@
  <objectgroup id="10" name="meta" offsetx="544" offsety="0">
   <object id="21" x="7363.64" y="3.0303" width="87.8788" height="668.97"/>
   <object id="22" x="7460.61" y="1372.73"/>
+  <object id="82" x="228" y="940" height="2"/>
  </objectgroup>
  <objectgroup id="11" name="enemigos">
   <object id="66" x="416" y="480" width="160" height="32"/>

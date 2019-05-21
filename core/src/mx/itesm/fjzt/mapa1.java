@@ -301,8 +301,9 @@ public class mapa1 extends Pantalla {
         FixtureDef fix = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(silo.getWidth()/4,silo.getHeight()/2-1);  //
+
         fix.filter.categoryBits = Pantalla.BIT_JUGADOR;
-        fix.filter.maskBits =  Pantalla.BIT_JUGADOR | Pantalla.BIT_SUELO | Pantalla.BIT_ZILO | Pantalla.BIT_ENEMIGO | Pantalla.BIT_OBJETOS;
+        fix.filter.maskBits =  Pantalla.BIT_JUGADOR | Pantalla.BIT_SUELO | Pantalla.BIT_ZILO | Pantalla.BIT_ENEMIGO | Pantalla.BIT_OBJETOS | Pantalla.BIT_WIN;
 
         fix.shape = shape;
         cuerpo.createFixture(fix);
@@ -357,8 +358,6 @@ public class mapa1 extends Pantalla {
                 silo.estadoSalto = JugadorNuevo.EstadoSalto.EN_PISO;
             }
         }
-
-
 
         if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw();
