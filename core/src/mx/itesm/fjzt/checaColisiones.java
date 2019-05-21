@@ -30,25 +30,26 @@ class checaColisiones implements ContactListener {
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_ENEMIGO:
                 if(fixture1.getFilterData().categoryBits == Pantalla.BIT_ENEMIGO){
                     if(mapa1.vidaPersonaje==3){
-                        mapa1.vidaPersonaje -= .5f;
+                        mapa1.vidaPersonaje -= 1f;
                         break;
-                    }else if(mapa1.vidaPersonaje==2){
-                        mapa1.vidaPersonaje -= .5f;
+                    }else if(mapa1.vidaPersonaje==2 && mapa1.invunerabilidad > 0){
+                        mapa1.vidaPersonaje -= 1f;
                         break;
-                    }else if(mapa1.vidaPersonaje==1){
+                    }else if(mapa1.vidaPersonaje==1&& mapa1.invunerabilidad > 0){
                         mapa1.ganar -= 1;
                     }
                 }else{
                     if(mapa1.vidaPersonaje==3){
-                        mapa1.vidaPersonaje -= .5f;
+                        mapa1.vidaPersonaje -= 1f;
                         break;
-                    }else if(mapa1.vidaPersonaje==2){
-                        mapa1.vidaPersonaje -= .5f;
+                    }else if(mapa1.vidaPersonaje==2&& mapa1.invunerabilidad > 0){
+                        mapa1.vidaPersonaje -= 1f;
                         break;
-                    }else if(mapa1.vidaPersonaje==1){
+                    }else if(mapa1.vidaPersonaje==1&& mapa1.invunerabilidad > 0){
                         mapa1.ganar -= 1;
                     }
                 }
+                mapa1.invunerabilidad = 250;
                 //Gdx.app.log("","score" + mapa1.ganar);
                 break;
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_OBJETOS:

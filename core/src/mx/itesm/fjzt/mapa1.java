@@ -26,6 +26,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -44,6 +46,7 @@ public class mapa1 extends Pantalla {
     public static int ganar = 1;
 
     public static int vidaPersonaje = 3;
+    public static int invunerabilidad = 0;
 
     //Dimensiones
     public static final int ANCHO_MAPA = 8000;
@@ -330,8 +333,15 @@ public class mapa1 extends Pantalla {
 
 
             batch.begin();
-            silo.dibujar(batch);
-           // System.out.print(vidaPersonaje);
+            if(invunerabilidad > 0){
+                SequenceAction flicker = new SequenceAction(Actions.fadeOut(0.25f), Actions.fadeIn(0.25f));
+                silo.addAction(Actions.repeat(6, flicker));
+            }else{
+                silo.dibujar(batch);
+            }
+            invunerabilidad-=1;
+
+
 
             batch.draw(textBarra,camera.position.x-ANCHO/2,0);
             if (silo.getVida()== 3) {
