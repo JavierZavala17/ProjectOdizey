@@ -889,14 +889,6 @@
   <object id="16" x="7616" y="320" width="128" height="128"/>
   <object id="17" x="8704" y="608"/>
  </objectgroup>
- <objectgroup id="7" name="reloj">
-  <object id="18" x="7232" y="992"/>
-  <object id="20" x="7136" y="256" width="64" height="96"/>
-  <object id="21" x="5536" y="576" width="64" height="96"/>
-  <object id="22" x="4352" y="256" width="64" height="96"/>
-  <object id="23" x="2848" y="416" width="64" height="96"/>
-  <object id="24" x="1152" y="416" width="64" height="96"/>
- </objectgroup>
  <objectgroup id="4" name="piso">
   <object id="1" x="7456" y="512" width="416" height="32"/>
   <object id="2" x="6976" y="352" width="416" height="32"/>
@@ -933,6 +925,14 @@
   <object id="47" x="6304" y="864"/>
   <object id="48" x="6304" y="864"/>
   <object id="49" x="5024" y="480"/>
+ </objectgroup>
+ <objectgroup id="7" name="reloj">
+  <object id="18" x="7232" y="992"/>
+  <object id="20" x="7136" y="256" width="64" height="96"/>
+  <object id="21" x="5536" y="576" width="64" height="96"/>
+  <object id="22" x="4352" y="256" width="64" height="96"/>
+  <object id="23" x="2848" y="416" width="64" height="96"/>
+  <object id="24" x="1152" y="416" width="64" height="96"/>
  </objectgroup>
  <layer id="9" name="enemigos" width="250" height="23">
   <data encoding="csv">

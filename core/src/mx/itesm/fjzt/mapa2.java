@@ -3,7 +3,6 @@ package mx.itesm.fjzt;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,11 +35,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class mapa2 extends Pantalla {
 
-    //Vidas
-    public static int vidaPersonaje = 3;
-
     //Ganar o Perder
     public static int ganar = 1;
+
+    public static int vidaPersonaje = 3;
+    public static int invunerabilidad = 0;
 
     //Dimensiones
     public static final int ANCHO_MAPA = 8000;
@@ -71,7 +70,6 @@ public class mapa2 extends Pantalla {
 
     //Musica
     private Music musicaFondo;
-    private Sound effectoDisparo;
 
 
     //Joystick
@@ -85,7 +83,7 @@ public class mapa2 extends Pantalla {
 
     //AssetManager
     private AssetManager manager;
-    private EstadoJuego estado = EstadoJuego.JUGANDO;
+    public EstadoJuego estado = EstadoJuego.JUGANDO;
     private EscenaPausa escenaPausa;
 
     //BOX2D Física
@@ -99,17 +97,17 @@ public class mapa2 extends Pantalla {
     //Interfaz
     private InterfazJugador interfaz;
 
-    //Marcadores
-    private int tiempo = 0;
-
     private Texto texto;
 
     //Vida
     private Texture vidaCompleta;
     private Texture vidaMenosUno;
     private Texture vidaMenosDos;
+    private Texture vidaMenosTres;
 
     //Reloj
+    private Reloj reloj;
+    private enemigoLvl1 enemigoLvl1;
 
 
     public mapa2(JuegoDemo juego) {
@@ -117,10 +115,9 @@ public class mapa2 extends Pantalla {
         this.juego = juego;
         manager = juego.getAssetManager();
         interfaz = new InterfazJugador(juego.batch);
-
-        mundo = new World(new Vector2(0,-30f),true);
+        mundo = new World(new Vector2(0,-35f),true);
         mundo.setContactListener(new checaColisiones2() );
-
+        vidaPersonaje = 3;
 
     }
 
@@ -131,16 +128,10 @@ public class mapa2 extends Pantalla {
         cargarMapa();
         crearHUD();
         configurarFisica();
-
-
-
         cargarMusicas();
 
         // El input es el joystick virtual y el botón
         Gdx.input.setInputProcessor(escenaHUD);
-
-
-
         texto = new Texto();
 
     }
@@ -173,11 +164,11 @@ public class mapa2 extends Pantalla {
                 Touchpad pad = (Touchpad) actor;
                 if (pad.getKnobPercentX()>0.20) {
                     silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.MOV_DERECHA);
-                    cuerpo.applyLinearImpulse(new Vector2(180000,0),cuerpo.getWorldCenter(), true);
+                    cuerpo.applyForceToCenter(180000,0,true);
 
                 } else if (pad.getKnobPercentX()<-0.20){
                     silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.MOV_IZQUIERDA);
-                    cuerpo.applyLinearImpulse(new Vector2(-180000,0),cuerpo.getWorldCenter(), true);
+                    cuerpo.applyForceToCenter(-180000,0,true);
 
                 } else {
                     silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.QUIETO);
@@ -206,7 +197,7 @@ public class mapa2 extends Pantalla {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 if(silo.getEstadoSalto()!= JugadorNuevo.EstadoSalto.SALTANDO){
-                    cuerpo.applyLinearImpulse(new Vector2(0,1800000),cuerpo.getWorldCenter(), true);
+                    cuerpo.applyLinearImpulse(new Vector2(cuerpo.getLinearVelocity().x,(999000000)),cuerpo.getWorldCenter(), true);
                     silo.estadoSalto = JugadorNuevo.EstadoSalto.SALTANDO;
                 }
                 return true;
@@ -241,7 +232,7 @@ public class mapa2 extends Pantalla {
     }
 
     private void crearObjetos() {
-        silo = new JugadorNuevo(texturaSilo,3,32,64);
+        silo = new JugadorNuevo(texturaSilo,vidaPersonaje,32,64);
         silo.setEstadoMovimiento(JugadorNuevo.EstadoMovimiento.QUIETO);
     }
 
@@ -251,6 +242,7 @@ public class mapa2 extends Pantalla {
         manager.load("vidacompleta.png", Texture.class);
         manager.load("vidamenosuno.png", Texture.class);
         manager.load("vidamenosdos.png", Texture.class);
+        manager.load("vidamenostres.png", Texture.class);
         manager.finishLoading();
 
         texturaSilo = manager.get("Linea-Silo-Co.png");
@@ -260,6 +252,7 @@ public class mapa2 extends Pantalla {
         vidaCompleta = manager.get("vidacompleta.png");
         vidaMenosUno = manager.get("vidamenosuno.png");
         vidaMenosDos = manager.get("vidamenosdos.png");
+        vidaMenosTres = manager.get("vidamenostres.png");
     }
 
     private void cargarMusicas() {
@@ -298,6 +291,7 @@ public class mapa2 extends Pantalla {
         FixtureDef fix = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(silo.getWidth()/4,silo.getHeight()/2-1);  //
+
         fix.filter.categoryBits = Pantalla.BIT_JUGADOR;
         fix.filter.maskBits =  Pantalla.BIT_JUGADOR | Pantalla.BIT_SUELO | Pantalla.BIT_ZILO | Pantalla.BIT_ENEMIGO | Pantalla.BIT_OBJETOS | Pantalla.BIT_WIN;
 
@@ -306,8 +300,10 @@ public class mapa2 extends Pantalla {
 
         //Agregar los bloques solidos (se configurarion en el mapa)
         ConvertidorMapa2.crearCuerpos(mapa,mundo);
-        debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo, muestra las cajas de colision
+        //debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo, muestra las cajas de colision
 
+        reloj = new Reloj(mapa,mundo);
+        enemigoLvl1 = new enemigoLvl1(mapa,mundo);
 
     }
     @Override
@@ -336,6 +332,11 @@ public class mapa2 extends Pantalla {
             batch.begin();
             silo.dibujar(batch);
 
+
+            if(invunerabilidad > 0){
+                invunerabilidad -= 1;
+            }
+
             batch.draw(textBarra,camera.position.x-ANCHO/2,0);
             if (silo.getVida()== 3) {
                 batch.draw(vidaCompleta,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
@@ -343,10 +344,11 @@ public class mapa2 extends Pantalla {
                 batch.draw(vidaMenosUno,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
             } else if (silo.getVida() == 1) {
                 batch.draw(vidaMenosDos,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+            }else{
+                batch.draw(vidaMenosTres,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
+                musicaFondo.stop();
+                juego.setScreen(new PantallaLose(juego));
             }
-
-            batch.draw(textBarra,camera.position.x-ANCHO/2,0);
-            batch.draw(vidaCompleta,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
             texto.mostrarTexto(batch,"[ Nivel:2 ]",camera.position.x-ANCHO/2 + 330,705);
             texto.mostrarTexto(batch,"[ Tiempo:  "+ interfaz.tiempoMundo()+" ]",camera.position.x-ANCHO/2 + 1030,705);
 
@@ -362,23 +364,23 @@ public class mapa2 extends Pantalla {
             if(cuerpo.getLinearVelocity().y == 0){
                 silo.estadoSalto = JugadorNuevo.EstadoSalto.EN_PISO;
             }
+
+
         }
-
-
 
         if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw();
         }
         //Si desactivado el debug en configurarF, quitar
-        debug.render(mundo,camera.combined);
+        //debug.render(mundo,camera.combined);
 
-        if(finJuego() || ganar <= 0){
+        if(finJuego() || estado == EstadoJuego.PIERDE || ganar < 0){
             ganar = 1;
             juego.setScreen(new PantallaLose(juego));
 
         }
 
-        if(ganar >=2){
+        if(ganar >= 2 || estado==EstadoJuego.GANA){
             ganar = 1;
             juego.setScreen(new PantallaWin(juego));
         }
@@ -386,6 +388,7 @@ public class mapa2 extends Pantalla {
 
     private boolean finJuego() {
         if(interfaz.isTiempoAcabo()){
+            estado = EstadoJuego.PIERDE;
             return true;
         }
         return false;
@@ -419,6 +422,17 @@ public class mapa2 extends Pantalla {
 
     @Override
     public void dispose() {
+
+
+    }
+
+    public void init(){
+        cargarMusicas();
+        vidaPersonaje = 3;
+        silo.setVida(vidaPersonaje);
+        configurarFisica();
+        InterfazJugador.tiempoMundo=100;
+        Reloj.usos = 5;
 
     }
 
@@ -483,8 +497,9 @@ public class mapa2 extends Pantalla {
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
                     musicaFondo.stop();
-
-                    juego.setScreen(new mapa2(juego));
+                    init();
+                    Gdx.input.setInputProcessor(escenaHUD);
+                    estado= EstadoJuego.JUGANDO;
 
                 }
             });
@@ -501,7 +516,6 @@ public class mapa2 extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // return to the game
-                    cargarMapa();
                     Gdx.input.setInputProcessor(escenaHUD);
                     estado= EstadoJuego.JUGANDO;
                 }

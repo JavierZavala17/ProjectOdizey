@@ -20,35 +20,68 @@ class checaColisiones3 implements ContactListener {
 
         switch (colision) {
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_WIN:
-                Gdx.app.log("","Gano");
                 mapa3.ganar ++;
                 break;
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_ENEMIGO:
                 if(fixture1.getFilterData().categoryBits == Pantalla.BIT_ENEMIGO){
                     if(mapa3.vidaPersonaje==3){
-                        mapa3.vidaPersonaje -= .5f;
+                        mapa3.vidaPersonaje -= 1f;
                         break;
-                    }else if(mapa3.vidaPersonaje==2){
-                        mapa3.vidaPersonaje -= .5f;
+                    }else if(mapa3.vidaPersonaje==2 && mapa3.invunerabilidad > 0){
+                        mapa3.vidaPersonaje -= 1f;
                         break;
-                    }else if(mapa3.vidaPersonaje==1){
+                    }else if(mapa3.vidaPersonaje==1&& mapa3.invunerabilidad > 0){
                         mapa3.ganar -= 1;
                     }
                 }else{
                     if(mapa3.vidaPersonaje==3){
-                        mapa3.vidaPersonaje -= .5f;
+                        mapa3.vidaPersonaje -= 1f;
                         break;
-                    }else if(mapa3.vidaPersonaje==2){
-                        mapa3.vidaPersonaje -= .5f;
+                    }else if(mapa3.vidaPersonaje==2&& mapa3.invunerabilidad > 0){
+                        mapa3.vidaPersonaje -= 1f;
                         break;
-                    }else if(mapa3.vidaPersonaje==1){
+                    }else if(mapa3.vidaPersonaje==1&& mapa3.invunerabilidad > 0){
                         mapa3.ganar -= 1;
                     }
                 }
-                //Gdx.app.log("","score" + mapa1.ganar);
+                mapa3.invunerabilidad = 250;
                 break;
             case Pantalla.BIT_JUGADOR | Pantalla.BIT_OBJETOS:
-                InterfazJugador.addTiempo(10);
+                if(fixture1.getFilterData().categoryBits == Pantalla.BIT_ENEMIGO){
+                    if(Reloj.usos == 5){
+                        InterfazJugador.addTiempo(10);
+                        Reloj.usos --;
+                    } else if(Reloj.usos == 4) {
+                        InterfazJugador.addTiempo(10);
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 3) {
+                        InterfazJugador.addTiempo(10);
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 2) {
+                        InterfazJugador.addTiempo(10);
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 1) {
+                        InterfazJugador.addTiempo(10);
+                        Reloj.usos--;
+                    }
+                }else{
+                    if(Reloj.usos == 5){
+                        InterfazJugador.addTiempo(10);
+                        Reloj.usos --;
+                    } else if(Reloj.usos == 4) {
+                        InterfazJugador.addTiempo(10);
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 3) {
+                        InterfazJugador.addTiempo(10);
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 2) {
+                        InterfazJugador.addTiempo(10);
+                        Reloj.usos--;
+                    }else if(Reloj.usos == 1) {
+                        InterfazJugador.addTiempo(10);
+                        Reloj.usos--;
+                    }
+                }
                 break;
         }
 
