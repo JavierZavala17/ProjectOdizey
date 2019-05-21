@@ -15,21 +15,21 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class reloj {
+public class enemigoLvl1{
 
     protected World world;
     protected TiledMap map;
     protected Fixture fixture;
     protected MapObject object;
 
-    public reloj(TiledMap mapa, World mundo) {
+    public enemigoLvl1(TiledMap mapa, World mundo) {
 
-        //Reloj
+        //enemigo
         BodyDef clock = new BodyDef();
         PolygonShape clockFin = new PolygonShape();
         FixtureDef clockfix = new FixtureDef();
         Body clockcuerpo;
-        for (MapObject object : mapa.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : mapa.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rectangulofin = ((RectangleMapObject) object).getRectangle();
 
             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
@@ -40,12 +40,11 @@ public class reloj {
 
             clockFin.setAsBox(rectangulofin.getWidth() / 2, rectangulofin.getHeight() / 2);
             clockfix.shape = clockFin;
-            clockfix.filter.categoryBits = Pantalla.BIT_OBJETOS;
-            clockfix.filter.maskBits =  Pantalla.BIT_JUGADOR | Pantalla.BIT_SUELO | Pantalla.BIT_ZILO;
+            clockfix.filter.categoryBits = Pantalla.BIT_ENEMIGO;
+            clockfix.filter.maskBits = Pantalla.BIT_BALA | Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO | Pantalla.BIT_ZILO;
 
             clockcuerpo.createFixture(clockfix);
         }
-
     }
 
     public void setCategoryFilter(short filterBit) {

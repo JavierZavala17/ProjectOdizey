@@ -1,21 +1,16 @@
 package mx.itesm.fjzt;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 
-public class ConvertidorMapa {
+public class ConvertidorMapa2 {
 
 
     public static void crearCuerpos(TiledMap mapa, World mundo) {
@@ -26,7 +21,7 @@ public class ConvertidorMapa {
         Body cuerpo;
 
         //Salida
-        for(MapObject object : mapa.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : mapa.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rectangulo = ((RectangleMapObject)object).getRectangle();
 
             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
@@ -46,7 +41,7 @@ public class ConvertidorMapa {
         PolygonShape shapefin = new PolygonShape();
         FixtureDef fixturefin = new FixtureDef();
         Body cuerpofin;
-        for(MapObject object : mapa.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : mapa.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rectangulofin = ((RectangleMapObject)object).getRectangle();
 
             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
@@ -65,7 +60,7 @@ public class ConvertidorMapa {
         PolygonShape clockFin = new PolygonShape();
         FixtureDef clockfix = new FixtureDef();
         Body clockcuerpo;
-        for (MapObject object : mapa.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : mapa.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rectangulofin = ((RectangleMapObject) object).getRectangle();
 
             //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
@@ -80,6 +75,28 @@ public class ConvertidorMapa {
             clockfix.filter.maskBits = Pantalla.BIT_BALA | Pantalla.BIT_ENEMIGO| Pantalla.BIT_JUGADOR | Pantalla.BIT_PAREDES_ENEMIGOS| Pantalla.BIT_SUELO | Pantalla.BIT_ZILO;
 
             clockcuerpo.createFixture(clockfix);
+        }
+
+        //Reloj
+        BodyDef clock2 = new BodyDef();
+        PolygonShape clockFin2 = new PolygonShape();
+        FixtureDef clockfix2 = new FixtureDef();
+        Body clockcuerpo2;
+        for (MapObject object : mapa.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rectangulofin = ((RectangleMapObject) object).getRectangle();
+
+            //3 tipos de body (Dynamic : se mueve; Static: Quietos; Kinematic: Afectados por ciertas fuerzas )
+            clock2.type = BodyDef.BodyType.StaticBody;
+            clock2.position.set((rectangulofin.getX() + rectangulofin.getWidth() / 2), (rectangulofin.getY() + rectangulofin.getHeight() / 2));
+
+            clockcuerpo2 = mundo.createBody(clock2);
+
+            clockFin2.setAsBox(rectangulofin.getWidth() / 2, rectangulofin.getHeight() / 2);
+            clockfix2.shape = clockFin2;
+            clockfix2.filter.categoryBits = Pantalla.BIT_OBJETOS;
+            clockfix2.filter.maskBits =  Pantalla.BIT_JUGADOR | Pantalla.BIT_SUELO | Pantalla.BIT_ZILO;
+
+            clockcuerpo2.createFixture(clockfix2);
         }
 
     }

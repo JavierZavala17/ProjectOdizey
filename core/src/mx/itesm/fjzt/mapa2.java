@@ -7,7 +7,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -36,9 +34,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import javax.xml.soap.Text;
-
-public class mapa1 extends Pantalla {
+public class mapa2 extends Pantalla {
 
     //Ganar o Perder
     public static int ganar = 1;
@@ -111,11 +107,9 @@ public class mapa1 extends Pantalla {
     private Texture vidaMenosDos;
 
     //Reloj
-    private reloj reloj;
-    private enemigoLvl1 enemigoLvl1;
 
 
-    public mapa1(JuegoDemo juego) {
+    public mapa2(JuegoDemo juego) {
         super(juego);
         this.juego = juego;
         manager = juego.getAssetManager();
@@ -275,7 +269,7 @@ public class mapa1 extends Pantalla {
 
     private void cargarMapa() {
         mapLoader = new TmxMapLoader();
-        mapa = mapLoader.load("Mapa1.tmx");
+        mapa = mapLoader.load("mapa2.tmx");
         manager.load("musicaLevel1.mp3",Music.class);
         manager.finishLoading();
         musicaFondo = manager.get("musicaLevel1.mp3");
@@ -308,11 +302,9 @@ public class mapa1 extends Pantalla {
         cuerpo.createFixture(fix);
 
         //Agregar los bloques solidos (se configurarion en el mapa)
-        ConvertidorMapa.crearCuerpos(mapa,mundo);
+        ConvertidorMapa2.crearCuerpos(mapa,mundo);
         debug = new Box2DDebugRenderer(); //Esto solo se usa en desarrollo, muestra las cajas de colision
 
-        reloj = new reloj(mapa,mundo);
-        enemigoLvl1 = new enemigoLvl1(mapa,mundo);
 
     }
     @Override
@@ -341,7 +333,7 @@ public class mapa1 extends Pantalla {
             silo.dibujar(batch);
             batch.draw(textBarra,camera.position.x-ANCHO/2,0);
             batch.draw(vidaCompleta,camera.position.x-ANCHO/2 + 20,ALTO-vidaCompleta.getHeight());
-            texto.mostrarTexto(batch,"[ Nivel:1 ]",camera.position.x-ANCHO/2 + 330,705);
+            texto.mostrarTexto(batch,"[ Nivel:2 ]",camera.position.x-ANCHO/2 + 330,705);
             texto.mostrarTexto(batch,"[ Tiempo:  "+ interfaz.tiempoMundo()+" ]",camera.position.x-ANCHO/2 + 1030,705);
 
 
@@ -372,7 +364,7 @@ public class mapa1 extends Pantalla {
 
         }
 
-        if(ganar >= 2){
+        if(ganar >=2){
             ganar = 1;
             juego.setScreen(new PantallaWin(juego));
         }
@@ -478,7 +470,7 @@ public class mapa1 extends Pantalla {
                     // Regresa al menú
                     musicaFondo.stop();
 
-                    juego.setScreen(new mapa1(juego));
+                    juego.setScreen(new mapa2(juego));
 
                 }
             });

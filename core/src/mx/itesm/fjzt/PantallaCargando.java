@@ -1,6 +1,8 @@
 package mx.itesm.fjzt;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -51,6 +53,7 @@ public class PantallaCargando extends Pantalla {
         //ENGRANE PEQUEÑO
         textureEngranePequeño = new Texture("engranePequeño.png");
         spriteEngranePequeño = new Sprite(textureEngranePequeño);
+
     }
 
     @Override
